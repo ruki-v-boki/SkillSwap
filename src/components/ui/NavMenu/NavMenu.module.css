@@ -1,0 +1,27 @@
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+  min-width: 222px;
+}
+
+.navLink {
+  color: var(--color-text);
+  text-decoration: none;
+  line-height: var(--line-height-xs);
+}
+
+.navLink:hover {
+  color: var(--color-text-link);
+}
+
+.navButton {
+  display: flex;
+  line-height: var(--line-height-xs);
+}
+
+.dropdown {
+  /* display: flex; */
+}

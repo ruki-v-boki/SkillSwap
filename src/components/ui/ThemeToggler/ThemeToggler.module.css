@@ -1,0 +1,9 @@
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  padding: 0 24px 0 0;
+  background-color: transparent;
+  cursor: pointer;
+}

@@ -1,0 +1,13 @@
+.chevron {
+  /* flex-shrink: 0; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  /* transition: transform var(--transition-default); */
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}

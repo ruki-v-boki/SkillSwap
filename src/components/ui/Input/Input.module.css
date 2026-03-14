@@ -1,0 +1,122 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.label {
+  margin-left: 4px;
+  color: var(--color-text);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-xs);
+}
+
+.required {
+  color: var(--color-error);
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  outline: 1px solid var(--color-toggle);
+  border-radius: 8px;
+  outline: none;
+  color: var(--color-text);
+  font-family: var(--font-family-base);
+  background-color: var(--color-input);
+}
+
+.input::placeholder {
+  color: var(--color-caption);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-s);
+}
+
+.input:focus::placeholder {
+  opacity: 0;
+}
+
+.input.error {
+  outline-color: var(--color-error);
+}
+
+.input.error:focus {
+  box-shadow: 0 0 0 3px rgba(191, 57, 32, 0.2);
+}
+
+.input:disabled {
+  outline-color: var(--color-disabled-text);
+  color: var(--color-disabled-text);
+  background-color: var(--color-disabled);
+  cursor: not-allowed;
+}
+
+.input:disabled::placeholder {
+  color: var(--color-disabled-text);
+}
+
+.withLeftIcon {
+  padding: 0 20px 0 50px;
+}
+
+.withRightIcon {
+  padding-right: 36px;
+}
+
+.leftIcon {
+  position: absolute;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  color: var(--color-toggle);
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 1;
+}
+
+.leftIcon.hidden {
+  opacity: 0;
+}
+
+.rightIcon {
+  position: absolute;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  color: var(--color-toggle);
+}
+
+.rightIcon button {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+
+.input.leftIconHidden {
+  padding: 0 20px 0 16px;
+}
+
+.errorMessage {
+  margin-left: 4px;
+  color: var(--color-error);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-xs);
+}
+
+.helper {
+  margin-left: 4px;
+  color: var(--color-caption);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-xs);
+}

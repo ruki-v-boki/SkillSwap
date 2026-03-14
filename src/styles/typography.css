@@ -1,0 +1,55 @@
+.h-1 {
+  font-family: var(--font-family-prime);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-l);
+  line-height: var(--line-height-xl);
+  letter-spacing: var(--letter-spacing-xs);
+}
+
+.h-2 {
+  font-family: var(--font-family-prime);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-xs);
+}
+
+.h-3 {
+  font-family: var(--font-family-prime);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-xs);
+}
+
+.h-4 {
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-s);
+}
+
+.h-body {
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-s);
+}
+
+.h-caption {
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-xs);
+  letter-spacing: var(--letter-spacing-s);
+}
+
+.h-3-buttons {
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-s);
+}

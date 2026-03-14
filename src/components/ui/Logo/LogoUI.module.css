@@ -1,0 +1,14 @@
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.title {
+  color: var(--color-text);
+  font-family: var(--font-family-prime);
+  font-weight: var(--font-weight-semi-bold);
+  font-size: var(--font-size-l);
+}

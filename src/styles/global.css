@@ -1,0 +1,7 @@
+body {
+  background-color: var(--color-bg);
+  font-family: var(--font-family-base), sans-serif;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0;
+}

@@ -1,0 +1,61 @@
+:root {
+  /* ------------ FONTS ------------ */
+
+  /* -------- family */
+  --font-family-base: 'Roboto', sans-serif;
+  --font-family-prime: 'Jost', sans-serif;
+  --font-family-secondary: 'Open Sans', sans-serif;
+
+  /* -------- weight */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+
+  /* -------- size */
+  --font-size-xs: 12px;
+  --font-size-s: 16px;
+  --font-size-m: 20px;
+  --font-size-l: 24px;
+  --font-size-xl: 32px;
+
+  /* -------- line-height */
+  --line-height-xs: 16px;
+  --line-height-s: 24px;
+  --line-height-m: 28px;
+  --line-height-l: 32px;
+  --line-height-xl: 40px;
+
+  /* -------- letter-spacing */
+  --letter-spacing-xs: -1.1%;
+  --letter-spacing-s: 2%;
+
+
+  /* ------------ COLORS ------------ */
+  --color-bg: #F9FAF7;
+  --color-input: #FFFFFF;
+  --color-text: #253017;
+  --color-caption: #69735D;
+  --color-toggle: #B2B9A9;
+  --color-disabled-text: #9CA197;
+  --color-disabled: #E4E8DF;
+  --color-text-link: #508826;
+  --color-accent: #ABD27A;
+  --color-button-hover: #DEEBC5;
+
+  /* -------- tags */
+  --color-tag-english: #ebe5c5;
+  --color-tag-business: #eee7f7;
+  --color-tag-creativity: #f7e7f2;
+  --color-tag-education: #e7f2f6;
+  --color-tag-home: #f7ebe5;
+  --color-tag-health: #e9f7e7;
+  --color-tag-plus: #e8ecf7;
+
+  /* -------- errors */
+  --color-alarm: #E0796E;
+  --color-error: #BF3920;
+
+  /* ------------------------ */
+  --radius-button: 12px;
+}

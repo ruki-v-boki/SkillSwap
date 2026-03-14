@@ -1,0 +1,29 @@
+/* -------- ROBOTO -------- */
+@font-face {
+  font-family: 'Roboto';
+  src: url('../assets/fonts/Roboto-VariableFont.woff2')
+      format('woff2-variations');
+  font-weight: 100 1000;
+  font-display: swap;
+  font-style: normal;
+}
+
+/* -------- JOST -------- */
+@font-face {
+  font-family: 'Jost';
+  src: url('../assets/fonts/Jost-VariableFont.woff2')
+      format('woff2-variations');
+  font-weight: 400 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+/* -------- OPEN SANS -------- */
+@font-face {
+  font-family: 'Open Sans';
+  src: url('../assets/fonts/OpenSans-VariableFont.woff2')
+      format('woff2-variations');
+  font-weight: 400 700;
+  font-display: swap;
+  font-style: normal;
+}

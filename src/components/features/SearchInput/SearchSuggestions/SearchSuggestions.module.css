@@ -1,0 +1,12 @@
+.suggestions {
+  display: flex;
+}
+
+.title {
+  font-size: 12px;
+  color: red;
+}
+
+.suggestionItem {
+  display: flex;
+}
