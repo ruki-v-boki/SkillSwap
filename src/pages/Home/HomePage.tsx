@@ -1,31 +1,33 @@
-import { useEffect } from 'react';
-import {  useSelector } from '@/services/store';
-import { selectIsNavOpen } from '@/services/slices/ui/uiSlice';
 import styles from './HomePage.module.css'
 import { MOCK_USERS } from '@/mock/users';
-import { CardUI } from '@/components/ui/Card';
+import { CatalogSectionUI } from '@/components/ui/CatalogSection';
 
 
 export function HomePage() {
-  const isNavOpen = useSelector(selectIsNavOpen);
-
-  useEffect(() => {
-  }, [isNavOpen]);
 
   return (
-    <div className={styles.container}>
-      {/* <p>Меню сейчас: {isNavOpen ? '🟢 Открыто' : '⚫ Закрыто'}</p> */}
+    <div className={styles.pageContainer}>
+
       <aside className={styles.aside}>
         <h2>Aside</h2>
       </aside>
 
 
-      <main className={styles.main}>
-        <CardUI user={MOCK_USERS[0]} type='catalog'/>
-        <CardUI user={MOCK_USERS[1]} type='catalog'/>
-        <CardUI user={MOCK_USERS[3]} type='catalog'/>
-        {/* <CardUI user={MOCK_USERS[1]} type='catalog'/>
-        <CardUI user={MOCK_USERS[0]} type='catalog'/> */}
+      <main className={styles.catalogContainer}>
+        <CatalogSectionUI
+          users={MOCK_USERS}
+          title='Популярное'
+          visibleCardsValue={3}
+        />
+        <CatalogSectionUI
+          users={MOCK_USERS}
+          title='Новое'
+          visibleCardsValue={3}
+        />
+        <CatalogSectionUI
+          users={MOCK_USERS}
+          title='Рекомендуемое'
+        />
       </main>
 
 

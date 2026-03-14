@@ -877,5 +877,47 @@ export const MOCK_USERS: IUser[] = [
       { id: 'learn61', categoryId: 'education', subcategoryId: 'coaching' },
       { id: 'learn62', categoryId: 'creativity', subcategoryId: 'music' }
     ]
+  },
+    {
+    id: 'user43',
+    name: 'Анна',
+    location: 'Москва',
+    age: 35,
+    about: 'Коуч по балансу жизни и работы. Помогаю найти гармонию.',
+    avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
+    rating: 40,
+    gender: 'female',
+    createdAt: '2025-06-30T10:50:00Z',
+    canTeach: {
+      id: 'skill42',
+      categoryId: 'health',
+      subcategoryId: 'work-life-balance',
+      customName: 'Баланс'
+    },
+    wantToLearn: [
+      { id: 'learn61', categoryId: 'education', subcategoryId: 'coaching' },
+      { id: 'learn62', categoryId: 'creativity', subcategoryId: 'music' }
+    ]
+  },
+    {
+    id: 'user42',
+    name: 'Лиза',
+    location: 'Москва',
+    age: 35,
+    about: 'Коуч по балансу жизни и работы. Помогаю найти гармонию.',
+    avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
+    rating: 40,
+    gender: 'female',
+    createdAt: '2025-06-30T10:50:00Z',
+    canTeach: {
+      id: 'skill42',
+      categoryId: 'health',
+      subcategoryId: 'work-life-balance',
+      customName: 'Баланс'
+    },
+    wantToLearn: [
+      { id: 'learn61', categoryId: 'education', subcategoryId: 'coaching' },
+      { id: 'learn62', categoryId: 'creativity', subcategoryId: 'music' }
+    ]
   }
 ];

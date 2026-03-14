@@ -1,0 +1,1 @@
+export { CatalogSectionUI } from './CatalogSection'
