@@ -1,0 +1,21 @@
+.likeButton {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  height: 24px;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.likeButton:active {
+  transform: scale(0.90);
+}
+
+.likeIcon {
+  display: block;
+  width: 24px;
+  height: 24px;
+}

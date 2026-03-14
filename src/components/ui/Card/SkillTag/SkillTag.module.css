@@ -1,0 +1,42 @@
+
+.tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  padding: 6px 12px;
+}
+
+.text {
+  display: block;
+  white-space: nowrap;
+}
+
+/* ------- ЦВЕТА ------- */
+.languages {
+  background-color: var(--color-tag-english);
+}
+
+.business {
+  background-color: var(--color-tag-business);
+}
+
+.creativity {
+  background-color: var(--color-tag-creativity);
+}
+
+.education {
+  background-color: var(--color-tag-education);
+}
+
+.home {
+  background-color: var(--color-tag-home);
+}
+
+.health {
+  background-color: var(--color-tag-health);
+}
+
+.plus {
+  background-color: var(--color-tag-plus);
+}
