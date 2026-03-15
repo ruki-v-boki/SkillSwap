@@ -1,7 +1,7 @@
-.pageContainer {
+.homePageContainer {
   display: flex;
   justify-content: space-between;
-  /* gap: 24px; */
+  gap: 24px;
   height: 100vh;
   background-color: var(--color-bg);
 }
@@ -9,11 +9,12 @@
 .aside {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   width: 384px;
+  height: fit-content;
   border-radius: var(--radius-button);
-  background-color: aquamarine;
+  box-shadow: var(--box-shadow-light);
+  background-color: var(--color-bg);
 }
 
 .catalogContainer {

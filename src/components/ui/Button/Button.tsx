@@ -14,6 +14,8 @@ export function Button({
   className = ''
 }: ButtonProps) {
 
+// ---------------------------------------------------------------
+
   const buttonClasses = [
     styles.button,
     variant && styles[variant],
@@ -21,6 +23,8 @@ export function Button({
     loading ? styles.loading : '',
     className
   ].filter(Boolean).join(' ');
+
+// ---------------------------------------------------------------
 
   return (
     <button

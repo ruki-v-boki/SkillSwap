@@ -12,6 +12,8 @@ export function SkillTagUI({ name, category, count }: Readonly<TSkillTagUIProps>
     );
   }
 
+// ---------------------------------------------------------------
+
   return (
     <div className={`${styles.tag} ${categoryClass}`}>
       <span className={`${styles.text} h-caption`}>{name}</span>

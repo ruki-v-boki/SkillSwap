@@ -4,8 +4,8 @@
   src: url('../assets/fonts/Roboto-VariableFont.woff2')
       format('woff2-variations');
   font-weight: 100 1000;
-  font-display: swap;
   font-style: normal;
+  font-display: swap;
 }
 
 /* -------- JOST -------- */
@@ -14,8 +14,8 @@
   src: url('../assets/fonts/Jost-VariableFont.woff2')
       format('woff2-variations');
   font-weight: 400 700;
-  font-display: swap;
   font-style: normal;
+  font-display: swap;
 }
 
 /* -------- OPEN SANS -------- */
@@ -24,6 +24,6 @@
   src: url('../assets/fonts/OpenSans-VariableFont.woff2')
       format('woff2-variations');
   font-weight: 400 700;
-  font-display: swap;
   font-style: normal;
+  font-display: swap;
 }

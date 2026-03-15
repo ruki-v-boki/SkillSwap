@@ -5,6 +5,7 @@ import { deleteCookie, getCookie, setCookie } from '@/utils/cookie';
 import { getUserApi, loginUserApi, logoutApi, registerUserApi, updateUserApi, type TAuthResponse, type TUserResponse } from '@/utils/api';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
+
 type TAuthState = {
   user: IUser | null;
   isAuthChecked: boolean;
@@ -19,10 +20,12 @@ export const initialState: TAuthState = {
   error: null
 };
 
-// ------------------------------------------------------------
+// ---------------------------------------------------------------
 
 export const getUser = createAsyncThunk('auth/getUser', getUserApi);
 export const updateUser = createAsyncThunk('auth/updateUser', updateUserApi);
+
+// ---------------------------------------------------------------
 
 export const register = createAsyncThunk(
   'auth/register',
@@ -34,6 +37,8 @@ export const register = createAsyncThunk(
   }
 );
 
+// ---------------------------------------------------------------
+
 export const login = createAsyncThunk(
   'auth/login',
   async (credentials: { email: string; password: string }) => {
@@ -44,12 +49,16 @@ export const login = createAsyncThunk(
   }
 );
 
+// ---------------------------------------------------------------
+
 export const logout = createAsyncThunk('auth/logout', async () => {
   await logoutApi();
   deleteCookie('accessToken');
   localStorage.removeItem('refreshToken');
   return null;
 });
+
+// ---------------------------------------------------------------
 
 export const checkAuth = createAsyncThunk(
   'auth/checkAuth',
@@ -69,7 +78,7 @@ export const checkAuth = createAsyncThunk(
   }
 );
 
-// ------------------------------------------------------------
+// ---------------------------------------------------------------
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -185,8 +194,11 @@ export const authSlice = createSlice({
   }
 });
 
+// ---------------------------------------------------------------
+
 // actions:
 export const { setAuthChecked, clearError } = authSlice.actions;
+
 // selectors:
 export const selectUser = (state: RootState) => state.auth.user;
 export const selectIsAuthChecked = (state: RootState) => state.auth.isAuthChecked;

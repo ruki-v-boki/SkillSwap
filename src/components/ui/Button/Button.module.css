@@ -20,15 +20,26 @@
 }
 
 .base {
+  box-shadow: var(--box-shadow-light);
   color: var(--color-text);
   background-color: var(--color-input);
 }
 
+.base:hover {
+  background-color: var(--color-input);
+}
+
 .prime {
+  box-shadow: var(--box-shadow);
   background-color: var(--color-accent);
 }
 
+.prime:hover {
+  outline: 0.5px solid var(--color-text-link);
+}
+
 .outline {
+  box-shadow: var(--box-shadow);
   outline: 1px solid var(--color-accent);
   background-color: transparent;
 }
@@ -43,6 +54,7 @@
   border-radius: 0;
   padding: 0;
   background-color: transparent;
+  transition: all 0.2s;
 }
 
 .link:hover {

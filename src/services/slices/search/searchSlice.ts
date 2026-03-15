@@ -2,14 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '@/services/store';
 
 
-export const fetchSearchResults = createAsyncThunk(
-  'search/fetchResults',
-  async (query: string) => {
-    const response = await fetch(`/api/skills/search?q=${query}`);
-    return response.json();
-  }
-);
-
 type SearchState = {
   query: string;
   results: any[];
@@ -27,6 +19,18 @@ const initialState: SearchState = {
   error: null,
   history: JSON.parse(localStorage.getItem('searchHistory') || '[]'),
 };
+
+// ---------------------------------------------------------------
+
+export const fetchSearchResults = createAsyncThunk(
+  'search/fetchResults',
+  async (query: string) => {
+    const response = await fetch(`/api/skills/search?q=${query}`);
+    return response.json();
+  }
+);
+
+// ---------------------------------------------------------------
 
 export const searchSlice = createSlice({
   name: 'searchSlice',
@@ -74,6 +78,9 @@ export const searchSlice = createSlice({
   },
 });
 
+// ---------------------------------------------------------------
+
+// actions
 export const {
   setSearchQuery,
   clearSearchResults,
@@ -81,6 +88,7 @@ export const {
   clearHistory
 } = searchSlice.actions;
 
+// selectors
 export const selectSearchQuery = (state: RootState) => state.searchSlice.query;
 export const selectSearchResults = (state: RootState) => state.searchSlice.results;
 export const selectSearchLoading = (state: RootState) => state.searchSlice.isLoading;

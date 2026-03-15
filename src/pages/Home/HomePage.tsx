@@ -1,36 +1,56 @@
+import { Filter } from "@/components/features/Filter";
+import { CatalogUI } from "@/components/ui/Catalog";
+import { APP_CATEGORIES, APP_SUBCATEGORIES } from "@/mock/skills";
+import { MOCK_USERS } from "@/mock/users";
+import { resetFilters, selectAllUsers, selectCities, selectFilteredUsers, selectHasActiveFilters, setError, setUsers } from "@/services/slices/filter/filterSlice";
+import { useDispatch, useSelector } from "@/services/store";
+import { useEffect } from "react";
 import styles from './HomePage.module.css'
-import { MOCK_USERS } from '@/mock/users';
-import { CatalogSectionUI } from '@/components/ui/CatalogSection';
-
 
 export function HomePage() {
 
-  return (
-    <div className={styles.pageContainer}>
+  const dispatch = useDispatch();
+  const allUsers = useSelector(selectAllUsers);
+  const filteredUsers = useSelector(selectFilteredUsers);
+  const cities = useSelector(selectCities);
+  const hasActiveFilters = useSelector(selectHasActiveFilters);
 
+// ---------------------------------------------------------------
+
+  useEffect(() => {
+    try {
+      dispatch(setUsers(MOCK_USERS));
+    } catch (error) {
+      dispatch(setError('Ошибка загрузки пользователей'));
+    }
+  }, [dispatch]);
+
+// ---------------------------------------------------------------
+
+  const handleResetFilters = () => {
+    dispatch(resetFilters());
+  };
+
+// ---------------------------------------------------------------
+
+  return (
+    <div className={styles.homePageContainer}>
       <aside className={styles.aside}>
-        <h2>Aside</h2>
+        <Filter
+          categories={APP_CATEGORIES}
+          subcategories={APP_SUBCATEGORIES}
+          cities={cities}
+        />
       </aside>
 
-
       <main className={styles.catalogContainer}>
-        <CatalogSectionUI
-          users={MOCK_USERS}
-          title='Популярное'
-          visibleCardsValue={3}
-        />
-        <CatalogSectionUI
-          users={MOCK_USERS}
-          title='Новое'
-          visibleCardsValue={3}
-        />
-        <CatalogSectionUI
-          users={MOCK_USERS}
-          title='Рекомендуемое'
+        <CatalogUI
+          users={filteredUsers}
+          hasFilters={hasActiveFilters}
+          onResetFilters={handleResetFilters}
+          allUsers={allUsers}
         />
       </main>
-
-
     </div>
   );
 }

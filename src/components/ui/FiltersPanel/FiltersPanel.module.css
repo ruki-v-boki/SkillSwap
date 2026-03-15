@@ -1,0 +1,42 @@
+.filtersPanelContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  min-width: 324px;
+  border-radius: var(--radius-button);
+  padding: 24px 20px;
+  background-color: var(--color-input);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 8px;
+}
+
+.title {
+  color: var(--color-text);
+}
+
+.badge {
+  padding-left: 5px;
+}
+
+.resetButton {
+  color: var(--color-text-link);
+}
+
+.resetButton:hover {
+  color: var(--color-accent);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.sectionTitle {
+  color: var(--color-text);
+}

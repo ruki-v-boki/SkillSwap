@@ -25,31 +25,34 @@ export function CardUI({
   };
   // ----------------- TO DO 1 --------------
 
-  // Для навыка "может научить" - показываем customName, категорию берем из справочника
+// ---------------------------------------------------------------
+
   const teachTags = [{
     id: user.canTeach.id,
-    name: user.canTeach.customName, // кастомное название от пользователя
-    category: getCategoryById(user.canTeach.categoryId) || { // русское название категории
+    name: user.canTeach.customName,
+    category: getCategoryById(user.canTeach.categoryId) || {
       id: user.canTeach.categoryId,
       name: user.canTeach.categoryId
     }
   }];
 
-  // Для навыков "хочет научиться" - показываем название ПОДкатегории из справочника
+// ---------------------------------------------------------------
+
   const learnTags = user.wantToLearn.map(skill => {
-    const subcategory = getSubcategoryById(skill.subcategoryId); // русское название ПОДкатегории
-    const category = getCategoryById(skill.categoryId); // русское название категории
+    const subcategory = getSubcategoryById(skill.subcategoryId);
+    const category = getCategoryById(skill.categoryId);
 
     return {
       id: skill.id,
-      name: subcategory?.name || skill.subcategoryId, // русское название ПОДкатегории
-      category: category || { // русское название категории
+      name: subcategory?.name || skill.subcategoryId,
+      category: category || {
         id: skill.categoryId,
         name: skill.categoryId
       }
     };
   });
   // ----------------- TO DO 2 --------------   унести логику? 
+// ---------------------------------------------------------------
 
   return (
     <div className={styles.container}>
@@ -72,11 +75,10 @@ export function CardUI({
         {type === 'catalog' &&
           <div className={styles.likeButtonBox}>
             <LikeButtonUI
-              isLiked={isLiked} // !!!!!!! <--------------- 1
-              onClick={handleLikeClick} // !!!!!!! <--------------- 1
+              isLiked={isLiked} // !!!!!!! <--------------- TO-DO 1
+              onClick={handleLikeClick} // !!!!!!! <--------------- TO-DO 1
             />
           </div>
-
         }
       </header>
       {/* ------- для профиля ------- */}

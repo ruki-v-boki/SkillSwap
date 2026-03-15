@@ -30,7 +30,6 @@
   --letter-spacing-xs: -1.1%;
   --letter-spacing-s: 2%;
 
-
   /* ------------ COLORS ------------ */
   --color-bg: #F9FAF7;
   --color-input: #FFFFFF;
@@ -58,5 +57,14 @@
 
   /* ------------------------ */
   --radius-button: 12px;
+  --radius-checkbox: 6px;
+
+  /* ------------------------ */
   --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --box-shadow-light: 0 1px 5px rgba(0, 0, 0, 0.1);
+  --box-shadow-smooth: 5px 5px 20px rgba(0, 0, 0, 0.2);
+
+  --scale-down: scale(0.85);
+  --scale-up: scale(1.2);
+  --scale-light: scale(1.01);
 }

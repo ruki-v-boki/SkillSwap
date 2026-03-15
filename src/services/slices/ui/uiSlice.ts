@@ -1,6 +1,7 @@
 import type { RootState } from '@/services/store';
 import { createSlice } from '@reduxjs/toolkit';
 
+
 type TUiState = {
   isNavOpen: boolean;
   isDarkTheme: boolean;
@@ -17,6 +18,7 @@ const initialState:TUiState = {
     activeModal: null,
   }
 
+// ---------------------------------------------------------------
 
 export const uiSlice = createSlice({
   name: 'ui',
@@ -42,6 +44,8 @@ export const uiSlice = createSlice({
     },
   },
 });
+
+// ---------------------------------------------------------------
 
 // actions
 export const {

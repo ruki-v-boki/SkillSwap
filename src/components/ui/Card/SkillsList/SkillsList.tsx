@@ -3,7 +3,6 @@ import styles from './SkillsList.module.css';
 import type { TSkillsListUIProps } from './type';
 
 
-
 export function SkillsListUI({ tags, variant, maxVisible = 2 }: TSkillsListUIProps) {
   const visibleTags = tags.slice(0, maxVisible);
   const remainingCount = tags.length - maxVisible;
@@ -22,7 +21,6 @@ export function SkillsListUI({ tags, variant, maxVisible = 2 }: TSkillsListUIPro
             category={tag.category}
           />
         ))}
-        
         {remainingCount > 0 && (
           <SkillTagUI
             name={`+${remainingCount}`}

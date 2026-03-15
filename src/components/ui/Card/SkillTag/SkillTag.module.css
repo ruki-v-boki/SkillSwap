@@ -1,10 +1,10 @@
-
 .tag {
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 20px;
   padding: 6px 12px;
+  box-shadow: var(--box-shadow-light);
 }
 
 .text {

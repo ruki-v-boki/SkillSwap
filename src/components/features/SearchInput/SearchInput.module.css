@@ -1,17 +1,17 @@
 .searchInputContainer {
   display: flex;
   width: 100%;
-  /* max-width: 527px; */
 }
 
 .searchInput {
-  border: none;
-  min-height: 48px;
-  border-radius: var(--radius-button);
   display: flex;
   width: 100%;
   min-width: 200px;
   max-width: 527px;
+  min-height: 48px;
+  border: none;
+  border-radius: var(--radius-button);
+  box-shadow: var(--box-shadow-light);
 }
 
 .searchInput:focus {

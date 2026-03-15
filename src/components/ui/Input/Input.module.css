@@ -26,8 +26,8 @@
 
 .input {
   width: 100%;
-  outline: 1px solid var(--color-toggle);
   border-radius: 8px;
+  outline: 1px solid var(--color-toggle);
   outline: none;
   color: var(--color-text);
   font-family: var(--font-family-base);
@@ -77,12 +77,12 @@
 .leftIcon {
   position: absolute;
   left: 12px;
+  z-index: 1;
   display: flex;
   align-items: center;
   color: var(--color-toggle);
-  pointer-events: none;
   transition: opacity 0.2s ease;
-  z-index: 1;
+  pointer-events: none;
 }
 
 .leftIcon.hidden {
@@ -98,10 +98,9 @@
 }
 
 .rightIcon button {
-  pointer-events: auto;
   cursor: pointer;
+  pointer-events: auto;
 }
-
 
 .input.leftIconHidden {
   padding: 0 20px 0 16px;

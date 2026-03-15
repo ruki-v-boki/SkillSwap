@@ -1,6 +1,5 @@
 import type { Category } from "@/types/types";
 
-
 export type TSkillsListUIProps = {
   tags: {
     id: string;

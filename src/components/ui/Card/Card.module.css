@@ -10,11 +10,11 @@
   max-width: 50%;
   border-radius: var(--radius-button);
   padding: 20px;
+  box-shadow: var(--box-shadow-light);
   background-color: var(--color-input);
 }
 
 .container:hover {
-  box-shadow: var(--box-shadow);
   cursor: pointer;
 }
 /* ============ CATALOG-CARD ============ */
@@ -28,7 +28,6 @@
 .userBox {
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: center; */
   align-items: center;
   gap: 12px;
 }
@@ -49,6 +48,7 @@
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
+  box-shadow: var(--box-shadow-smooth);
 }
 
 /* ------------  INFO */

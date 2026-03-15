@@ -900,7 +900,7 @@ export const MOCK_USERS: IUser[] = [
     ]
   },
     {
-    id: 'user42',
+    id: 'user44',
     name: 'Лиза',
     location: 'Москва',
     age: 35,

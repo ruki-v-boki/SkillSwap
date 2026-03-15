@@ -1,7 +1,7 @@
-// Input.tsx
 import type { InputProps } from './type';
 import styles from './Input.module.css';
 import { useState } from 'react';
+
 
 export function Input ({
   type = 'search',
@@ -27,6 +27,8 @@ export function Input ({
 }: InputProps) {
   const [focused, setFocused] = useState(false);
 
+// ---------------------------------------------------------------
+
   const inputClasses = [
     styles.input,
     error ? styles.error : '',
@@ -37,15 +39,21 @@ export function Input ({
     className,
   ].filter(Boolean).join(' ');
 
+// ---------------------------------------------------------------
+
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setFocused(true);
     onFocus?.(e);
   };
 
+// ---------------------------------------------------------------
+
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     setFocused(false);
     onBlur?.(e);
   };
+
+// ---------------------------------------------------------------
 
   return (
     <div className={styles.wrapper}>

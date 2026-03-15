@@ -1,0 +1,76 @@
+.radioGroupContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.optionLabel {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+  padding: 4px 0;
+  color: #253017;
+  cursor: pointer;
+}
+
+.radioInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.radio {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--color-text);
+  border-radius: 50%;
+  padding: 0;
+  background-color: var(--color-input);
+  transition: all 0.5s ease-in-out;
+  pointer-events: none;
+}
+
+.optionLabel:hover .radio {
+  border-color: var(--color-text-link);
+}
+
+.radioChecked {
+  border-color: var(--color-text-link);
+  background-color: var(--color-input);
+}
+
+.radioDot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-text-link);
+}
+
+.labelText {
+  display: flex;
+  flex: 1;
+  flex-grow: 1;
+  align-items: center;
+  min-width: 0;
+  color: var(--color-text);
+}
+
+.labelText:hover {
+  color: var(--color-text-link);
+}

@@ -10,8 +10,12 @@
   cursor: pointer;
 }
 
+.likeButton:hover {
+  transform: var(--scale-up);
+}
+
 .likeButton:active {
-  transform: scale(0.90);
+  transform: var(--scale-down);
 }
 
 .likeIcon {

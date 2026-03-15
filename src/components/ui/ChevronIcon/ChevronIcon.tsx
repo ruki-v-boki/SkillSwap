@@ -5,6 +5,7 @@ import type { ChevronIconProps } from './type';
 
 export function ChevronIcon({ open, rotate = 0 }: ChevronIconProps): React.ReactElement {
   const rotation = open ? rotate + 180 : rotate;
+
   return (
     <img
       src={chevronIcon}

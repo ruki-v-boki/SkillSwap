@@ -3,6 +3,7 @@ import type { LikeButtonUIProps } from './type'
 import likeActive from '@/assets/icons/LikeActive.svg'
 import like from '@/assets/icons/like.svg'
 
+
 export function LikeButtonUI({
   isLiked,
   onClick

@@ -1,8 +1,7 @@
-// SearchInput.tsx
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from '@/services/store';
 import { Input } from '@/components/ui/Input/Input';
-import { 
+import {
   setSearchQuery,
   selectSearchQuery,
   fetchSearchResults,
@@ -20,7 +19,7 @@ export function SearchInput() {
 
   useEffect(() => {
     const abortController = new AbortController();
-    
+
     if (debouncedValue !== globalSearchQuery) {
       dispatch(setSearchQuery(debouncedValue));
 
@@ -73,7 +72,6 @@ export function SearchInput() {
         }
         hideLeftIconOnFocus={true}
       />
-      
       {localValue.length >= 2 && (
         <SearchSuggestions query={localValue} />
       )}

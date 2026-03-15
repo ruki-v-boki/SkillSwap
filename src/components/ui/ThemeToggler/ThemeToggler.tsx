@@ -12,7 +12,7 @@ export function ThemeToggler() {
 
   return (
     <button
-      className={styles.box}
+      className={styles.togglerButton}
       onClick={handleThemeToggle}
       aria-label="Переключить тему"
     >

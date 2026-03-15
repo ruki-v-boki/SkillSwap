@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { ChevronIcon } from '../ChevronIcon';
 import styles from './CatalogSection.module.css'
 import type { CatalogSectionUIProps } from './type'
-import { CardUI } from '../Card';
 import { Button } from '../Button';
+import { ChevronIcon } from '../ChevronIcon';
+import { CardUI } from '../Card';
 
 
 export function CatalogSectionUI({
@@ -13,15 +13,21 @@ export function CatalogSectionUI({
 }: CatalogSectionUIProps) {
   const [showAll, setShowAll] = useState(false);
 
-  const visibleUsers = visibleCardsValue === undefined 
-    ? users 
+// ---------------------------------------------------------------
+
+  const visibleUsers = visibleCardsValue === undefined
+    ? users
     : (showAll ? users : users.slice(0, visibleCardsValue));
   const hasMoreCards = visibleCardsValue !== undefined && users.length > visibleCardsValue;
   const buttonText = showAll ? 'Скрыть все' : 'Смотреть все';
 
+// ---------------------------------------------------------------
+
   const handleButtonClick = () => {
     setShowAll(!showAll);
   };
+
+// ---------------------------------------------------------------
 
   return (
     <section className={styles.section}>
@@ -48,7 +54,6 @@ export function CatalogSectionUI({
           />
         ))}
       </div>
-
     </section>
   )
 }

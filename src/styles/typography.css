@@ -9,7 +9,7 @@
 .h-2 {
   font-family: var(--font-family-prime);
   font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-s);
+  font-size: var(--font-size-l);
   line-height: var(--line-height-m);
   letter-spacing: var(--letter-spacing-xs);
 }

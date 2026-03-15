@@ -10,10 +10,8 @@ export interface IUser {
   createdAt: string;
   avatar?: string;
   rating?: number;
-  likedBy?: string[]; // id пользователей поставивших лайк
-  /** Навыки, которым могу научить */
+  likedBy?: string[];
   canTeach: CanTeachSkill;
-  /** Навыки, которым хочу научиться */
   wantToLearn: WantToLearnSkill[];
 }
 
@@ -26,7 +24,7 @@ export type Category = {
 export type Subcategory = {
   id: string;
   name: string;
-  categoryId: string; // ID родительской категории
+  categoryId: string;
 }
 
 // ------------ НАВЫКИ ------------
@@ -35,10 +33,9 @@ export type SkillsCatalog = {
   subcategories: Subcategory[];
 }
 
-// Базовый навык (ссылки на справочники)
 export type BaseSkill = {
-  categoryId: string; // ID из справочника категорий
-  subcategoryId: string; // ID из справочника подкатегорий
+  categoryId: string;
+  subcategoryId: string;
 }
 
 export type WantToLearnSkill = BaseSkill & {
@@ -47,5 +44,16 @@ export type WantToLearnSkill = BaseSkill & {
 
 export type CanTeachSkill = BaseSkill & {
   id: string;
-  customName: string; // название, которое придумал юзер
+  customName: string;
+}
+
+// ------------ ФИЛЬТРЫ ------------
+export type FilterMode = 'all' | 'teach' | 'learn';
+
+export type FiltersState = {
+  mode: FilterMode;
+  selectedCategories: string[];
+  selectedSkills: string[];
+  authorGender: 'any' | 'male' | 'female';
+  selectedCities: string[];
 }

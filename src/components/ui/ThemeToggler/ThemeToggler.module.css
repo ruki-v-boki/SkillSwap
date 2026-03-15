@@ -1,9 +1,19 @@
-.box {
+.togglerButton {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 24px 0 0;
   border: none;
-  padding: 0 24px 0 0;
+  padding: 0;
   background-color: transparent;
+  transition: transform ease;
   cursor: pointer;
+}
+
+.togglerButton:hover {
+  transform: var(--scale-up);
+}
+
+.togglerButton:active {
+  transform: var(--scale-down);
 }
