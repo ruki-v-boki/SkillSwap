@@ -6,18 +6,30 @@ import {
 import { ProfileSectionUI } from "../ui/ProfileSection";
 import { useDispatch } from "@/services/store";
 import { useEffect } from "react";
+import { MOCK_USERS } from "@/mock/users";
+
 
 export function ProfileSection() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+  const MOCK_USER = MOCK_USERS[1]
 
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch, user]);
 
-  if (!user) {
+  // if (!user) {
+  //   return <ProfileSectionUI user={null} />;  <----- для настоящего api юзера
+  // }
+
+  // return <ProfileSectionUI user={user}  />; <----- для настоящего api юзера
+
+  if (!MOCK_USER) {
     return <ProfileSectionUI user={null} />;
   }
 
-  return <ProfileSectionUI user={user}  />;
+  return <ProfileSectionUI user={MOCK_USER}  />;
+  // return <ProfileSectionUI user={user}  />;
+
+
 }

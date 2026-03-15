@@ -2,10 +2,19 @@ import { Filter } from "@/components/features/Filter";
 import { CatalogUI } from "@/components/ui/Catalog";
 import { APP_CATEGORIES, APP_SUBCATEGORIES } from "@/mock/skills";
 import { MOCK_USERS } from "@/mock/users";
-import { resetFilters, selectAllUsers, selectCities, selectFilteredUsers, selectHasActiveFilters, setError, setUsers } from "@/services/slices/filter/filterSlice";
+import {
+  resetFilters,
+  selectAllUsers,
+  selectCities,
+  selectFilteredUsers,
+  selectHasActiveFilters,
+  setError,
+  setUsers
+} from "@/services/slices/filter/filterSlice";
 import { useDispatch, useSelector } from "@/services/store";
 import { useEffect } from "react";
 import styles from './HomePage.module.css'
+
 
 export function HomePage() {
 

@@ -7,7 +7,7 @@
   display: flex;
   width: 100%;
   min-width: 200px;
-  max-width: 527px;
+  /* max-width: 527px; */
   min-height: 48px;
   border: none;
   border-radius: var(--radius-button);
