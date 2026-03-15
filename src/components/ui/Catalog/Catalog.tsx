@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import styles from './Catalog.module.css';
 import type { CatalogUIProps } from './type';
-import { CatalogSectionUI } from '../CatalogSection';
+import { CatalogSectionUI } from './CatalogSection';
 import noResultsIcon from '@/assets/icons/noResults.svg'
 import { Button } from '../Button';
 

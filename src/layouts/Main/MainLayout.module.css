@@ -1,8 +1,9 @@
 .layout {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .main {
-  padding: 32px 36px;
+  padding: 32px 36px 60px 36px;
 }

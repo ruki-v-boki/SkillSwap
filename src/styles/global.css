@@ -6,6 +6,10 @@ body {
   background-color: var(--color-bg);
 }
 
+a {
+  text-decoration: none;
+}
+
 .checkbox {
   position: relative;
   flex-shrink: 0;

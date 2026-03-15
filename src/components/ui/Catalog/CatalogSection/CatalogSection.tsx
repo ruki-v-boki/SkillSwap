@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import styles from './CatalogSection.module.css'
-import type { CatalogSectionUIProps } from '../../CatalogSection/type';
-import { Button } from '../../Button';
+import type { CatalogSectionUIProps } from './type'
 import { ChevronIcon } from '../../ChevronIcon';
+import { Button } from '../../Button';
 import { CardUI } from '../../Card';
 
 
