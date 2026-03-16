@@ -1,18 +1,21 @@
-import styles from './ChevronIcon.module.css';
-import chevronIcon from '@/assets/icons/chevronIcon.svg'
 import type { ChevronIconProps } from './type';
 
 
-export function ChevronIcon({ open, rotate = 0 }: ChevronIconProps): React.ReactElement {
+export function ChevronIcon({ open, rotate = 0 }: ChevronIconProps) {
   const rotation = open ? rotate + 180 : rotate;
 
   return (
-    <img
-      src={chevronIcon}
-      alt=""
-      aria-hidden="true"
-      className={[styles.chevron, open ? styles.chevronOpen : ''].filter(Boolean).join(' ')}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
       style={{ transform: `rotate(${rotation}deg)` }}
-    />
+    >
+        <path
+          fill="currentColor"
+          d="M12 15.935c-.646 0-1.292-.249-1.781-.738L4.2 9.179a.696.696 0 0 1 0-.978.696.696 0 0 1 .978 0l6.018 6.018a1.136 1.136 0 0 0 1.606 0L18.821 8.2a.696.696 0 0 1 .978 0 .696.696 0 0 1 0 .978l-6.018 6.018c-.489.49-1.135.738-1.781.738"/>
+    </svg>
   );
 }

@@ -19,35 +19,36 @@
 .notificationsButton {
   display: block;
   width: 24px;
-  height: 24px;
+  height: 100%;
   border: none;
   padding: 0;
   background-color: transparent;
   cursor: pointer;
 }
 
-.notificationsButton:hover {
+/* .notificationsButton:hover {
   transform: var(--scale-up);
-}
+} */
 
-.notificationsButton:active {
+/* .notificationsButton:active {
   transform: var(--scale-down);
-}
+} */
 
 /* ---------------------------- */
 .favouritesButton {
-  display: block;
+  display: flex;
   width: 24px;
-  height: 24px;
+  height: 100%;
+  padding: 0;
 }
 
-.favouritesButton:hover {
+/* .favouritesButton:hover {
   transform: var(--scale-up);
-}
+} */
 
-.favouritesButton:active {
+/* .favouritesButton:active {
   transform: var(--scale-down);
-}
+} */
 /* ---------------------------- */
 
 .userInfo {
@@ -55,6 +56,7 @@
   align-items: center;
   gap: 8px;
   border: none;
+  padding: 0;
   background-color: transparent;
   cursor: pointer;
 }

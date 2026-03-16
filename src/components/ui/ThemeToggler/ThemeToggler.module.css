@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
   border: none;
   padding: 0;
   background-color: transparent;
@@ -9,10 +10,14 @@
   cursor: pointer;
 }
 
-.togglerButton:hover {
-  transform: var(--scale-up);
-}
+/* .togglerButton:hover {
+  color: var(--color-text-link);
+} */
 
-.togglerButton:active {
+/* .togglerButton:hover {
+  transform: var(--scale-up);
+} */
+
+/* .togglerButton:active {
   transform: var(--scale-down);
-}
+} */

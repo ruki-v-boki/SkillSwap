@@ -78,6 +78,7 @@ export function CardUI({
               isLiked={isLiked} // !!!!!!! <--------------- TO-DO 1
               onClick={handleLikeClick} // !!!!!!! <--------------- TO-DO 1
             />
+            <span className={`h-caption`}>{user.rating}</span>
           </div>
         }
       </header>
