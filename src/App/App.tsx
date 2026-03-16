@@ -1,13 +1,14 @@
-import { Routes, Route } from 'react-router-dom';
+import { NotFoundPage, ServerErrorPage } from '@/pages/Error';
+import { SkillsPage } from '@/pages/Skills/SkillsPage';
 import { MainLayout } from '@/layouts/Main/MainLayout';
 import { HomePage } from '@/pages/Home/HomePage';
-import { AboutPage } from '@/pages/About';
-import { NotFoundPage } from '@/pages/NotFound/NotFoundPage';
-import { SkillsPage } from '@/pages/Skills/SkillsPage';
+import { Routes, Route } from 'react-router-dom';
 import { ContactsPage } from '@/pages/Contacts';
-import { BlogPage } from '@/pages/Blog';
 import { PolicyPage } from '@/pages/Policy';
 import { TermsPage } from '@/pages/Terms';
+import { AboutPage } from '@/pages/About';
+import { BlogPage } from '@/pages/Blog';
+
 
 export function App() {
   return (
@@ -21,6 +22,7 @@ export function App() {
         <Route path="blog" element={<BlogPage />} />
         <Route path="policy" element={<PolicyPage />} />
         <Route path="terms" element={<TermsPage />} />
+        <Route path="500" element={<ServerErrorPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

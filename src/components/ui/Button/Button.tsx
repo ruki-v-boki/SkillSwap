@@ -1,8 +1,9 @@
 import type { ButtonProps } from "./type";
 import styles from './Button.module.css';
+import { forwardRef } from "react";
 
 
-export function Button({
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   children,
   variant = 'base',
   loading = false,
@@ -12,7 +13,7 @@ export function Button({
   onClick,
   style,
   className = ''
-}: ButtonProps) {
+}, ref) => {
 
 // ---------------------------------------------------------------
 
@@ -28,6 +29,7 @@ export function Button({
 
   return (
     <button
+      ref={ref}
       type={type}
       className={buttonClasses}
       disabled={disabled || loading}
@@ -41,4 +43,6 @@ export function Button({
       {children}
     </button>
   )
-}
+})
+
+Button.displayName = 'Button';

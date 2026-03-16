@@ -1,0 +1,54 @@
+.catalogItem {
+  display: flex;
+  gap: 12px;
+  min-width: max-content;
+  color: var(--color-text);
+}
+
+.iconBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: var(--box-shadow);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: start;
+}
+
+.subcategoriesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+.languages {
+  background-color: var(--color-tag-english);
+}
+
+.business {
+  background-color: var(--color-tag-business);
+}
+
+.creativity {
+  background-color: var(--color-tag-creativity);
+}
+
+.education {
+  background-color: var(--color-tag-education);
+}
+
+.home {
+  background-color: var(--color-tag-home);
+}
+
+.health {
+  background-color: var(--color-tag-health);
+}

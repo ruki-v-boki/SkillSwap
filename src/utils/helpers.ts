@@ -1,3 +1,4 @@
+import { categoryConfig } from "@/constants/category";
 import { APP_CATEGORIES, APP_SUBCATEGORIES } from "@/mock/skills";
 
 export const getAgeWord = (age: number): string => {
@@ -52,4 +53,12 @@ export const getCategoriesWithSubcategories = () => {
     ...category,
     subcategories: getSubcategoriesByCategoryId(category.id)
   }));
+};
+
+export const getCategoryConfig = (categoryId: string) => {
+  return categoryConfig[categoryId] || {
+    colorClass: 'default',
+    icon: '',
+    label: categoryId
+  };
 };

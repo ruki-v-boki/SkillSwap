@@ -26,15 +26,6 @@
   cursor: pointer;
 }
 
-/* .notificationsButton:hover {
-  transform: var(--scale-up);
-} */
-
-/* .notificationsButton:active {
-  transform: var(--scale-down);
-} */
-
-/* ---------------------------- */
 .favouritesButton {
   display: flex;
   width: 24px;
@@ -42,116 +33,31 @@
   padding: 0;
 }
 
-/* .favouritesButton:hover {
-  transform: var(--scale-up);
-} */
-
-/* .favouritesButton:active {
-  transform: var(--scale-down);
-} */
-/* ---------------------------- */
-
-.userInfo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: none;
-  padding: 0;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-.userAvatarBox {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 48px;
-  height: 48px;
-}
-
-.userAvatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: var(--box-shadow-smooth);
-}
-
-.userName {
-  display: block;
-  color: var(--color-text);
-}
-
-.userInfo:hover .userName {
-  color: var(--color-text-link);
-}
 /* ---------------------------- */
 
 .profileBanner {
-  position: absolute;
-  top: 60px;
-  right: 10px;
-  z-index: 3;
-  display: flex;
+  top: 70px;
+  right: 0;
   flex-direction: column;
-  justify-content: center;
   align-items: start;
   gap: 24px;
   width: 260px;
-  border-radius: var(--radius-button);
   padding: 40px;
-  outline: 1px solid var(--color-toggle);
-  background-color: var(--color-input);
 }
-
-.profileLink {
-  color: var(--color-text);
-}
-
-.profileLink:hover {
-  color: var(--color-text-link);
-}
-
-.logoutButton {
-  padding: 0;
-  color: var(--color-text);
-}
-/* ---------------------------- */
 
 .notificationsBanner {
-  position: absolute;
-  top: 60px;
-  right: 10px;
-  z-index: 4;
-  display: flex;
+  top: 70px;
+  right: 0;
   flex-direction: column;
-  justify-content: center;
   align-items: start;
   gap: 24px;
   width: 556px;
   height: 616px; /* временная высота */
-  border-radius: var(--radius-button);
   padding: 60px;
-  outline: 1px solid var(--color-toggle);
-  background-color: var(--color-input);
 }
 /* ---------------------------- */
 
 .authBox {
   display: flex;
   gap: 32px;
-}
-
-.authButtonsBox {
-  display: flex;
-  gap: 8px;
-}
-
-.loginButton {
-  display: flex;
-  background-color: var(--color-input);
-}
-
-.registerButton {
-  display: flex;
 }

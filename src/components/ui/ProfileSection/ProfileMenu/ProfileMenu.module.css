@@ -1,0 +1,12 @@
+.profileLink {
+  color: var(--color-text);
+}
+
+.profileLink:hover {
+  color: var(--color-text-link);
+}
+
+.logoutButton {
+  padding: 0;
+  color: var(--color-text);
+}

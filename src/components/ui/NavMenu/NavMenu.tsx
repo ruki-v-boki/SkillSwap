@@ -1,15 +1,18 @@
 import { useDispatch, useSelector } from '@/services/store';
 import { NavLink } from 'react-router-dom';
-
 import styles from './NavMenu.module.css';
 import { Button } from '../Button';
 import { ChevronIcon } from '../ChevronIcon';
 import { selectIsNavOpen, toggleNav } from '@/services/slices/ui/uiSlice';
+import { useRef } from 'react';
+import { BannerUI } from '../Banner';
+import { SkillsCatalogUI } from '../SkillsCatalog';
 
 
 export function NavMenu () {
   const dispatch = useDispatch();
   const isNavOpen = useSelector(selectIsNavOpen);
+  const navButtonRef = useRef<HTMLButtonElement>(null);
 
   return (
     <nav className={styles.nav}>
@@ -21,6 +24,7 @@ export function NavMenu () {
       </NavLink>
 
       <Button
+        ref={navButtonRef}
         className={`${styles.navButton} h-body`}
         type="button"
         variant='link'
@@ -31,12 +35,15 @@ export function NavMenu () {
         <ChevronIcon open={isNavOpen} />
       </Button>
 
-      {/* выпадающее меню */}
-      {/* {isNavOpen && (
-        <div className={styles.dropdown}>
-            тут будет компонент баннера всех навыков
-        </div>
-      )} */}
+      <BannerUI
+        isOpen={isNavOpen}
+        onClose={() => dispatch(toggleNav())}
+        triggerRef={navButtonRef}
+        className={styles.skillsBanner}
+        data-testid="skills-banner"
+      >
+        <SkillsCatalogUI />
+      </BannerUI>
     </nav>
   );
 }

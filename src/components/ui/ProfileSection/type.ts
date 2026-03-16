@@ -1,4 +1,4 @@
-import type { IUser } from "@/types/types"
+import type { IUser } from "@/types/types";
 
 export type ProfileSectionUIProps = {
   user: IUser | null;

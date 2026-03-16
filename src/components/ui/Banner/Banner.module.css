@@ -1,0 +1,10 @@
+.banner {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  border-radius: var(--radius-button);
+  box-shadow: var(--box-shadow-smooth);
+  outline: 1px solid var(--color-toggle);
+  background-color: var(--color-input);
+}

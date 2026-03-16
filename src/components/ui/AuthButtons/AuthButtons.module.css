@@ -1,0 +1,19 @@
+.authButtonsBoxProfile {
+  display: flex;
+  gap: 8px;
+}
+
+.authButtonsBoxForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.loginButton {
+  display: flex;
+  background-color: var(--color-input);
+}
+
+.registerButton {
+  display: flex;
+}

@@ -1,7 +1,11 @@
 .container {
   display: flex;
-  background-color: chartreuse;
-  width: 100%;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  gap: 40px;
+  border-radius: var(--radius-button);
+  padding: 60px;
+  box-shadow: var(--box-shadow);
+  background-color: var(--color-input);
 }

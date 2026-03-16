@@ -1,1 +1,1 @@
-export { ProfileSectionUI } from './ProfileSection'
+export { ProfileSectionUI } from './ProfileSection';

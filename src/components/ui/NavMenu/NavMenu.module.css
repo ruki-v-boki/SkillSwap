@@ -1,4 +1,5 @@
 .nav {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,4 +20,10 @@
 .navButton {
   display: flex;
   line-height: var(--line-height-xs);
+}
+
+.skillsBanner {
+  top: 70px;
+  left: -190px;
+  padding: 60px;
 }

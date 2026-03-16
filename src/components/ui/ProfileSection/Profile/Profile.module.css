@@ -1,0 +1,34 @@
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.userAvatarBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+}
+
+.userAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: var(--box-shadow-smooth);
+}
+
+.userName {
+  display: block;
+  color: var(--color-text);
+}
+
+.userInfo:hover .userName {
+  color: var(--color-text-link);
+}
