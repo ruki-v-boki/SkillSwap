@@ -1,6 +1,6 @@
 import { Filter } from "@/components/features/Filter";
 import { CatalogUI } from "@/components/ui/Catalog";
-import { APP_CATEGORIES, APP_SUBCATEGORIES } from "@/mock/skills";
+import { APP_CATEGORIES, APP_SUBCATEGORIES } from "@/constants/skills";
 import { MOCK_USERS } from "@/mock/users";
 import {
   resetFilters,

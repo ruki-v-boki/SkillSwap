@@ -13,27 +13,3 @@
   box-shadow: var(--box-shadow-inset);
   transition: all 0.2s ease;
 }
-
-.business {
-  background-color: var(--color-tag-business);
-}
-
-.creativity {
-  background-color: var(--color-tag-creativity);
-}
-
-.languages {
-  background-color: var(--color-tag-english);
-}
-
-.education {
-  background-color: var(--color-tag-education);
-}
-
-.home {
-  background-color: var(--color-tag-home);
-}
-
-.health {
-  background-color: var(--color-tag-health);
-}

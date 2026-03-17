@@ -1,4 +1,4 @@
-import { categoryConfig } from '@/constants/category';
+import { getCategoryConfig } from '@/utils/helpers';
 import styles from './SkillsMenu.module.css';
 import type { SkillsMenuUIProps } from './type';
 import defaultIcon from '@/assets/icons/user-circle.svg'
@@ -12,31 +12,29 @@ export function SkillsMenuUI({
     sub => sub.categoryId === category.id
   );
 
-  const config = categoryConfig[category.id];
+  const config = getCategoryConfig(category.id);
 
   return (
     <div className={styles.catalogItem}>
-      <div className={`${styles.iconBox} ${styles[config?.colorClass || 'default']}`}>
-        {config?.icon ? (
+      <div className={`${styles.iconBox} ${config.colorClass}`}>
+        {config.icon ? (
           <img src={config.icon} alt={category.name} className={styles.icon} />
         ) : (
           <img src={defaultIcon} alt="изображение не найдено" />
         )}
       </div>
       <div className={styles.content}>
-        <h2 className={`h-2`}>
+        <h2 className="h-2">
           {category.name}
         </h2>
-        {categorySubcategories.length > 0 ? (
+        {categorySubcategories.length > 0 && (
           <ul className={styles.subcategoriesList}>
             {categorySubcategories.map(subcategory => (
-              <li key={subcategory.id} className={`h-body`}>
+              <li key={subcategory.id} className="h-body">
                 {subcategory.name}
               </li>
             ))}
           </ul>
-        ) : (
-          <></>
         )}
       </div>
     </div>

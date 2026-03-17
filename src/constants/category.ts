@@ -5,39 +5,61 @@ import EducationIcon from '@/assets/icons/categories/education.svg';
 import HomeIcon from '@/assets/icons/categories/home.svg';
 import HealthIcon from '@/assets/icons/categories/health.svg';
 
-export const categoryConfig: Record<string, {
-  colorClass: string;
-  icon: string;
-  label: string;
-}> = {
+export const categoryConfig = {
   business: {
     colorClass: 'business',
     icon: BusinessIcon,
-    label: 'Бизнес и карьера'
+    label: 'Бизнес и карьера',
+    id: 'business'
   },
   creativity: {
     colorClass: 'creativity',
     icon: CreativityIcon,
-    label: 'Творчество и искусство'
+    label: 'Творчество и искусство',
+    id: 'creativity'
   },
   languages: {
     colorClass: 'languages',
     icon: LanguagesIcon,
-    label: 'Иностранные языки'
+    label: 'Иностранные языки',
+    id: 'languages'
   },
   education: {
     colorClass: 'education',
     icon: EducationIcon,
-    label: 'Образование и развитие'
+    label: 'Образование и развитие',
+    id: 'education'
   },
   home: {
     colorClass: 'home',
     icon: HomeIcon,
-    label: 'Дом и уют'
+    label: 'Дом и уют',
+    id: 'home'
   },
   health: {
     colorClass: 'health',
     icon: HealthIcon,
-    label: 'Здоровье и лайфстайл'
+    label: 'Здоровье и лайфстайл',
+    id: 'health'
+  },
+  plus: {
+    colorClass: 'plus',
+    icon: null,
+    label: 'Плюс',
+    id: 'plus'
   }
+} as const;
+
+export type CategoryId = keyof typeof categoryConfig;
+
+export const CATEGORIES_FROM_CONFIG = Object.values(categoryConfig)
+  .filter(cat => cat.id !== 'plus')
+  .map(({ id, label }) => ({ id, name: label })) as { id: CategoryId; name: string }[];
+
+export const getCategoryColorClass = (categoryId: string): string => {
+  const keys = Object.keys(categoryConfig) as CategoryId[];
+  if (keys.includes(categoryId as CategoryId)) {
+    return categoryConfig[categoryId as CategoryId].colorClass;
+  }
+  return 'default';
 };

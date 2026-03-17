@@ -1,4 +1,4 @@
-import { APP_CATEGORIES, APP_SUBCATEGORIES } from "@/mock/skills";
+import { APP_CATEGORIES, APP_SUBCATEGORIES } from "@/constants/skills";
 import { SkillsMenuUI } from "../SkillsMenu";
 import styles from './SkillsCatalog.module.css';
 

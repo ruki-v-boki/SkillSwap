@@ -1,5 +1,5 @@
 import { categoryConfig } from "@/constants/category";
-import { APP_CATEGORIES, APP_SUBCATEGORIES } from "@/mock/skills";
+import { APP_CATEGORIES, APP_SUBCATEGORIES } from "@/constants/skills";
 
 export const getAgeWord = (age: number): string => {
   const lastDigit = age % 10;
@@ -51,7 +51,11 @@ export const getCategoriesWithSubcategories = () => {
 };
 
 export const getCategoryConfig = (categoryId: string) => {
-  return categoryConfig[categoryId] || {
+  if (Object.hasOwn(categoryConfig, categoryId)) {
+    return categoryConfig[categoryId as keyof typeof categoryConfig];
+  }
+  
+  return {
     colorClass: 'default',
     icon: '',
     label: categoryId
