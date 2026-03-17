@@ -1,6 +1,5 @@
 import type { IUser } from "@/types/types";
 
-
 export const MOCK_USERS: IUser[] = [
   // ========== БИЗНЕС И КАРЬЕРА ==========
   {
@@ -23,7 +22,8 @@ export const MOCK_USERS: IUser[] = [
       { id: 'learn1', categoryId: 'languages', subcategoryId: 'english' },
       { id: 'learn2', categoryId: 'creativity', subcategoryId: 'music' },
       { id: 'learn3', categoryId: 'languages', subcategoryId: 'spanish' },
-      { id: 'learn4', categoryId: 'health', subcategoryId: 'yoga' }
+      { id: 'learn4', categoryId: 'health', subcategoryId: 'yoga' },
+      { id: 'learn5', categoryId: 'education', subcategoryId: 'coaching' }
     ]
   },
   {
@@ -43,12 +43,13 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Agile'
     },
     wantToLearn: [
-      { id: 'learn3', categoryId: 'languages', subcategoryId: 'spanish' },
-      { id: 'learn4', categoryId: 'health', subcategoryId: 'yoga' },
-      { id: 'learn1', categoryId: 'languages', subcategoryId: 'english' },
-      { id: 'learn2', categoryId: 'creativity', subcategoryId: 'music' },
-      { id: 'learn3', categoryId: 'languages', subcategoryId: 'spanish' },
-      { id: 'learn4', categoryId: 'health', subcategoryId: 'yoga' }
+      { id: 'learn6', categoryId: 'languages', subcategoryId: 'spanish' },
+      { id: 'learn7', categoryId: 'health', subcategoryId: 'yoga' },
+      { id: 'learn8', categoryId: 'creativity', subcategoryId: 'drawing' },
+      { id: 'learn9', categoryId: 'languages', subcategoryId: 'french' },
+      { id: 'learn10', categoryId: 'home', subcategoryId: 'cooking' },
+      { id: 'learn11', categoryId: 'education', subcategoryId: 'teaching-skills' },
+      { id: 'learn12', categoryId: 'health', subcategoryId: 'mindfulness' }
     ]
   },
   {
@@ -68,7 +69,9 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Тайм-менеджмент'
     },
     wantToLearn: [
-      { id: 'learn5', categoryId: 'education', subcategoryId: 'cognitive-techniques' }
+      { id: 'learn13', categoryId: 'education', subcategoryId: 'cognitive-techniques' },
+      { id: 'learn14', categoryId: 'languages', subcategoryId: 'english' },
+      { id: 'learn15', categoryId: 'health', subcategoryId: 'fitness' }
     ]
   },
   {
@@ -88,8 +91,10 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Резюме'
     },
     wantToLearn: [
-      { id: 'learn6', categoryId: 'home', subcategoryId: 'cooking' },
-      { id: 'learn7', categoryId: 'languages', subcategoryId: 'german' }
+      { id: 'learn16', categoryId: 'home', subcategoryId: 'cooking' },
+      { id: 'learn17', categoryId: 'languages', subcategoryId: 'german' },
+      { id: 'learn18', categoryId: 'creativity', subcategoryId: 'photography' },
+      { id: 'learn19', categoryId: 'health', subcategoryId: 'nutrition' }
     ]
   },
   {
@@ -109,7 +114,9 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Личный бренд'
     },
     wantToLearn: [
-      { id: 'learn8', categoryId: 'creativity', subcategoryId: 'photography' }
+      { id: 'learn20', categoryId: 'creativity', subcategoryId: 'photography' },
+      { id: 'learn21', categoryId: 'languages', subcategoryId: 'english' },
+      { id: 'learn22', categoryId: 'education', subcategoryId: 'personal-development' }
     ]
   },
   {
@@ -129,7 +136,9 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Продажи'
     },
     wantToLearn: [
-      { id: 'learn9', categoryId: 'health', subcategoryId: 'mental-health' }
+      { id: 'learn23', categoryId: 'health', subcategoryId: 'mental-health' },
+      { id: 'learn24', categoryId: 'languages', subcategoryId: 'chinese' },
+      { id: 'learn25', categoryId: 'creativity', subcategoryId: 'acting' }
     ]
   },
   {
@@ -149,8 +158,11 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Маркетинг'
     },
     wantToLearn: [
-      { id: 'learn10', categoryId: 'languages', subcategoryId: 'chinese' },
-      { id: 'learn11', categoryId: 'creativity', subcategoryId: 'video-editing' }
+      { id: 'learn26', categoryId: 'languages', subcategoryId: 'chinese' },
+      { id: 'learn27', categoryId: 'creativity', subcategoryId: 'video-editing' },
+      { id: 'learn28', categoryId: 'education', subcategoryId: 'coaching' },
+      { id: 'learn29', categoryId: 'health', subcategoryId: 'fitness' },
+      { id: 'learn30', categoryId: 'home', subcategoryId: 'cooking' }
     ]
   },
   {
@@ -170,7 +182,8 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Управление командой'
     },
     wantToLearn: [
-      { id: 'learn12', categoryId: 'education', subcategoryId: 'coaching' }
+      { id: 'learn31', categoryId: 'education', subcategoryId: 'coaching' },
+      { id: 'learn32', categoryId: 'languages', subcategoryId: 'spanish' }
     ]
   },
 
@@ -192,7 +205,10 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Иллюстрация'
     },
     wantToLearn: [
-      { id: 'learn13', categoryId: 'business', subcategoryId: 'personal-brand' }
+      { id: 'learn33', categoryId: 'business', subcategoryId: 'personal-brand' },
+      { id: 'learn34', categoryId: 'creativity', subcategoryId: 'photography' },
+      { id: 'learn35', categoryId: 'languages', subcategoryId: 'spanish' },
+      { id: 'learn36', categoryId: 'home', subcategoryId: 'plants' }
     ]
   },
   {
@@ -212,8 +228,10 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Портрет'
     },
     wantToLearn: [
-      { id: 'learn14', categoryId: 'home', subcategoryId: 'plants' },
-      { id: 'learn15', categoryId: 'languages', subcategoryId: 'italian' }
+      { id: 'learn37', categoryId: 'home', subcategoryId: 'plants' },
+      { id: 'learn38', categoryId: 'languages', subcategoryId: 'french' },
+      { id: 'learn39', categoryId: 'creativity', subcategoryId: 'drawing' },
+      { id: 'learn40', categoryId: 'business', subcategoryId: 'marketing' }
     ]
   },
   {
@@ -233,8 +251,9 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Видеомонтаж'
     },
     wantToLearn: [
-      { id: 'learn16', categoryId: 'creativity', subcategoryId: 'music' },
-      { id: 'learn17', categoryId: 'business', subcategoryId: 'marketing' }
+      { id: 'learn41', categoryId: 'creativity', subcategoryId: 'music' },
+      { id: 'learn42', categoryId: 'business', subcategoryId: 'marketing' },
+      { id: 'learn43', categoryId: 'languages', subcategoryId: 'english' }
     ]
   },
   {
@@ -254,7 +273,11 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Гитара'
     },
     wantToLearn: [
-      { id: 'learn18', categoryId: 'education', subcategoryId: 'learning-skills' }
+      { id: 'learn44', categoryId: 'education', subcategoryId: 'learning-skills' },
+      { id: 'learn45', categoryId: 'languages', subcategoryId: 'french' },
+      { id: 'learn46', categoryId: 'health', subcategoryId: 'yoga' },
+      { id: 'learn47', categoryId: 'creativity', subcategoryId: 'drawing' },
+      { id: 'learn48', categoryId: 'home', subcategoryId: 'cooking' }
     ]
   },
   {
@@ -274,8 +297,9 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Актерское мастерство'
     },
     wantToLearn: [
-      { id: 'learn19', categoryId: 'health', subcategoryId: 'mindfulness' },
-      { id: 'learn20', categoryId: 'languages', subcategoryId: 'french' }
+      { id: 'learn49', categoryId: 'health', subcategoryId: 'mindfulness' },
+      { id: 'learn50', categoryId: 'languages', subcategoryId: 'french' },
+      { id: 'learn51', categoryId: 'education', subcategoryId: 'coaching' }
     ]
   },
   {
@@ -295,7 +319,9 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Сторителлинг'
     },
     wantToLearn: [
-      { id: 'learn21', categoryId: 'business', subcategoryId: 'entrepreneurship' }
+      { id: 'learn52', categoryId: 'business', subcategoryId: 'entrepreneurship' },
+      { id: 'learn53', categoryId: 'languages', subcategoryId: 'spanish' },
+      { id: 'learn54', categoryId: 'health', subcategoryId: 'mental-health' }
     ]
   },
   {
@@ -315,8 +341,9 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Арт-терапия'
     },
     wantToLearn: [
-      { id: 'learn22', categoryId: 'health', subcategoryId: 'mental-health' },
-      { id: 'learn23', categoryId: 'home', subcategoryId: 'plants' }
+      { id: 'learn55', categoryId: 'health', subcategoryId: 'mental-health' },
+      { id: 'learn56', categoryId: 'home', subcategoryId: 'plants' },
+      { id: 'learn57', categoryId: 'education', subcategoryId: 'personal-development' }
     ]
   },
   {
@@ -336,7 +363,9 @@ export const MOCK_USERS: IUser[] = [
       customName: 'DIY'
     },
     wantToLearn: [
-      { id: 'learn24', categoryId: 'business', subcategoryId: 'sales' }
+      { id: 'learn58', categoryId: 'business', subcategoryId: 'sales' },
+      { id: 'learn59', categoryId: 'creativity', subcategoryId: 'photography' },
+      { id: 'learn60', categoryId: 'home', subcategoryId: 'plants' }
     ]
   },
 
@@ -358,7 +387,9 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Английский'
     },
     wantToLearn: [
-      { id: 'learn25', categoryId: 'education', subcategoryId: 'teaching-skills' }
+      { id: 'learn61', categoryId: 'education', subcategoryId: 'teaching-skills' },
+      { id: 'learn62', categoryId: 'creativity', subcategoryId: 'drawing' },
+      { id: 'learn63', categoryId: 'health', subcategoryId: 'yoga' }
     ]
   },
   {
@@ -378,7 +409,10 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Французский'
     },
     wantToLearn: [
-      { id: 'learn26', categoryId: 'creativity', subcategoryId: 'drawing' }
+      { id: 'learn64', categoryId: 'creativity', subcategoryId: 'drawing' },
+      { id: 'learn65', categoryId: 'languages', subcategoryId: 'english' },
+      { id: 'learn66', categoryId: 'home', subcategoryId: 'cooking' },
+      { id: 'learn67', categoryId: 'education', subcategoryId: 'cognitive-techniques' }
     ]
   },
   {
@@ -398,8 +432,10 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Испанский'
     },
     wantToLearn: [
-      { id: 'learn27', categoryId: 'business', subcategoryId: 'marketing' },
-      { id: 'learn28', categoryId: 'home', subcategoryId: 'cooking' }
+      { id: 'learn68', categoryId: 'business', subcategoryId: 'marketing' },
+      { id: 'learn69', categoryId: 'home', subcategoryId: 'cooking' },
+      { id: 'learn70', categoryId: 'creativity', subcategoryId: 'music' },
+      { id: 'learn71', categoryId: 'health', subcategoryId: 'fitness' }
     ]
   },
   {
@@ -419,7 +455,8 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Немецкий'
     },
     wantToLearn: [
-      { id: 'learn29', categoryId: 'health', subcategoryId: 'fitness' }
+      { id: 'learn72', categoryId: 'health', subcategoryId: 'fitness' },
+      { id: 'learn73', categoryId: 'creativity', subcategoryId: 'photography' }
     ]
   },
   {
@@ -439,7 +476,11 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Китайский'
     },
     wantToLearn: [
-      { id: 'learn30', categoryId: 'business', subcategoryId: 'entrepreneurship' }
+      { id: 'learn74', categoryId: 'business', subcategoryId: 'entrepreneurship' },
+      { id: 'learn75', categoryId: 'creativity', subcategoryId: 'calligraphy' },
+      { id: 'learn76', categoryId: 'education', subcategoryId: 'teaching-skills' },
+      { id: 'learn77', categoryId: 'health', subcategoryId: 'mindfulness' },
+      { id: 'learn78', categoryId: 'home', subcategoryId: 'cooking' }
     ]
   },
   {
@@ -459,7 +500,10 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Японский'
     },
     wantToLearn: [
-      { id: 'learn32', categoryId: 'creativity', subcategoryId: 'drawing' }
+      { id: 'learn79', categoryId: 'creativity', subcategoryId: 'drawing' },
+      { id: 'learn80', categoryId: 'home', subcategoryId: 'plants' },
+      { id: 'learn81', categoryId: 'health', subcategoryId: 'yoga' },
+      { id: 'learn82', categoryId: 'education', subcategoryId: 'learning-skills' }
     ]
   },
   {
@@ -479,8 +523,12 @@ export const MOCK_USERS: IUser[] = [
       customName: 'IELTS/TOEFL'
     },
     wantToLearn: [
-      { id: 'learn33', categoryId: 'education', subcategoryId: 'teaching-skills' },
-      { id: 'learn34', categoryId: 'health', subcategoryId: 'nutrition' }
+      { id: 'learn83', categoryId: 'education', subcategoryId: 'teaching-skills' },
+      { id: 'learn84', categoryId: 'health', subcategoryId: 'nutrition' },
+      { id: 'learn85', categoryId: 'languages', subcategoryId: 'spanish' },
+      { id: 'learn86', categoryId: 'creativity', subcategoryId: 'music' },
+      { id: 'learn87', categoryId: 'home', subcategoryId: 'repair' },
+      { id: 'learn88', categoryId: 'business', subcategoryId: 'investments' }
     ]
   },
 
@@ -502,7 +550,9 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Личностный рост'
     },
     wantToLearn: [
-      { id: 'learn35', categoryId: 'creativity', subcategoryId: 'art-therapy' }
+      { id: 'learn89', categoryId: 'creativity', subcategoryId: 'art-therapy' },
+      { id: 'learn90', categoryId: 'languages', subcategoryId: 'french' },
+      { id: 'learn91', categoryId: 'health', subcategoryId: 'mental-health' }
     ]
   },
   {
@@ -522,8 +572,10 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Эффективное обучение'
     },
     wantToLearn: [
-      { id: 'learn36', categoryId: 'languages', subcategoryId: 'german' },
-      { id: 'learn37', categoryId: 'home', subcategoryId: 'repair' }
+      { id: 'learn92', categoryId: 'languages', subcategoryId: 'german' },
+      { id: 'learn93', categoryId: 'home', subcategoryId: 'repair' },
+      { id: 'learn94', categoryId: 'creativity', subcategoryId: 'music' },
+      { id: 'learn95', categoryId: 'health', subcategoryId: 'fitness' }
     ]
   },
   {
@@ -543,7 +595,8 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Когнитивные техники'
     },
     wantToLearn: [
-      { id: 'learn38', categoryId: 'health', subcategoryId: 'yoga' }
+      { id: 'learn96', categoryId: 'health', subcategoryId: 'yoga' },
+      { id: 'learn97', categoryId: 'languages', subcategoryId: 'italian' }
     ]
   },
   {
@@ -563,7 +616,10 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Скорочтение'
     },
     wantToLearn: [
-      { id: 'learn39', categoryId: 'creativity', subcategoryId: 'photography' }
+      { id: 'learn98', categoryId: 'creativity', subcategoryId: 'photography' },
+      { id: 'learn99', categoryId: 'languages', subcategoryId: 'spanish' },
+      { id: 'learn100', categoryId: 'health', subcategoryId: 'mindfulness' },
+      { id: 'learn101', categoryId: 'home', subcategoryId: 'cooking' }
     ]
   },
   {
@@ -583,7 +639,9 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Методика преподавания'
     },
     wantToLearn: [
-      { id: 'learn40', categoryId: 'languages', subcategoryId: 'english' }
+      { id: 'learn102', categoryId: 'languages', subcategoryId: 'english' },
+      { id: 'learn103', categoryId: 'creativity', subcategoryId: 'art-therapy' },
+      { id: 'learn104', categoryId: 'health', subcategoryId: 'nutrition' }
     ]
   },
   {
@@ -603,8 +661,9 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Коучинг'
     },
     wantToLearn: [
-      { id: 'learn41', categoryId: 'business', subcategoryId: 'entrepreneurship' },
-      { id: 'learn42', categoryId: 'health', subcategoryId: 'mindfulness' }
+      { id: 'learn105', categoryId: 'business', subcategoryId: 'entrepreneurship' },
+      { id: 'learn106', categoryId: 'health', subcategoryId: 'mindfulness' },
+      { id: 'learn107', categoryId: 'creativity', subcategoryId: 'acting' }
     ]
   },
 
@@ -626,7 +685,10 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Организация пространства'
     },
     wantToLearn: [
-      { id: 'learn43', categoryId: 'home', subcategoryId: 'plants' }
+      { id: 'learn108', categoryId: 'home', subcategoryId: 'plants' },
+      { id: 'learn109', categoryId: 'creativity', subcategoryId: 'diy' },
+      { id: 'learn110', categoryId: 'health', subcategoryId: 'yoga' },
+      { id: 'learn111', categoryId: 'languages', subcategoryId: 'french' }
     ]
   },
   {
@@ -646,7 +708,8 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Личные финансы'
     },
     wantToLearn: [
-      { id: 'learn44', categoryId: 'business', subcategoryId: 'investments' }
+      { id: 'learn112', categoryId: 'business', subcategoryId: 'investments' },
+      { id: 'learn113', categoryId: 'creativity', subcategoryId: 'music' }
     ]
   },
   {
@@ -666,8 +729,11 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Кулинария'
     },
     wantToLearn: [
-      { id: 'learn45', categoryId: 'creativity', subcategoryId: 'photography' },
-      { id: 'learn46', categoryId: 'health', subcategoryId: 'nutrition' }
+      { id: 'learn114', categoryId: 'creativity', subcategoryId: 'photography' },
+      { id: 'learn115', categoryId: 'health', subcategoryId: 'nutrition' },
+      { id: 'learn116', categoryId: 'languages', subcategoryId: 'german' },
+      { id: 'learn117', categoryId: 'business', subcategoryId: 'marketing' },
+      { id: 'learn118', categoryId: 'home', subcategoryId: 'plants' }
     ]
   },
   {
@@ -687,7 +753,9 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Растения'
     },
     wantToLearn: [
-      { id: 'learn47', categoryId: 'home', subcategoryId: 'diy' }
+      { id: 'learn119', categoryId: 'home', subcategoryId: 'diy' },
+      { id: 'learn120', categoryId: 'creativity', subcategoryId: 'drawing' },
+      { id: 'learn121', categoryId: 'health', subcategoryId: 'nutrition' }
     ]
   },
   {
@@ -707,7 +775,8 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Ремонт'
     },
     wantToLearn: [
-      { id: 'learn48', categoryId: 'business', subcategoryId: 'entrepreneurship' }
+      { id: 'learn122', categoryId: 'business', subcategoryId: 'entrepreneurship' },
+      { id: 'learn123', categoryId: 'home', subcategoryId: 'plants' }
     ]
   },
   {
@@ -727,8 +796,9 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Хранение'
     },
     wantToLearn: [
-      { id: 'learn49', categoryId: 'creativity', subcategoryId: 'diy' },
-      { id: 'learn50', categoryId: 'home', subcategoryId: 'cleaning' }
+      { id: 'learn124', categoryId: 'creativity', subcategoryId: 'diy' },
+      { id: 'learn125', categoryId: 'home', subcategoryId: 'cleaning' },
+      { id: 'learn126', categoryId: 'languages', subcategoryId: 'english' }
     ]
   },
 
@@ -750,7 +820,10 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Йога'
     },
     wantToLearn: [
-      { id: 'learn51', categoryId: 'education', subcategoryId: 'coaching' }
+      { id: 'learn127', categoryId: 'education', subcategoryId: 'coaching' },
+      { id: 'learn128', categoryId: 'languages', subcategoryId: 'german' },
+      { id: 'learn129', categoryId: 'creativity', subcategoryId: 'art-therapy' },
+      { id: 'learn130', categoryId: 'home', subcategoryId: 'plants' }
     ]
   },
   {
@@ -770,8 +843,9 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Нутрициология'
     },
     wantToLearn: [
-      { id: 'learn52', categoryId: 'home', subcategoryId: 'cooking' },
-      { id: 'learn53', categoryId: 'health', subcategoryId: 'fitness' }
+      { id: 'learn131', categoryId: 'home', subcategoryId: 'cooking' },
+      { id: 'learn132', categoryId: 'health', subcategoryId: 'fitness' },
+      { id: 'learn133', categoryId: 'creativity', subcategoryId: 'photography' }
     ]
   },
   {
@@ -791,8 +865,10 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Ментальное здоровье'
     },
     wantToLearn: [
-      { id: 'learn54', categoryId: 'creativity', subcategoryId: 'art-therapy' },
-      { id: 'learn55', categoryId: 'health', subcategoryId: 'mindfulness' }
+      { id: 'learn134', categoryId: 'creativity', subcategoryId: 'art-therapy' },
+      { id: 'learn135', categoryId: 'health', subcategoryId: 'mindfulness' },
+      { id: 'learn136', categoryId: 'education', subcategoryId: 'coaching' },
+      { id: 'learn137', categoryId: 'languages', subcategoryId: 'spanish' }
     ]
   },
   {
@@ -812,7 +888,8 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Майндфулнес'
     },
     wantToLearn: [
-      { id: 'learn56', categoryId: 'languages', subcategoryId: 'sanskrit' }
+      { id: 'learn138', categoryId: 'languages', subcategoryId: 'chiniese' },
+      { id: 'learn139', categoryId: 'creativity', subcategoryId: 'drawing' }
     ]
   },
   {
@@ -832,8 +909,10 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Фитнес'
     },
     wantToLearn: [
-      { id: 'learn57', categoryId: 'health', subcategoryId: 'nutrition' },
-      { id: 'learn58', categoryId: 'business', subcategoryId: 'personal-brand' }
+      { id: 'learn140', categoryId: 'health', subcategoryId: 'nutrition' },
+      { id: 'learn141', categoryId: 'business', subcategoryId: 'personal-brand' },
+      { id: 'learn142', categoryId: 'languages', subcategoryId: 'english' },
+      { id: 'learn143', categoryId: 'creativity', subcategoryId: 'video-editing' }
     ]
   },
   {
@@ -853,8 +932,9 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Сон'
     },
     wantToLearn: [
-      { id: 'learn59', categoryId: 'health', subcategoryId: 'yoga' },
-      { id: 'learn60', categoryId: 'home', subcategoryId: 'plants' }
+      { id: 'learn144', categoryId: 'health', subcategoryId: 'yoga' },
+      { id: 'learn145', categoryId: 'home', subcategoryId: 'plants' },
+      { id: 'learn146', categoryId: 'creativity', subcategoryId: 'music' }
     ]
   },
   {
@@ -874,13 +954,15 @@ export const MOCK_USERS: IUser[] = [
       customName: 'Баланс'
     },
     wantToLearn: [
-      { id: 'learn61', categoryId: 'education', subcategoryId: 'coaching' },
-      { id: 'learn62', categoryId: 'creativity', subcategoryId: 'music' }
+      { id: 'learn147', categoryId: 'education', subcategoryId: 'coaching' },
+      { id: 'learn148', categoryId: 'creativity', subcategoryId: 'music' },
+      { id: 'learn149', categoryId: 'languages', subcategoryId: 'english' },
+      { id: 'learn150', categoryId: 'home', subcategoryId: 'cooking' }
     ]
   },
-    {
+  {
     id: 'user43',
-    name: 'Анна',
+    name: 'Анна К.',
     location: 'Москва',
     age: 35,
     about: 'Коуч по балансу жизни и работы. Помогаю найти гармонию.',
@@ -889,19 +971,20 @@ export const MOCK_USERS: IUser[] = [
     gender: 'female',
     createdAt: '2025-06-30T10:50:00Z',
     canTeach: {
-      id: 'skill42',
+      id: 'skill43',
       categoryId: 'health',
       subcategoryId: 'work-life-balance',
       customName: 'Баланс'
     },
     wantToLearn: [
-      { id: 'learn61', categoryId: 'education', subcategoryId: 'coaching' },
-      { id: 'learn62', categoryId: 'creativity', subcategoryId: 'music' }
+      { id: 'learn151', categoryId: 'education', subcategoryId: 'coaching' },
+      { id: 'learn152', categoryId: 'creativity', subcategoryId: 'music' },
+      { id: 'learn153', categoryId: 'languages', subcategoryId: 'spanish' }
     ]
   },
-    {
+  {
     id: 'user44',
-    name: 'Лиза',
+    name: 'Елизавета',
     location: 'Москва',
     age: 35,
     about: 'Коуч по балансу жизни и работы. Помогаю найти гармонию.',
@@ -910,14 +993,16 @@ export const MOCK_USERS: IUser[] = [
     gender: 'female',
     createdAt: '2025-06-30T10:50:00Z',
     canTeach: {
-      id: 'skill42',
+      id: 'skill44',
       categoryId: 'health',
       subcategoryId: 'work-life-balance',
       customName: 'Баланс'
     },
     wantToLearn: [
-      { id: 'learn61', categoryId: 'education', subcategoryId: 'coaching' },
-      { id: 'learn62', categoryId: 'creativity', subcategoryId: 'music' }
+      { id: 'learn154', categoryId: 'education', subcategoryId: 'coaching' },
+      { id: 'learn155', categoryId: 'creativity', subcategoryId: 'drawing' },
+      { id: 'learn156', categoryId: 'home', subcategoryId: 'plants' },
+      { id: 'learn157', categoryId: 'languages', subcategoryId: 'french' }
     ]
   }
 ];

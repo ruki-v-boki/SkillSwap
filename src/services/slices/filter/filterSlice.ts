@@ -113,10 +113,10 @@ export const selectActiveFiltersCount = (state: RootState) => {
 
   let count = 0;
   if (filters.mode !== 'all') count++;
-  if (filters.selectedCategories.length > 0) count++;
-  if (filters.selectedSkills.length > 0) count++;
+  if (filters.selectedCategories.length > 0) count += filters.selectedCategories.length;
+  if (filters.selectedSkills.length > 0) count += filters.selectedSkills.length;
   if (filters.authorGender !== 'any') count++;
-  if (filters.selectedCities.length > 0) count++;
+  if (filters.selectedCities.length > 0) count += filters.selectedCities.length;
 
   return count;
 };

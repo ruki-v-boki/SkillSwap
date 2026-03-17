@@ -14,6 +14,7 @@ import {
 import { useDispatch, useSelector } from "@/services/store";
 import { useEffect } from "react";
 import styles from './HomePage.module.css'
+import { ActiveFilters } from "@/components/features/ActiveFilters/ActiveFilters";
 
 
 export function HomePage() {
@@ -53,6 +54,7 @@ export function HomePage() {
       </aside>
 
       <main className={styles.catalogContainer}>
+        <ActiveFilters />
         <CatalogUI
           users={filteredUsers}
           hasFilters={hasActiveFilters}

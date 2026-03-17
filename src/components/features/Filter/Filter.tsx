@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { FiltersPanelUI } from '@/components/ui/FiltersPanel';
-import type { FiltersPanelUIProps } from '@/components/ui/FiltersPanel/type';
 import { useDispatch, useSelector } from '@/services/store';
 import {
   resetFilters,
@@ -9,14 +8,8 @@ import {
   setFilters,
   selectActiveFiltersCount
 } from '@/services/slices/filter/filterSlice';
+import type { FilterProps } from './type';
 
-interface FiltersProps {
-  categories: FiltersPanelUIProps['categories'];
-  subcategories: FiltersPanelUIProps['subcategories'];
-  cities: string[];
-  className?: string;
-  'data-testid'?: string;
-}
 
 export function Filter({
   categories,
@@ -24,14 +17,16 @@ export function Filter({
   cities,
   className,
   'data-testid': dataTestId
-}: FiltersProps) {
+}: FilterProps) {
   const dispatch = useDispatch();
   const filters = useSelector(selectFilters);
   const hasActiveFilters = useSelector(selectHasActiveFilters);
   const activeFiltersCount = useSelector(selectActiveFiltersCount);
 
+// ---------------------------------------------------------------
+
   const handleChange = useCallback((newFilters: typeof filters) => {
-    if (newFilters.selectedCategories.length === 1 && 
+    if (newFilters.selectedCategories.length === 1 &&
         newFilters.selectedSkills.length === 0 &&
         filters.selectedCategories.length === 0 &&
         filters.selectedSkills.length > 0) {
@@ -41,9 +36,13 @@ export function Filter({
     dispatch(setFilters(newFilters));
   }, [dispatch, filters]);
 
+// ---------------------------------------------------------------
+
   const handleReset = useCallback(() => {
     dispatch(resetFilters());
   }, [dispatch]);
+
+// ---------------------------------------------------------------
 
   return (
     <FiltersPanelUI

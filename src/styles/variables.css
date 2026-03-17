@@ -63,6 +63,7 @@
   --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   --box-shadow-light: 0 1px 5px rgba(0, 0, 0, 0.1);
   --box-shadow-smooth: 5px 5px 20px rgba(0, 0, 0, 0.2);
+  --box-shadow-inset: inset 5px 5px 5px rgba(0, 0, 0, 0.1);
 
   --scale-down: scale(0.9);
   --scale-up: scale(1.2);

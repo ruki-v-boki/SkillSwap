@@ -70,8 +70,10 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
-  all: unset;
+}
+
+.custom:hover {
+  box-shadow: var(--box-shadow-inset);
 }
 
 .fullWidth {
