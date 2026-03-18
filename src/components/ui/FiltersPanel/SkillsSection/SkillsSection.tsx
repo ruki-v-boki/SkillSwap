@@ -1,9 +1,10 @@
 import { useState, useCallback, useEffect } from 'react';
-import styles from './SkillsSection.module.css';
+import { motion, AnimatePresence } from 'framer-motion';
 import type { SkillsSectionUIProps } from './type';
+import styles from './SkillsSection.module.css';
 import { ChevronIcon } from '../../ChevronIcon';
 import { Button } from '../../Button';
-import { motion, AnimatePresence } from 'framer-motion';
+
 
 export function SkillsSectionUI({
   categories,

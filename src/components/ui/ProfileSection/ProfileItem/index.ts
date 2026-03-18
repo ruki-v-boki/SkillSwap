@@ -1,0 +1,1 @@
+export { ProfileItemUI } from './ProfileItem';

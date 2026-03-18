@@ -1,0 +1,20 @@
+.notificationsButton {
+  display: block;
+  width: 24px;
+  height: 100%;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.notificationsBanner {
+  top: 70px;
+  right: 0;
+  flex-direction: column;
+  align-items: start;
+  gap: 24px;
+  width: 556px;
+  height: 616px; /* временная высота */
+  padding: 60px;
+}

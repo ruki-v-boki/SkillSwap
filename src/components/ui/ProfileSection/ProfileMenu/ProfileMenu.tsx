@@ -1,31 +1,32 @@
-import { NavLink } from 'react-router-dom';
+import type { ProfileMenuUIProps } from './type';
 import styles from './ProfileMenu.module.css';
-import { useDispatch } from '@/services/store';
+import { NavLink } from 'react-router-dom';
 import { Button } from '../../Button';
-import { toggleProfileMenu } from '@/services/slices/ui/uiSlice';
 
-export function ProfileMenuUI() {
-  const dispatch = useDispatch();
 
+export function ProfileMenuUI({
+  onLinkClick
+}:ProfileMenuUIProps) {
   return(
     <>
       <NavLink
         to={'/profile'}
         className={styles.profileLink}
-        onClick={() => dispatch(toggleProfileMenu())}
+        onClick={() => onLinkClick()}
       >
         Личный кабинет
       </NavLink>
+
       <Button
         type="button"
         className={styles.logoutButton}
         variant={'link'}
         onClick={() => {
-          dispatch(toggleProfileMenu());
-          // здесь будет логика выхода
-        }} // TO DO <------- отдельная кнопка выхода из аккаунта
+          onLinkClick()
+          // dispatch( здесь будет логика выхода );
+        }}
       >
-      Выйти из аккаунта
+        Выйти из аккаунта
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"

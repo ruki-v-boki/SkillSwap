@@ -6,7 +6,12 @@ export function useClickOutside(
   handler: () => void,
   excludeRef?: RefObject<HTMLElement | null>
 ) {
+
+// ---------------------------------------------------------------
+
   useEffect(() => {
+    if (typeof handler !== 'function') return;
+
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
 
@@ -19,10 +24,20 @@ export function useClickOutside(
       }
     };
 
+// ---------------------------------------------------------------
+
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        handler();
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscapeKey);
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscapeKey);
     };
   }, [ref, handler, excludeRef]);
 }

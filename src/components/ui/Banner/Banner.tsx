@@ -14,7 +14,11 @@ export function BannerUI({
 }: BannerUIProps) {
 
   const bannerRef = useRef<HTMLDivElement>(null);
-  useClickOutside(bannerRef, onClose, triggerRef);
+  useClickOutside(
+    bannerRef,
+    onClose,
+    triggerRef
+  );
 
   if (!isOpen) return null;
 

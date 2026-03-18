@@ -8,6 +8,15 @@
   cursor: pointer;
 }
 
+.userInfo:hover .userName {
+  color: var(--color-text-link);
+}
+
+.userName {
+  display: block;
+  color: var(--color-text);
+}
+
 .userAvatarBox {
   display: flex;
   justify-content: center;
@@ -24,11 +33,12 @@
   box-shadow: var(--box-shadow-smooth);
 }
 
-.userName {
-  display: block;
-  color: var(--color-text);
-}
-
-.userInfo:hover .userName {
-  color: var(--color-text-link);
+.profileBanner {
+  top: 70px;
+  right: 0;
+  flex-direction: column;
+  align-items: start;
+  gap: 24px;
+  width: 260px;
+  padding: 40px;
 }

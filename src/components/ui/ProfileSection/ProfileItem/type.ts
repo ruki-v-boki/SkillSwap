@@ -1,5 +1,5 @@
 import type { IUser } from "@/types/types";
 
-export type ProfileUIProps = {
+export type ProfileItemUIProps = {
   user: IUser;
 }

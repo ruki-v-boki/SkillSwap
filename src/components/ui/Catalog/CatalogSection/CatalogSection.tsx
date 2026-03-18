@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import styles from './CatalogSection.module.css'
-import type { CatalogSectionUIProps } from './type'
+import { selectHasActiveFilters } from '@/services/slices/filter/filterSlice';
+import type { CatalogSectionUIProps } from './type';
+import styles from './CatalogSection.module.css';
 import { ChevronIcon } from '../../ChevronIcon';
+import { useSelector } from '@/services/store';
+import sortIcon from '@/assets/icons/sort.svg';
+import { motion } from 'framer-motion';
 import { Button } from '../../Button';
 import { CardUI } from '../../Card';
-import sortIcon from '@/assets/icons/sort.svg'
-import { selectHasActiveFilters } from '@/services/slices/filter/filterSlice';
-import { useSelector } from '@/services/store';
+import { useState } from 'react';
 
 
 export function CatalogSectionUI({

@@ -6,5 +6,4 @@ export type CatalogSectionUIProps = {
   title?: string;
   visibleCardsValue?: number,
   containerVariants?: Variants;
-  cardVariants?: Variants;
 }
