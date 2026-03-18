@@ -50,7 +50,7 @@ export function CitiesSectionUI({
           onClick={toggleShowAll}
           className={styles.showAllButton}
         >
-          {showAll ? 'Скрыть' : `Все города (${cities.length})`}
+          {showAll ? 'Скрыть' : `Все города`}
           <ChevronIcon open={showAll}/>
         </Button>
       )}

@@ -75,3 +75,8 @@
 .subcategoryLabel:hover {
   color: var(--color-text-link);
 }
+
+.showAllButton {
+  color: var(--color-text-link);
+  justify-content: flex-start;
+}

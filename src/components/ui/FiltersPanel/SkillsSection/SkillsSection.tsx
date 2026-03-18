@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import styles from './SkillsSection.module.css';
 import type { SkillsSectionUIProps } from './type';
 import { ChevronIcon } from '../../ChevronIcon';
+import { Button } from '../../Button';
 
 
 export function SkillsSectionUI({
@@ -16,17 +17,21 @@ export function SkillsSectionUI({
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(propSelectedCategories || []);
   const [selectedSkills, setSelectedSkills] = useState<string[]>(propSelectedSkills || []);
+  
+  const allCategoryIds = categories.map(cat => cat.id);
+  const allCategoriesExpanded = allCategoryIds.length > 0 && 
+    allCategoryIds.every(id => expandedCategories.includes(id));
 
 // ---------------------------------------------------------------
 
   useEffect(() => {
-  if (propSelectedCategories) {
-    setSelectedCategories(propSelectedCategories);
-  }
-  if (propSelectedSkills) {
-    setSelectedSkills(propSelectedSkills);
-  }
-}, [propSelectedCategories, propSelectedSkills]);
+    if (propSelectedCategories) {
+      setSelectedCategories(propSelectedCategories);
+    }
+    if (propSelectedSkills) {
+      setSelectedSkills(propSelectedSkills);
+    }
+  }, [propSelectedCategories, propSelectedSkills]);
 
 // ---------------------------------------------------------------
 
@@ -119,6 +124,17 @@ export function SkillsSectionUI({
 
 // ---------------------------------------------------------------
 
+  const toggleShowAll = useCallback(() => {
+    if (allCategoriesExpanded) {
+      setExpandedCategories([]);
+    } else {
+      setExpandedCategories(allCategoryIds);
+    }
+
+  }, [allCategoriesExpanded, allCategoryIds]);
+
+// ---------------------------------------------------------------
+
   return (
     <section className={styles.section} data-testid={dataTestId}>
       <div className={styles.categoriesList}>
@@ -189,6 +205,15 @@ export function SkillsSectionUI({
           );
         })}
       </div>
+      <Button
+        type='button'
+        variant='link'
+        onClick={toggleShowAll}
+        className={styles.showAllButton}
+      >
+        {allCategoriesExpanded ? 'Скрыть' : 'Все категории'}
+        <ChevronIcon open={allCategoriesExpanded}/>
+      </Button>
     </section>
   );
 }
