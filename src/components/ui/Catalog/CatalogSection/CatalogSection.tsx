@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import styles from './CatalogSection.module.css'
 import type { CatalogSectionUIProps } from './type'
 import { ChevronIcon } from '../../ChevronIcon';
@@ -23,7 +24,7 @@ export function CatalogSectionUI({
 
 // ---------------------------------------------------------------
 
-  const sortedUsers = sortByNew 
+  const sortedUsers = sortByNew
     ? [...users].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     : users;
 
@@ -48,40 +49,61 @@ export function CatalogSectionUI({
   return (
     <section className={styles.section}>
       <div className={styles.sectionHeader}>
-        <h2 className={`${styles.sectionTitle} h-1`}>{title}</h2>
-        {hasActiveFilters && (
-          <Button
-            type='button'
-            variant='base'
-            onClick={handleSortClick}
-            className={`${styles.sortButton} ${sortByNew ? styles.active : ''}`}
-          >
-            <img src={sortIcon} />
-            Сначала новые
-          </Button>
-        )}
-        {hasMoreCards && (
-          <Button
-            type='button'
-            variant='base'
-            onClick={handleShowAllClick}
-            className={styles.showMoreButton}
-          >
-            {showAllButtonText}
-            <ChevronIcon rotate={-90} open={showAll} />
-          </Button>
-        )}
+        <motion.h2
+          className={`${styles.sectionTitle} h-1`}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {title}
+        </motion.h2>
+
+        <div className={styles.buttonsContainer}>
+          {hasActiveFilters && (
+              <Button
+                type='button'
+                variant='base'
+                onClick={handleSortClick}
+                className={`${styles.sortButton} ${sortByNew ? styles.active : ''}`}
+              >
+                <motion.img
+                  src={sortIcon}
+                  alt="sort"
+                  animate={{ rotate: sortByNew ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+                Сначала новые
+              </Button>
+          )}
+
+          {hasMoreCards && (
+              <Button
+                type='button'
+                variant='base'
+                onClick={handleShowAllClick}
+                className={styles.showMoreButton}
+              >
+                {showAllButtonText}
+                  <ChevronIcon rotate={-90} open={showAll} />
+              </Button>
+          )}
+        </div>
       </div>
 
-      <div className={styles.cardsContainer}>
-        {visibleUsers.map(user => (
-          <CardUI
-            key={user.id}
-            user={user}
-            type="catalog"
-          />
-        ))}
-      </div>
+      <motion.div
+        className={styles.cardsContainer}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.9 }}
+      >
+          {visibleUsers.map((user) => (
+            <CardUI
+              key={user.id}
+              user={user}
+              type='catalog'
+            />
+          ))}
+      </motion.div>
     </section>
   )
 }

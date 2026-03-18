@@ -3,7 +3,7 @@ import styles from './SkillsSection.module.css';
 import type { SkillsSectionUIProps } from './type';
 import { ChevronIcon } from '../../ChevronIcon';
 import { Button } from '../../Button';
-
+import { motion, AnimatePresence } from 'framer-motion';
 
 export function SkillsSectionUI({
   categories,
@@ -130,8 +130,41 @@ export function SkillsSectionUI({
     } else {
       setExpandedCategories(allCategoryIds);
     }
-
   }, [allCategoriesExpanded, allCategoryIds]);
+
+// ---------------------------------------------------------------
+
+  const subcategoriesVariants = {
+    hidden: {
+      height: 0,
+      opacity: 0,
+      transition: {
+        duration: 0.3
+      }
+    },
+    visible: {
+      height: 'auto',
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+        staggerChildren: 0.07 // задержка между появлением каждого элемента
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: {
+      x: -20,
+      opacity: 0
+    },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.3
+      }
+    }
+  };
 
 // ---------------------------------------------------------------
 
@@ -169,51 +202,65 @@ export function SkillsSectionUI({
                 </label>
 
                 {categorySubcategories.length > 0 && (
-                  <button
+                  <motion.button
                     type="button"
                     className={styles.expandButton}
                     onClick={() => handleCategoryClick(category.id)}
                     aria-label={isExpanded ? 'Свернуть' : 'Развернуть'}
+                    animate={{ rotate: isExpanded ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
                   >
                     <ChevronIcon open={isExpanded} />
-                  </button>
+                  </motion.button>
                 )}
               </div>
 
-              {isExpanded && categorySubcategories.length > 0 && (
-                <div className={styles.subcategoriesList}>
-                  {categorySubcategories.map(sub => (
-                    <div key={sub.id} className={styles.subcategoryBox}>
-                      <input
-                        type="checkbox"
-                        id={`sub-${sub.id}`}
-                        checked={isSubcategorySelected(sub.id)}
-                        onChange={(e) => handleSubcategoryCheck(sub.id, e.target.checked)}
-                        className={`checkbox`}
-                      />
-                      <label
-                        htmlFor={`sub-${sub.id}`}
-                        className={`${styles.subcategoryLabel} h-body`}
+              <AnimatePresence initial={false}>
+                {isExpanded && categorySubcategories.length > 0 && (
+                  <motion.div
+                    className={styles.subcategoriesList}
+                    variants={subcategoriesVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                  >
+                    {categorySubcategories.map(sub => (
+                      <motion.div
+                        key={sub.id}
+                        className={styles.subcategoryBox}
+                        variants={itemVariants}
                       >
-                        {sub.name}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              )}
+                        <input
+                          type="checkbox"
+                          id={`sub-${sub.id}`}
+                          checked={isSubcategorySelected(sub.id)}
+                          onChange={(e) => handleSubcategoryCheck(sub.id, e.target.checked)}
+                          className={`checkbox`}
+                        />
+                        <label
+                          htmlFor={`sub-${sub.id}`}
+                          className={`${styles.subcategoryLabel} h-body`}
+                        >
+                          {sub.name}
+                        </label>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           );
         })}
       </div>
       <Button
-        type='button'
-        variant='link'
-        onClick={toggleShowAll}
-        className={styles.showAllButton}
-      >
-        {allCategoriesExpanded ? 'Скрыть' : 'Все категории'}
-        <ChevronIcon open={allCategoriesExpanded}/>
-      </Button>
+          type='button'
+          variant='link'
+          onClick={toggleShowAll}
+          className={styles.showAllButton}
+        >
+          {allCategoriesExpanded ? 'Скрыть' : 'Все категории'}
+          <ChevronIcon open={allCategoriesExpanded}/>
+        </Button>
     </section>
   );
 }
