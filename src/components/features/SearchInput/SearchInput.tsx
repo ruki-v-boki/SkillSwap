@@ -1,80 +1,199 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from '@/services/store';
 import { Input } from '@/components/ui/Input/Input';
-import {
-  setSearchQuery,
-  selectSearchQuery,
-  fetchSearchResults,
-  clearSearchResults
-} from '@/services/slices/search/searchSlice';
+import searchIcon from '@/assets/icons/search.svg'
+import { selectSelectedSkills } from '@/services/slices/filter/filterSlice';
+import { selectSkillFromSearch } from '@/services/slices/search/searchThunks';
 import { useDebounce } from '@/hooks/useDebounce';
 import styles from './SearchInput.module.css';
 import { SearchSuggestions } from './SearchSuggestions/SearchSuggestions';
+import { useClickOutside } from '@/hooks/useClickOutside';
+import { useNavigate } from 'react-router-dom';
+import {
+  setQuery,
+  setIsOpen,
+  setSelectedIndex,
+  selectSearchQuery,
+  selectIsSearchOpen,
+  selectSearchResults,
+  selectSelectedIndex,
+} from '@/services/slices/search/searchSlice';
+
 
 export function SearchInput() {
+
   const dispatch = useDispatch();
   const globalSearchQuery = useSelector(selectSearchQuery);
-  const [localValue, setLocalValue] = useState(globalSearchQuery);
-  const debouncedValue = useDebounce(localValue, 300);
+  const searchResults = useSelector(selectSearchResults);
+  const selectedIndex = useSelector(selectSelectedIndex);
+  const isOpen = useSelector(selectIsSearchOpen);
+  const selectedSkills = useSelector(selectSelectedSkills);
+  const [inputValue, setInputValue] = useState(globalSearchQuery);
+  const debouncedValue = useDebounce(inputValue, 300);
+  const isSelectingRef = useRef(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate()
+
+// ---------------------------------------------------------------
+
+  useClickOutside(
+    containerRef,
+    () => {
+      if (isOpen && !isSelectingRef.current) {
+        dispatch(setIsOpen(false));
+        dispatch(setSelectedIndex(-1));
+      }
+    },
+    inputRef
+  );
+
+// ---------------------------------------------------------------
 
   useEffect(() => {
-    const abortController = new AbortController();
+    if (isSelectingRef.current) return;
+
+    setInputValue(globalSearchQuery);
 
     if (debouncedValue !== globalSearchQuery) {
-      dispatch(setSearchQuery(debouncedValue));
+      dispatch(setQuery(debouncedValue));
+    }
 
-      if (debouncedValue.length >= 2) {
-        dispatch(fetchSearchResults(debouncedValue));
-      } else if (debouncedValue.length === 0) {
-        dispatch(clearSearchResults());
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [globalSearchQuery, debouncedValue, isOpen, dispatch]);
+
+// ---------------------------------------------------------------
+
+  const handleFocus = useCallback(() => {
+    dispatch(setIsOpen(true));
+  }, [dispatch]);
+
+// ---------------------------------------------------------------
+
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+    dispatch(setSelectedIndex(-1));
+    dispatch(setIsOpen(true));
+  }, [dispatch]);
+
+// ---------------------------------------------------------------
+
+  const handleSelectSuggestion = useCallback((
+    skillId: string,
+    skillName: string
+  ) => {
+    isSelectingRef.current = true;
+    dispatch(selectSkillFromSearch(skillId));
+    setInputValue(skillName);
+    dispatch(setQuery(skillName));
+    dispatch(setIsOpen(false));
+    dispatch(setSelectedIndex(-1));
+    inputRef.current?.blur();
+    navigate('/home');
+
+    if (inputRef.current) {
+        inputRef.current.focus();
       }
+
+    setTimeout(() => {
+      isSelectingRef.current = false;
+    }, 100);
+  }, [dispatch]);
+
+// ---------------------------------------------------------------
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+  if (!isOpen && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+    e.preventDefault();
+    dispatch(setIsOpen(true));
+    return;
+  }
+
+  switch (e.key) {
+    case 'ArrowDown': {
+      e.preventDefault();
+      const next = selectedIndex + 1;
+      if (next < searchResults.length) {
+        dispatch(setSelectedIndex(next));
+      } else if (selectedIndex === -1 && searchResults.length > 0) {
+        dispatch(setSelectedIndex(0));
+      }
+      break;
     }
 
-    return () => {
-      abortController.abort();
-    };
-  }, [debouncedValue, dispatch, globalSearchQuery]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalValue(e.target.value);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && localValue.length >= 2) {
-      dispatch(setSearchQuery(localValue));
-      dispatch(fetchSearchResults(localValue));
+    case 'ArrowUp': {
+      e.preventDefault();
+      const prev = selectedIndex - 1;
+      if (prev >= -1) {
+        dispatch(setSelectedIndex(prev));
+      }
+      break;
     }
-  };
+
+    case 'Enter': {
+      e.preventDefault();
+      if (selectedIndex >= 0 && searchResults[selectedIndex]) {
+        const item = searchResults[selectedIndex];
+        if (!selectedSkills.includes(item.id)) {
+          handleSelectSuggestion(item.id, item.name);
+        }
+        dispatch(setIsOpen(false));
+        dispatch(setSelectedIndex(-1));
+      }
+      break;
+    }
+
+    case 'Escape':
+      e.preventDefault();
+      dispatch(setIsOpen(false));
+      dispatch(setSelectedIndex(-1));
+      break;
+  }
+}, [
+     isOpen, selectedIndex, searchResults, inputValue,
+     selectedSkills, dispatch, handleSelectSuggestion
+  ]);
+
+// ---------------------------------------------------------------
 
   return (
-    <div className={styles.searchInputContainer}>
+    <div
+      className={styles.searchInputContainer}
+      ref={containerRef}
+    >
       <Input
+        ref={inputRef}
         type="search"
         name='search'
-        value={localValue}
+        value={inputValue}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
+        onFocus={handleFocus}
         placeholder="Искать навык"
         className={styles.searchInput}
-        leftIcon={
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path 
-              fill="#69735d" 
-              d="M11.535 21.07C6.279 21.07 2 16.79 2 11.535 2 6.279 6.28 2 11.535 2c5.256 0 9.535 4.28 9.535 9.535 0 5.256-4.28 9.535-9.535 9.535m0-17.675c-4.493 0-8.14 3.656-8.14 8.14s3.647 8.14 8.14 8.14 8.14-3.656 8.14-8.14-3.647-8.14-8.14-8.14M21.302 22a.7.7 0 0 1-.493-.205l-1.86-1.86a.7.7 0 0 1 0-.987c.27-.27.716-.27.986 0l1.86 1.86c.27.27.27.717 0 .987a.7.7 0 0 1-.493.205"
-            />
-          </svg>
-        }
+        leftIcon={<img src={searchIcon} alt="иконка поиска" />}
         hideLeftIconOnFocus={true}
       />
-      {localValue.length >= 2 && (
-        <SearchSuggestions query={localValue} />
-      )}
+
+{/* // --------------------------------------------------------------- */}
+
+      {isOpen && (
+          <SearchSuggestions
+            query={inputValue}
+            results={searchResults}
+            onSelect={handleSelectSuggestion}
+            selectedSkills={selectedSkills}
+            selectedIndex={selectedIndex}
+            onClose={() => {
+              dispatch(setIsOpen(false));
+              dispatch(setSelectedIndex(-1));
+            }}
+          />
+        )
+      }
     </div>
   );
 }

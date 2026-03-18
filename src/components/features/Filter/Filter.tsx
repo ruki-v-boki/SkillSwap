@@ -6,10 +6,13 @@ import {
   selectFilters,
   selectHasActiveFilters,
   setFilters,
-  selectActiveFiltersCount
+  selectActiveFiltersCount,
 } from '@/services/slices/filter/filterSlice';
+import {
+  clearSearch,
+  selectSearchQuery,
+} from '@/services/slices/search/searchSlice';
 import type { FilterProps } from './type';
-
 
 export function Filter({
   categories,
@@ -18,12 +21,14 @@ export function Filter({
   className,
   'data-testid': dataTestId
 }: FilterProps) {
+
   const dispatch = useDispatch();
   const filters = useSelector(selectFilters);
   const hasActiveFilters = useSelector(selectHasActiveFilters);
   const activeFiltersCount = useSelector(selectActiveFiltersCount);
+  const searchQuery = useSelector(selectSearchQuery);
 
-// ---------------------------------------------------------------
+  // ---------------------------------------------------------------
 
   const handleChange = useCallback((newFilters: typeof filters) => {
     if (newFilters.selectedCategories.length === 1 &&
@@ -36,13 +41,22 @@ export function Filter({
     dispatch(setFilters(newFilters));
   }, [dispatch, filters]);
 
-// ---------------------------------------------------------------
+  // ---------------------------------------------------------------
 
   const handleReset = useCallback(() => {
-    dispatch(resetFilters());
-  }, [dispatch]);
 
-// ---------------------------------------------------------------
+    dispatch(resetFilters());
+
+    if (searchQuery) {
+      dispatch(clearSearch());
+    }
+  }, [dispatch, searchQuery]);
+
+  // ---------------------------------------------------------------
+
+  const showResetButton = hasActiveFilters || searchQuery;
+
+  // ---------------------------------------------------------------
 
   return (
     <FiltersPanelUI
@@ -51,7 +65,7 @@ export function Filter({
       subcategories={subcategories}
       cities={cities}
       onChange={handleChange}
-      onReset={hasActiveFilters ? handleReset : undefined}
+      onReset={showResetButton ? handleReset : undefined}
       activeFiltersCount={activeFiltersCount}
       className={className}
       data-testid={dataTestId}

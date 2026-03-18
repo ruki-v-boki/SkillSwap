@@ -1,16 +1,15 @@
+import { FILTER_MODE_OPTIONS, GENDER_OPTIONS } from '@/constants/filter';
 import { useCallback, memo } from 'react';
 import styles from './FiltersPanel.module.css';
-import {
-  FILTER_MODE_OPTIONS,
-  GENDER_OPTIONS,
-  type AuthorGender,
-  type FilterMode,
-  type FiltersPanelUIProps
-} from './type';
 import { RadioGroupUI } from './RadioGroup';
 import { SkillsSectionUI } from './SkillsSection';
 import { CitiesSectionUI } from './CitiesSection';
 import { Button } from '../Button';
+import {
+  type AuthorGender,
+  type FilterMode,
+  type FiltersPanelUIProps
+} from './type';
 
 
 export const FiltersPanelUI = memo(function FiltersPanelUI({
@@ -43,7 +42,7 @@ export const FiltersPanelUI = memo(function FiltersPanelUI({
     onChange({
       ...value,
       selectedCategories,
-      selectedSkills 
+      selectedSkills
     });
   }, [onChange, value]);
 
@@ -64,6 +63,9 @@ export const FiltersPanelUI = memo(function FiltersPanelUI({
             <span className={styles.badge}>({activeFiltersCount})</span>
           )}
         </h2>
+
+{/* // --------------------------------------------------------------- */}
+
         {onReset && (
           <Button
             onClick={onReset}
@@ -79,6 +81,8 @@ export const FiltersPanelUI = memo(function FiltersPanelUI({
           </Button>
         )}
       </header>
+
+{/* // --------------------------------------------------------------- */}
 
       <section className={styles.section}>
         <RadioGroupUI

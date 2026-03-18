@@ -1,4 +1,3 @@
-// types.ts
 import type { ChangeEvent, FocusEvent, KeyboardEvent } from 'react';
 
 export type InputProps = {

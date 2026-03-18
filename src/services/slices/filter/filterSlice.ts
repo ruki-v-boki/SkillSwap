@@ -1,8 +1,8 @@
 import { usersFilter } from "@/components/features/Filter/filters/usersFilter";
+import type { FiltersState } from "@/components/features/Filter/type";
 import type { RootState } from "@/services/store";
-import type { FiltersState, IUser } from "@/types/types";
+import type { IUser } from "@/types/types";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-
 
 const initialFilters: FiltersState = {
   mode: 'all',
@@ -39,6 +39,26 @@ export const filterSlice = createSlice({
         ...action.payload
       };
     },
+    addSkill: (state, action: PayloadAction<string>) => {
+      const skillId = action.payload;
+      if (!state.filters.selectedSkills.includes(skillId)) {
+        state.filters.selectedSkills.push(skillId);
+      }
+    },
+    addSkillWithCategory: (state, action: PayloadAction<{ skillId: string; categoryId: string }>) => {
+      const { skillId, categoryId } = action.payload;
+
+      if (!state.filters.selectedSkills.includes(skillId)) {
+        state.filters.selectedSkills.push(skillId);
+      }
+
+      if (categoryId && !state.filters.selectedCategories.includes(categoryId)) {
+        state.filters.selectedCategories.push(categoryId);
+      }
+    },
+    removeSkill: (state, action: PayloadAction<string>) => {
+      state.filters.selectedSkills = state.filters.selectedSkills.filter(id => id !== action.payload);
+    },
     resetFilters: (state) => {
       state.filters = initialFilters;
     },
@@ -59,10 +79,13 @@ export const filterSlice = createSlice({
 
 // ---------------------------------------------------------------
 
-// actions
+// Actions
 export const {
   setUsers,
   setFilters,
+  addSkill,
+  addSkillWithCategory,
+  removeSkill,
   resetFilters,
   clearCategoryFilters,
   clearSkillFilters,
@@ -70,7 +93,9 @@ export const {
   setError
 } = filterSlice.actions;
 
-// selectors
+// ---------------------------------------------------------------
+
+// Selectors
 export const selectAllUsers = (state: RootState) => state.filter.users;
 export const selectFilters = (state: RootState) => state.filter.filters;
 export const selectError = (state: RootState) => state.filter.error;
@@ -80,7 +105,6 @@ export const selectError = (state: RootState) => state.filter.error;
 export const selectFilteredUsers = (state: RootState) => {
   const users = selectAllUsers(state);
   const filters = selectFilters(state);
-
   return usersFilter(users, filters);
 };
 
@@ -88,7 +112,6 @@ export const selectFilteredUsers = (state: RootState) => {
 
 export const selectCities = (state: RootState) => {
   const users = selectAllUsers(state);
-
   return [...new Set(users.map(user => user.location))];
 };
 
@@ -96,7 +119,6 @@ export const selectCities = (state: RootState) => {
 
 export const selectHasActiveFilters = (state: RootState) => {
   const filters = selectFilters(state);
-
   return (
     filters.mode !== 'all' ||
     filters.selectedSkills.length > 0 ||
@@ -110,14 +132,12 @@ export const selectHasActiveFilters = (state: RootState) => {
 
 export const selectActiveFiltersCount = (state: RootState) => {
   const filters = selectFilters(state);
-
   let count = 0;
   if (filters.mode !== 'all') count++;
   if (filters.selectedCategories.length > 0) count += filters.selectedCategories.length;
   if (filters.selectedSkills.length > 0) count += filters.selectedSkills.length;
   if (filters.authorGender !== 'any') count++;
   if (filters.selectedCities.length > 0) count += filters.selectedCities.length;
-
   return count;
 };
 
@@ -125,13 +145,16 @@ export const selectActiveFiltersCount = (state: RootState) => {
 
 export const selectFiltersDescription = (state: RootState) => {
   const filters = selectFilters(state);
-
   const parts = [];
   if (filters.mode !== 'all') parts.push(`режим: ${filters.mode}`);
   if (filters.selectedCategories.length > 0) parts.push(`категории: ${filters.selectedCategories.length}`);
   if (filters.selectedSkills.length > 0) parts.push(`навыки: ${filters.selectedSkills.length}`);
   if (filters.authorGender !== 'any') parts.push(`пол: ${filters.authorGender}`);
   if (filters.selectedCities.length > 0) parts.push(`города: ${filters.selectedCities.length}`);
-
   return parts.join(', ') || 'нет фильтров';
 };
+
+// ---------------------------------------------------------------
+
+export const selectSelectedSkills = (state: RootState) => state.filter.filters.selectedSkills;
+export const selectSelectedCategories = (state: RootState) => state.filter.filters.selectedCategories;

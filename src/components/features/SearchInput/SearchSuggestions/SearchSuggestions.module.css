@@ -1,12 +1,60 @@
-.suggestions {
-  display: flex;
-}
-
-.title {
-  font-size: 12px;
-  color: red;
+.suggestionsContainer {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  max-height: 400px;
+  border-radius: var(--radius-button);
+  box-shadow: var(--box-shadow-smooth);
+  outline: 1px solid var(--color-toggle);
+  overflow-y: auto;
+  background: var(--color-input);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) var(--color-input);
 }
 
 .suggestionItem {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border: none;
+  padding: 10px 16px;
+  background: var(--color-input);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.suggestionItem:hover:not(:disabled) {
+  background-color: var(--color-button-hover);
+}
+
+.suggestionItem.selected {
+  background-color: var(--color-button-hover);
+}
+
+.suggestionItem.alreadySelected {
+  opacity: 0.7;
+  color: var(--color-text);
+  background-color: var(--color-disabled);
+  cursor: default;
+}
+
+.selectedBadge {
+  margin-left: 6px;
+  color: #4caf50;
+  font-weight: normal;
+  font-size: 11px;
+}
+
+.suggestionItem.alreadySelected .selectedBadge {
+  color:  var(--color-text-link);
+  font-weight: bold;
+}
+
+.emptyMessage {
+  padding: 15px;
+  color: var(--color-caption);
+  opacity: 0.7;
 }

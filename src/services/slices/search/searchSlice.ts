@@ -1,95 +1,83 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import type { RootState } from '@/services/store';
+import { APP_SUBCATEGORIES } from "@/constants/skills";
+import type { RootState } from "@/services/store";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 
-type SearchState = {
+export interface SearchResult {
+  id: string;
+  name: string;
+  categoryId: string;
+}
+
+interface SearchState {
   query: string;
-  results: any[];
-  suggestions: string[];
-  isLoading: boolean;
-  error: string | null;
-  history: string[];
-};
+  results: SearchResult[];
+  selectedIndex: number;
+  isOpen: boolean;
+}
+
+const initialResults: SearchResult[] = APP_SUBCATEGORIES.map(skill => ({
+  id: skill.id,
+  name: skill.name,
+  categoryId: skill.categoryId
+}));
 
 const initialState: SearchState = {
   query: '',
-  results: [],
-  suggestions: [],
-  isLoading: false,
-  error: null,
-  history: JSON.parse(localStorage.getItem('searchHistory') || '[]'),
+  results: initialResults,
+  selectedIndex: -1,
+  isOpen: false
 };
 
-// ---------------------------------------------------------------
-
-export const fetchSearchResults = createAsyncThunk(
-  'search/fetchResults',
-  async (query: string) => {
-    const response = await fetch(`/api/skills/search?q=${query}`);
-    return response.json();
-  }
-);
-
-// ---------------------------------------------------------------
-
 export const searchSlice = createSlice({
-  name: 'searchSlice',
+  name: 'search',
   initialState,
   reducers: {
-    setSearchQuery: (state, action) => {
+    setQuery: (state, action: PayloadAction<string>) => {
       state.query = action.payload;
-    },
-    clearSearchResults: (state) => {
-      state.results = [];
-      state.suggestions = [];
-    },
-    addToHistory: (state, action) => {
-      if (!state.history.includes(action.payload)) {
-        state.history = [action.payload, ...state.history].slice(0, 5);
-        localStorage.setItem('searchHistory', JSON.stringify(state.history));
-      }
-    },
-    clearHistory: (state) => {
-      state.history = [];
-      localStorage.removeItem('searchHistory');
-    },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchSearchResults.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(fetchSearchResults.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.results = action.payload;
 
-        if (state.query) {
-          searchSlice.caseReducers.addToHistory(state, {
-            ...action,
-            payload: state.query,
-          });
-        }
-      })
-      .addCase(fetchSearchResults.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message || 'Ошибка поиска';
-      });
-  },
+      if (!action.payload) {
+        state.results = initialResults;
+        return;
+      }
+
+      const lowerQuery = action.payload.toLowerCase().trim();
+      state.results = initialResults.filter(skill => 
+        skill.name.toLowerCase().includes(lowerQuery)
+      );
+    },
+    
+    setSelectedIndex: (state, action: PayloadAction<number>) => {
+      state.selectedIndex = action.payload;
+    },
+    
+    setIsOpen: (state, action: PayloadAction<boolean>) => {
+      state.isOpen = action.payload;
+    },
+    
+    clearSearch: (state) => {
+      state.query = '';
+      state.results = initialResults;
+      state.selectedIndex = -1;
+    },
+
+    resetSearch: () => initialState
+  }
 });
 
-// ---------------------------------------------------------------
-
-// actions
+// Actions
 export const {
-  setSearchQuery,
-  clearSearchResults,
-  addToHistory,
-  clearHistory
+  setQuery,
+  setSelectedIndex,
+  setIsOpen,
+  clearSearch,
+  resetSearch
 } = searchSlice.actions;
 
-// selectors
-export const selectSearchQuery = (state: RootState) => state.searchSlice.query;
-export const selectSearchResults = (state: RootState) => state.searchSlice.results;
-export const selectSearchLoading = (state: RootState) => state.searchSlice.isLoading;
-export const selectSearchHistory = (state: RootState) => state.searchSlice.history;
+// Selectors
+export const selectSearchQuery = (state: RootState) => state.search.query;
+export const selectSearchResults = (state: RootState) => state.search.results;
+export const selectSelectedIndex = (state: RootState) => state.search.selectedIndex;
+export const selectIsSearchOpen = (state: RootState) => state.search.isOpen;
+
+export default searchSlice.reducer;

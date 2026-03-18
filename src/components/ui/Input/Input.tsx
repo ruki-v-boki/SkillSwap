@@ -1,9 +1,9 @@
 import type { InputProps } from './type';
 import styles from './Input.module.css';
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 
 
-export function Input ({
+export const Input = forwardRef<HTMLInputElement, InputProps> (({
   type = 'search',
   value,
   placeholder,
@@ -24,7 +24,7 @@ export function Input ({
   leftIcon,
   rightIcon,
   hideLeftIconOnFocus = true,
-}: InputProps) {
+}, ref) => {
   const [focused, setFocused] = useState(false);
 
 // ---------------------------------------------------------------
@@ -72,6 +72,7 @@ export function Input ({
         )}
 
         <input
+          ref={ref}
           className={inputClasses}
           type={type}
           value={value}
@@ -95,4 +96,4 @@ export function Input ({
       {helper && !error && <span className={styles.helper}>{helper}</span>}
     </div>
   );
-}
+})
