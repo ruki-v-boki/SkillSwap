@@ -1,4 +1,4 @@
-.container {
+.card {
   position: relative;
   z-index: 0;
   display: flex;
@@ -14,7 +14,7 @@
   background-color: var(--color-input);
 }
 
-.container:hover {
+.card:hover {
   cursor: pointer;
   box-shadow: var(--box-shadow-smooth);
 }
@@ -91,11 +91,11 @@
 
 
 /* ============ PROFILE-CARD / MODAL-CARD ============ */
-.containerProfile {
+.cardProfile {
   gap: 24px;
 }
 
-.containerProfile:hover {
+.cardProfile:hover {
   box-shadow: var(--box-shadow-light);
 }
 

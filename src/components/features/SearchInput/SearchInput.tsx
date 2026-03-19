@@ -53,15 +53,13 @@ export function SearchInput() {
   useEffect(() => {
     if (isSelectingRef.current) return;
 
-    setInputValue(globalSearchQuery);
-
     if (debouncedValue !== globalSearchQuery) {
       dispatch(setQuery(debouncedValue));
     }
 
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus();
-    }
+    if (isOpen && inputRef.current && document.activeElement !== inputRef.current) {
+    inputRef.current.focus();
+  }
   }, [globalSearchQuery, debouncedValue, isOpen, dispatch]);
 
 // ---------------------------------------------------------------

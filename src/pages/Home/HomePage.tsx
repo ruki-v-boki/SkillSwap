@@ -53,7 +53,7 @@ export function HomePage() {
         />
       </aside>
 
-      <main className={styles.catalogContainer}>
+      <main className={styles.homePageCatalog}>
         <ActiveFilters />
         <CatalogUI
           users={filteredUsers}

@@ -75,8 +75,8 @@ export function CardUI({
     <div
       className={
         isExpandedView
-          ? `${styles.container} ${styles.containerProfile}`
-          : styles.container
+          ? `${styles.card} ${styles.cardProfile}`
+          : styles.card
       }
       onClick={handleCardClick}>
       <header className={styles.header}>

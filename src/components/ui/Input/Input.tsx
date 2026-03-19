@@ -89,6 +89,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps> (({
           onKeyDown={onKeyDown}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          autoComplete="off"
         />
 
         {rightIcon && <span className={styles.rightIcon}>{rightIcon}</span>}
