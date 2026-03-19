@@ -41,6 +41,7 @@
   --color-text-link: #508826;
   --color-accent: #ABD27A;
   --color-button-hover: #DEEBC5;
+  --color-overlay: rgba(142, 142, 142, 0.6);
 
   /* -------- tags */
   --color-tag-english: #ebe5c5;
@@ -55,16 +56,19 @@
   --color-alarm: #E0796E;
   --color-error: #BF3920;
 
-  /* ------------------------ */
+  /* ------------ OTHER STYLES ------------ */
+
+  /* -------- radius */
   --radius-button: 12px;
   --radius-checkbox: 6px;
 
-  /* ------------------------ */
+  /* -------- shadows */
   --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   --box-shadow-light: 0 1px 5px rgba(0, 0, 0, 0.1);
   --box-shadow-smooth: 5px 5px 20px rgba(0, 0, 0, 0.2);
   --box-shadow-inset: inset 5px 5px 5px rgba(0, 0, 0, 0.1);
 
+  /* -------- transform */
   --scale-down: scale(0.9);
   --scale-up: scale(1.2);
   --scale-light: scale(1.01);

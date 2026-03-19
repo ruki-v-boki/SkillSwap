@@ -10,9 +10,9 @@
   cursor: pointer;
 }
 
-/* .togglerButton:hover {
+.togglerButton:hover {
   color: var(--color-text-link);
-} */
+}
 
 /* .togglerButton:hover {
   transform: var(--scale-up);

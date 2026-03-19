@@ -17,9 +17,15 @@
 
 .favouritesButton {
   display: flex;
+  align-items: center;
   width: 24px;
   height: 100%;
   padding: 0;
+  color: var(--color-text);
+}
+
+.favouritesButton:hover {
+  color: var(--color-text-link);
 }
 
 .authBox {

@@ -1,6 +1,7 @@
-import { useDispatch, useSelector } from '@/services/store'
-import styles from './ThemeToggler.module.css'
-import { selectIsDarkTheme, toggleTheme } from '@/services/slices/ui/uiSlice'
+import { selectIsDarkTheme, toggleTheme } from '@/services/slices/ui/uiSlice';
+import { useDispatch, useSelector } from '@/services/store';
+import styles from './ThemeToggler.module.css';
+
 
 export function ThemeToggler() {
   const isThemeDark = useSelector(selectIsDarkTheme)

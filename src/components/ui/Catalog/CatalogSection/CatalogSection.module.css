@@ -19,6 +19,7 @@
 /* ---------------------------------------- */
 .showMoreButton:hover {
   box-shadow: var(--box-shadow);
+  color: var(--color-text-link);
 }
 
 .sortButton {
@@ -30,14 +31,17 @@
 
 .sortButton:hover {
   box-shadow: inset var(--box-shadow);
+  color: var(--color-text-link);
 }
 
 .sortButton.active {
   box-shadow: inset var(--box-shadow);
+  color: var(--color-text-link);
 }
 
 .sortButton.active:hover {
   box-shadow: var(--box-shadow-inset);
+  color: var(--color-text);
 }
 /* ---------------------------------------- */
 

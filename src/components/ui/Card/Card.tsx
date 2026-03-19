@@ -2,7 +2,7 @@ import { getAgeWord, getCategoryById, getSubcategoryById } from '@/utils/helpers
 import styles from './Card.module.css'
 import type { CardUIProps } from './type'
 import { Button } from '../Button';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { LikeButtonUI } from '../LikeButtonUI';
 import { useState } from 'react';
 import { SkillsListUI } from './SkillsList';
@@ -12,20 +12,20 @@ export function CardUI({
   user,
   type='catalog'
 }: CardUIProps) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const location = useLocation();
 
 
   // ----------------- TO DO 1 --------------
   const [isLiked, setIsLiked] = useState(false); // ВРЕМЕННОЕ Состояние для лайка
   const handleLikeClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Предотвращаем всплытие события
-    setIsLiked(!isLiked); // Переключаем состояние
+    e.stopPropagation();
+    setIsLiked(!isLiked);
     console.log('лайк кликнут', !isLiked);
     // Здесь потом будет API вызов
   };
   // ----------------- TO DO 1 --------------
 
-// ---------------------------------------------------------------
 
   const teachTags = [{
     id: user.canTeach.id,
@@ -54,10 +54,24 @@ export function CardUI({
   // ----------------- TO DO 2 --------------   унести логику? 
 // ---------------------------------------------------------------
 
-  return (
-    <div className={styles.container}>
-      <header className={styles.header}>
+  const handleCardClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (type === 'modal') {
+      return;
+    }
 
+    navigate(`/modal/${user.id}`, {
+      state: {
+        background: location.pathname
+      }
+    });
+};
+
+// ---------------------------------------------------------------
+
+  return (
+    <div className={styles.container} onClick={handleCardClick}>
+      <header className={styles.header}>
         <div className={styles.userBox}>
           <div className={styles.imageBox}>
             <img className={styles.avatar} src={user.avatar} alt={user.name} />
@@ -69,10 +83,9 @@ export function CardUI({
               {user.location}, {user.age} {getAgeWord(user.age)}
             </span>
           </div>
-
         </div>
-        {/* ------- для каталога ------- */}
-        {type === 'catalog' &&
+
+        {type === 'catalog' || type === 'modal' ? (
           <div className={styles.likeButtonBox}>
             <LikeButtonUI
               isLiked={isLiked} // !!!!!!! <--------------- TO-DO 1
@@ -80,26 +93,32 @@ export function CardUI({
             />
             <span className={`h-caption`}>{user.rating}</span>
           </div>
-        }
+          ):('')}
       </header>
-      {/* ------- для профиля ------- */}
-      {/* {type === 'profileCard' && <p className={styles.description}>{user.about}</p>} */}
-      {/* ------- НАВЫКИ ------- */}
+
+      {type === 'profile' || type === 'modal' && (
+        <p className={styles.description}>{user.about}</p>
+      )}
+
       <div className={styles.skillsBox}>
-        <SkillsListUI tags={teachTags} variant="teach" maxVisible={1} /> 
-        <SkillsListUI tags={learnTags} variant="learn" maxVisible={2} />
+        <SkillsListUI tags={teachTags} variant="teach" maxVisible={1} />
+        <SkillsListUI tags={learnTags} variant="learn" maxVisible={type === 'catalog' ? 2 : 999} />
       </div>
-      {/* ------- для каталога ------- */}
-      {type === 'catalog' && (
+
+      {type === 'catalog' || type === 'modal' ? (
         <Button
           fullWidth
           type='button'
           variant='prime'
-          onClick={() => navigate(`/offer/${user.id}`)}
-          >
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/offer/${user.id}`);
+          }}
+        >
           Подробнее
         </Button>
-      )}
+      ) : ('')
+      }
     </div>
   );
 }

@@ -1,11 +1,17 @@
 .notificationsButton {
-  display: block;
+  display: flex;
+  align-items: center;
   width: 24px;
   height: 100%;
   border: none;
   padding: 0;
+  color: var(--color-text);
   background-color: transparent;
   cursor: pointer;
+}
+
+.notificationsButton:hover {
+  color: var(--color-text-link);
 }
 
 .notificationsBanner {

@@ -1,7 +1,7 @@
-import styles from './LikeButton.module.css'
-import type { LikeButtonUIProps } from './type'
-import likeActive from '@/assets/icons/LikeActive.svg'
-import like from '@/assets/icons/like.svg'
+import likeActive from '@/assets/icons/LikeActive.svg';
+import type { LikeButtonUIProps } from './type';
+import styles from './LikeButton.module.css';
+import like from '@/assets/icons/like.svg';
 
 
 export function LikeButtonUI({
