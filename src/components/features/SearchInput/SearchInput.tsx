@@ -1,13 +1,13 @@
+import { selectSkillFromSearch } from '@/services/slices/search/searchThunks';
+import { selectSelectedSkills } from '@/services/slices/filter/filterSlice';
+import { SearchSuggestions } from './SearchSuggestions/SearchSuggestions';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from '@/services/store';
+import { useClickOutside } from '@/hooks/useClickOutside';
 import { Input } from '@/components/ui/Input/Input';
 import searchIcon from '@/assets/icons/search.svg'
-import { selectSelectedSkills } from '@/services/slices/filter/filterSlice';
-import { selectSkillFromSearch } from '@/services/slices/search/searchThunks';
 import { useDebounce } from '@/hooks/useDebounce';
 import styles from './SearchInput.module.css';
-import { SearchSuggestions } from './SearchSuggestions/SearchSuggestions';
-import { useClickOutside } from '@/hooks/useClickOutside';
 import { useNavigate } from 'react-router-dom';
 import {
   setQuery,

@@ -3,13 +3,23 @@ import styles from './SkillsList.module.css';
 import type { TSkillsListUIProps } from './type';
 
 
-export function SkillsListUI({ tags, variant, maxVisible = 2 }: TSkillsListUIProps) {
+export function SkillsListUI({
+  tags,
+  variant,
+  maxVisible = 2,
+  styleType
+}:TSkillsListUIProps) {
   const visibleTags = tags.slice(0, maxVisible);
   const remainingCount = tags.length - maxVisible;
-  const plusCategory = { id: 'plus', name: 'Плюс' };
+  const PLUS_CATEGORY = { id: 'plus', name: 'Плюс' };
+  const isCatalog = styleType === 'catalog';
+
+  const containerClass = isCatalog
+    ? styles.container
+    : `${styles.container} ${styles.containerProfile}`;
 
   return (
-    <div className={styles.container}>
+    <div className={containerClass}>
       <span className={`${styles.skillCategoryTitle} h-4`}>
         {variant === 'teach' ? 'Может научить:' : 'Хочет научиться:'}
       </span>
@@ -24,7 +34,7 @@ export function SkillsListUI({ tags, variant, maxVisible = 2 }: TSkillsListUIPro
         {remainingCount > 0 && (
           <SkillTagUI
             name={`+${remainingCount}`}
-            category={plusCategory}
+            category={PLUS_CATEGORY}
             count={remainingCount}
           />
         )}

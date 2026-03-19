@@ -26,6 +26,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps> (({
   hideLeftIconOnFocus = true,
 }, ref) => {
   const [focused, setFocused] = useState(false);
+  const hasValue = Boolean(value && value.length > 0);
+  const shouldHideIcon = hasValue || (focused && hideLeftIconOnFocus && !hasValue);
 
 // ---------------------------------------------------------------
 
@@ -35,7 +37,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps> (({
     focused ? styles.focused : '',
     leftIcon ? styles.withLeftIcon : '',
     rightIcon ? styles.withRightIcon : '',
-    (focused && hideLeftIconOnFocus && leftIcon) ? styles.leftIconHidden : '',
+    shouldHideIcon ? styles.leftIconHidden : '',
     className,
   ].filter(Boolean).join(' ');
 
@@ -66,7 +68,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps> (({
 
       <div className={styles.inputWrapper}>
         {leftIcon && (
-          <span className={`${styles.leftIcon} ${focused && hideLeftIconOnFocus ? styles.hidden : ''}`}>
+          <span className={`${styles.leftIcon} ${shouldHideIcon ? styles.hidden : ''}`}>
             {leftIcon}
           </span>
         )}

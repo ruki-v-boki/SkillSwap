@@ -48,11 +48,11 @@ const containerVariants: Variants = {
 
 // Варианты для появления секций
 const sectionVariants: Variants = {
-  hidden: { 
+  hidden: {
     opacity: 0,
     x: -20
   },
-  visible: { 
+  visible: {
     opacity: 1,
     x: 0,
     transition: {
@@ -86,11 +86,11 @@ export function CatalogUI({
 
   // Анимация для сообщения об отсутствии результатов
   const noResultsVariants: Variants = {
-    hidden: { 
+    hidden: {
       opacity: 0,
       scale: 0.8
     },
-    visible: { 
+    visible: {
       opacity: 1,
       scale: 1,
       transition: {
@@ -112,7 +112,7 @@ export function CatalogUI({
           animate="visible"
           exit="hidden"
         >
-          <motion.p 
+          <motion.p
             className={`h-1`}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -121,7 +121,7 @@ export function CatalogUI({
             Сейчас подходящих предложений не найдено :(
           </motion.p>
           
-          <motion.img 
+          <motion.img
             src={noResultsIcon} 
             alt="Ничего не найдено" 
             className={styles.noResultsImage}
@@ -130,7 +130,7 @@ export function CatalogUI({
             transition={{ delay: 0.4, type: "spring" as const }}
           />
           
-          <motion.p 
+          <motion.p
             className={`h-3`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

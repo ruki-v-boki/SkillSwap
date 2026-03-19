@@ -31,7 +31,7 @@ export function ModalUI({
     <div className={styles.overlay}>
       <div
         ref={modalRef}
-        className={styles.modal}
+        className={`${styles.modal} modal-open`}
       >
         {children}
       </div>

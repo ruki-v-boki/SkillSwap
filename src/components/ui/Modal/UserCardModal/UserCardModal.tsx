@@ -6,5 +6,5 @@ export function UserCardModal() {
   const { id } = useParams();
   const user = MOCK_USERS.find(u => u.id === id);
 
-  return <CardUI user={user!} type="modal" />; // user! здесь точно должен быть
+  return <CardUI user={user!} styleType="modal" />; // user! здесь точно должен быть
 }

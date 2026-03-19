@@ -54,7 +54,7 @@ export function Filter({
 
   // ---------------------------------------------------------------
 
-  const showResetButton = hasActiveFilters || searchQuery;
+  const showResetButton = hasActiveFilters;
 
   // ---------------------------------------------------------------
 

@@ -1,6 +1,8 @@
-import type { IUser } from "@/types/types"
+import type { IUser } from "@/types/types";
 
 export type CardUIProps = {
   user: IUser;
-  type: 'catalog' | 'profile' | 'modal';
+  styleType: TCardStyle;
 }
+
+export type TCardStyle = 'catalog' | 'profile' | 'modal';

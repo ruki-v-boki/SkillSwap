@@ -4,6 +4,10 @@
   gap: 8px;
 }
 
+.containerProfile {
+  gap: 14px;
+}
+
 .skillCategoryTitle {
   color: var(--color-text);
 }

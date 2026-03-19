@@ -106,7 +106,7 @@ export function CatalogSectionUI({
             <CardUI
               key={user.id}
               user={user}
-              type='catalog'
+              styleType='catalog'
             />
           ))}
       </motion.div>

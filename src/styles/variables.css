@@ -42,6 +42,7 @@
   --color-accent: #ABD27A;
   --color-button-hover: #DEEBC5;
   --color-overlay: rgba(142, 142, 142, 0.6);
+  --color-overlay-on-bg: #8e8e8e;
 
   /* -------- tags */
   --color-tag-english: #ebe5c5;

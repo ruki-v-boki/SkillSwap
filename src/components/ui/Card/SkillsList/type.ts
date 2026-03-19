@@ -1,4 +1,5 @@
 import type { Category } from "@/types/types";
+import type { TCardStyle } from "../type";
 
 export type TSkillsListUIProps = {
   tags: {
@@ -8,4 +9,5 @@ export type TSkillsListUIProps = {
   }[];
   variant: 'teach' | 'learn';
   maxVisible?: number;
+  styleType: TCardStyle;
 };

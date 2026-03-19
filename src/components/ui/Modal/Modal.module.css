@@ -13,8 +13,13 @@
 }
 
 .modal {
-  width: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
+  min-width: 30vw;
   border-radius: var(--radius-button);
   padding: 40px;
+  box-shadow: var(--box-shadow-smooth);
   background: var(--color-input);
 }

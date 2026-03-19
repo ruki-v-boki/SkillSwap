@@ -10,11 +10,13 @@ import { SkillsListUI } from './SkillsList';
 
 export function CardUI({
   user,
-  type='catalog'
+  styleType
 }: CardUIProps) {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const isExpandedView = styleType === 'profile' || styleType === 'modal';
+  const isInteractive = styleType === 'catalog' || styleType === 'modal';
+  const isCatalog = styleType === 'catalog';
 
   // ----------------- TO DO 1 --------------
   const [isLiked, setIsLiked] = useState(false); // ВРЕМЕННОЕ Состояние для лайка
@@ -56,7 +58,7 @@ export function CardUI({
 
   const handleCardClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (type === 'modal') {
+    if (styleType === 'modal') {
       return;
     }
 
@@ -70,7 +72,13 @@ export function CardUI({
 // ---------------------------------------------------------------
 
   return (
-    <div className={styles.container} onClick={handleCardClick}>
+    <div
+      className={
+        isExpandedView
+          ? `${styles.container} ${styles.containerProfile}`
+          : styles.container
+      }
+      onClick={handleCardClick}>
       <header className={styles.header}>
         <div className={styles.userBox}>
           <div className={styles.imageBox}>
@@ -80,32 +88,49 @@ export function CardUI({
           <div className={styles.userInfoBox}>
             <h4 className={styles.userName}>{user.name}</h4>
             <span className={`${styles.bio} h-caption`}>
-              {user.location}, {user.age} {getAgeWord(user.age)}
+              {user.location},
+              {user.age}
+              {getAgeWord(user.age)}
             </span>
           </div>
         </div>
-
-        {type === 'catalog' || type === 'modal' ? (
+{/* --------------------------------------------------------------- */}
+        {isInteractive && (
           <div className={styles.likeButtonBox}>
-            <LikeButtonUI
-              isLiked={isLiked} // !!!!!!! <--------------- TO-DO 1
-              onClick={handleLikeClick} // !!!!!!! <--------------- TO-DO 1
-            />
-            <span className={`h-caption`}>{user.rating}</span>
+            <LikeButtonUI isLiked={isLiked} onClick={handleLikeClick} />
+            <span className="h-caption">{user.rating}</span>
           </div>
-          ):('')}
+        )}
       </header>
-
-      {type === 'profile' || type === 'modal' && (
-        <p className={styles.description}>{user.about}</p>
+{/* --------------------------------------------------------------- */}
+      {isExpandedView && (
+        <p className={`${styles.description} h-body`}>
+          {user.about}
+        </p>
       )}
 
-      <div className={styles.skillsBox}>
-        <SkillsListUI tags={teachTags} variant="teach" maxVisible={1} />
-        <SkillsListUI tags={learnTags} variant="learn" maxVisible={type === 'catalog' ? 2 : 999} />
+      <div
+        className={
+          isExpandedView
+            ? `${styles.skillsBox} ${styles.skillsBoxProfile}`
+            : styles.skillsBox
+        }
+      >
+        <SkillsListUI
+          tags={teachTags}
+          variant="teach"
+          maxVisible={1}
+          styleType={styleType}
+        />
+        <SkillsListUI
+          tags={learnTags}
+          variant="learn"
+          maxVisible={isCatalog ? 2 : 999}
+          styleType={styleType}
+        />
       </div>
-
-      {type === 'catalog' || type === 'modal' ? (
+{/* --------------------------------------------------------------- */}
+      {isInteractive && (
         <Button
           fullWidth
           type='button'
@@ -117,8 +142,7 @@ export function CardUI({
         >
           Подробнее
         </Button>
-      ) : ('')
-      }
+      )}
     </div>
   );
 }

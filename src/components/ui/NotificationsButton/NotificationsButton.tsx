@@ -1,4 +1,3 @@
-import bellIcon from '@/assets/icons/Notification.svg';
 import styles from './NotificationsButton.module.css';
 import { useRef, useState } from 'react';
 import { BannerUI } from '../Banner';
