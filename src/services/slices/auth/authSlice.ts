@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { IUser } from '@/types/types';
 import type { RootState } from '@/services/store';
-import { deleteCookie, getCookie, setCookie } from '@/utils/cookie';
-import { getUserApi, loginUserApi, logoutApi, registerUserApi, updateUserApi, type TAuthResponse, type TUserResponse } from '@/utils/api';
+import { authAPI } from '@/services/api';
+import type { LoginCredentials, RegisterData, AuthResponse } from '@/types/auth';
 import type { PayloadAction } from '@reduxjs/toolkit';
-
+import { supabase } from '@/services/supabase/client';
 
 type TAuthState = {
   user: IUser | null;
@@ -22,17 +22,44 @@ export const initialState: TAuthState = {
 
 // ---------------------------------------------------------------
 
-export const getUser = createAsyncThunk('auth/getUser', getUserApi);
-export const updateUser = createAsyncThunk('auth/updateUser', updateUserApi);
+export const getUser = createAsyncThunk(
+  'auth/getUser',
+  async (_, { getState }) => {
+    const state = getState() as RootState;
+    const userId = state.auth.user?.id;
+    
+    if (!userId) {
+      throw new Error('User ID not found');
+    }
+    
+    const user = await authAPI.getUserProfile(userId);
+    return { user };
+  }
+);
+
+// ---------------------------------------------------------------
+
+export const updateUser = createAsyncThunk(
+  'auth/updateUser',
+  async (userData: Partial<IUser>, { getState }) => {
+    const state = getState() as RootState;
+    const userId = state.auth.user?.id;
+    
+    if (!userId) {
+      throw new Error('User ID not found');
+    }
+    
+    const updatedUser = await authAPI.updateUser(userId, userData);
+    return { user: updatedUser };
+  }
+);
 
 // ---------------------------------------------------------------
 
 export const register = createAsyncThunk(
   'auth/register',
-  async (userData: { email: string; password: string; name: string }) => {
-    const response = await registerUserApi(userData);
-    setCookie('accessToken', response.accessToken);
-    localStorage.setItem('refreshToken', response.refreshToken);
+  async (userData: RegisterData) => {
+    const response = await authAPI.register(userData);
     return response;
   }
 );
@@ -41,10 +68,8 @@ export const register = createAsyncThunk(
 
 export const login = createAsyncThunk(
   'auth/login',
-  async (credentials: { email: string; password: string }) => {
-    const response = await loginUserApi(credentials);
-    setCookie('accessToken', response.accessToken);
-    localStorage.setItem('refreshToken', response.refreshToken);
+  async (credentials: LoginCredentials) => {
+    const response = await authAPI.login(credentials);
     return response;
   }
 );
@@ -52,9 +77,7 @@ export const login = createAsyncThunk(
 // ---------------------------------------------------------------
 
 export const logout = createAsyncThunk('auth/logout', async () => {
-  await logoutApi();
-  deleteCookie('accessToken');
-  localStorage.removeItem('refreshToken');
+  await authAPI.logout();
   return null;
 });
 
@@ -63,16 +86,19 @@ export const logout = createAsyncThunk('auth/logout', async () => {
 export const checkAuth = createAsyncThunk(
   'auth/checkAuth',
   async (_, { dispatch }) => {
-    const accessToken = getCookie('accessToken');
-    const refreshToken = localStorage.getItem('refreshToken');
-
-    if (accessToken && refreshToken) {
-      try {
+    // Supabase автоматически управляет сессией
+    // Проверяем через API, есть ли активная сессия
+    try {
+      // Пытаемся получить текущего пользователя
+      // const { data: { session } } = await import('@/services/supabase/client').then(m => m.supabase.auth.getSession());
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (session?.user) {
+        // Если сессия есть, получаем профиль
         await dispatch(getUser()).unwrap();
-      } catch (error) {
-        deleteCookie('accessToken');
-        localStorage.removeItem('refreshToken');
       }
+    } catch (error) {
+      console.error('Check auth error:', error);
     }
     return null;
   }
@@ -100,7 +126,7 @@ export const authSlice = createSlice({
       })
       .addCase(
         getUser.fulfilled,
-        (state, action: PayloadAction<TUserResponse>) => {
+        (state, action: PayloadAction<{ user: IUser }>) => {
           state.isLoading = false;
           state.user = action.payload.user;
           state.isAuthChecked = true;
@@ -108,8 +134,7 @@ export const authSlice = createSlice({
       )
       .addCase(getUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error =
-          action.error.message || 'Ошибка загрузки данных пользователя';
+        state.error = action.error.message || 'Ошибка загрузки данных пользователя';
       })
 
       // ------ ОБНОВЛЕНИЕ ПОЛЬЗОВАТЕЛЯ ------
@@ -119,7 +144,7 @@ export const authSlice = createSlice({
       })
       .addCase(
         updateUser.fulfilled,
-        (state, action: PayloadAction<TUserResponse>) => {
+        (state, action: PayloadAction<{ user: IUser }>) => {
           state.isLoading = false;
           state.user = action.payload.user;
         }
@@ -151,7 +176,7 @@ export const authSlice = createSlice({
       })
       .addCase(
         register.fulfilled,
-        (state, action: PayloadAction<TAuthResponse>) => {
+        (state, action: PayloadAction<AuthResponse>) => {
           state.isLoading = false;
           state.user = action.payload.user;
         }
@@ -168,7 +193,7 @@ export const authSlice = createSlice({
       })
       .addCase(
         login.fulfilled,
-        (state, action: PayloadAction<TAuthResponse>) => {
+        (state, action: PayloadAction<AuthResponse>) => {
           state.isLoading = false;
           state.user = action.payload.user;
         }

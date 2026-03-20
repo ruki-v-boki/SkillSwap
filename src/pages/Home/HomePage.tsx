@@ -1,38 +1,50 @@
-import { Filter } from "@/components/features/Filter";
-import { CatalogUI } from "@/components/ui/Catalog";
-import { APP_CATEGORIES, APP_SUBCATEGORIES } from "@/constants/skills";
-import { MOCK_USERS } from "@/mock/users";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from '@/services/store';
 import {
+  setUsers,
+  setError,
+  setLoading,
   resetFilters,
-  selectAllUsers,
   selectCities,
+  selectAllUsers,
+  selectIsLoading,
   selectFilteredUsers,
   selectHasActiveFilters,
-  setError,
-  setUsers
-} from "@/services/slices/filter/filterSlice";
-import { useDispatch, useSelector } from "@/services/store";
-import { useEffect } from "react";
-import styles from './HomePage.module.css'
+} from '@/services/slices/filter/filterSlice';
+import { usersAPI } from '@/services/api';
+import styles from './HomePage.module.css';
+import { CatalogUI } from "@/components/ui/Catalog";
+import { Filter } from "@/components/features/Filter";
+import { APP_CATEGORIES, APP_SUBCATEGORIES } from "@/constants/skills";
 import { ActiveFilters } from "@/components/features/ActiveFilters/ActiveFilters";
 
 
 export function HomePage() {
-
   const dispatch = useDispatch();
   const allUsers = useSelector(selectAllUsers);
   const filteredUsers = useSelector(selectFilteredUsers);
   const cities = useSelector(selectCities);
   const hasActiveFilters = useSelector(selectHasActiveFilters);
+  const isLoading = useSelector(selectIsLoading);
 
 // ---------------------------------------------------------------
 
   useEffect(() => {
-    try {
-      dispatch(setUsers(MOCK_USERS));
-    } catch (error) {
-      dispatch(setError('Ошибка загрузки пользователей'));
-    }
+    const loadUsers = async () => {
+      dispatch(setLoading(true));
+      dispatch(setError(null));
+
+      try {
+        const users = await usersAPI.getAllUsers();
+        dispatch(setUsers(users));
+      } catch (error) {
+        console.error('Error loading users:', error);
+        dispatch(setError('Ошибка загрузки пользователей'));
+      } finally {
+        dispatch(setLoading(false));
+      }
+    };
+    loadUsers();
   }, [dispatch]);
 
 // ---------------------------------------------------------------
@@ -40,6 +52,12 @@ export function HomePage() {
   const handleResetFilters = () => {
     dispatch(resetFilters());
   };
+
+// ---------------------------------------------------------------
+
+  if (isLoading) {
+    return <div className={styles.loading}>Загрузка...</div>; // TO-DO: здесь будет компонент лоадера
+  }
 
 // ---------------------------------------------------------------
 

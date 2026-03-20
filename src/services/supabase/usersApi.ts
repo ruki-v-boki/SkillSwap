@@ -1,0 +1,115 @@
+import { supabase } from './client';
+import { transformToIUser, type SupabaseProfile, type SupabaseSkill } from './types';
+import type { IUser } from '@/types/types';
+import type { IUsersAPI } from '../api/types';
+
+export class SupabaseUsersAPI implements IUsersAPI {
+  async getAllUsers(): Promise<IUser[]> {
+    // 1. Получаем всех пользователей
+    const { data: users, error: usersError } = await supabase
+      .from('users')
+      .select('id, name, location, age, about, gender, avatar_url, rating, created_at');
+
+    if (usersError) throw new Error(usersError.message);
+
+    // 2. Получаем все навыки
+    const { data: skills, error: skillsError } = await supabase
+      .from('skills')
+      .select('*');
+
+    if (skillsError) throw new Error(skillsError.message);
+
+    // 3. Группируем навыки по пользователям
+    const skillsByUser = new Map<string, SupabaseSkill[]>();
+    for (const skill of skills || []) {
+      if (!skillsByUser.has(skill.user_id)) {
+        skillsByUser.set(skill.user_id, []);
+      }
+      skillsByUser.get(skill.user_id)!.push(skill);
+    }
+
+    // 4. Трансформируем
+    const transformedUsers: IUser[] = [];
+    for (const user of users || []) {
+      const userSkills = skillsByUser.get(user.id) || [];
+
+      const teachSkillRaw = userSkills.find(s => s.type === 'teach');
+      const teachSkill = teachSkillRaw ? {
+        id: teachSkillRaw.id,
+        categoryId: teachSkillRaw.category_id,
+        subcategoryId: teachSkillRaw.subcategory_id,
+        customName: teachSkillRaw.custom_name || '',
+      } : undefined;
+
+      const learnSkills = userSkills
+        .filter(s => s.type === 'learn')
+        .map(s => ({
+          id: s.id,
+          categoryId: s.category_id,
+          subcategoryId: s.subcategory_id,
+        }));
+
+      transformedUsers.push(transformToIUser(
+        user as SupabaseProfile,
+        teachSkill,
+        learnSkills
+      ));
+    }
+
+    return transformedUsers;
+  }
+
+  async getUserById(id: string): Promise<IUser> {
+    const { data: user, error: userError } = await supabase
+      .from('users')
+      .select('id, name, location, age, about, gender, avatar_url, rating, created_at')
+      .eq('id', id)
+      .single();
+
+    if (userError) throw new Error(userError.message);
+
+    const { data: skills, error: skillsError } = await supabase
+      .from('skills')
+      .select('*')
+      .eq('user_id', id);
+
+    if (skillsError) throw new Error(skillsError.message);
+
+    const teachSkillRaw = skills.find(s => s.type === 'teach');
+    const teachSkill = teachSkillRaw ? {
+      id: teachSkillRaw.id,
+      categoryId: teachSkillRaw.category_id,
+      subcategoryId: teachSkillRaw.subcategory_id,
+      customName: teachSkillRaw.custom_name || '',
+    } : undefined;
+
+    const learnSkills = skills
+      .filter(s => s.type === 'learn')
+      .map(s => ({
+        id: s.id,
+        categoryId: s.category_id,
+        subcategoryId: s.subcategory_id,
+      }));
+
+    return transformToIUser(user as SupabaseProfile, teachSkill, learnSkills);
+  }
+
+  async updateUser(id: string, data: Partial<IUser>): Promise<IUser> {
+    const { error } = await supabase
+      .from('users')
+      .update({
+        name: data.name,
+        location: data.location,
+        age: data.age,
+        about: data.about,
+        gender: data.gender,
+        avatar_url: data.avatar,
+        rating: data.rating,
+      })
+      .eq('id', id);
+
+    if (error) throw new Error(error.message);
+
+    return this.getUserById(id);
+  }
+}

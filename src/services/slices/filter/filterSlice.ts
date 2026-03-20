@@ -16,12 +16,14 @@ interface filterState {
   users: IUser[];
   filters: FiltersState;
   error: string | null;
+  isLoading: boolean;
 }
 
 const initialState: filterState = {
   users: [],
   filters: initialFilters,
-  error: null
+  error: null,
+  isLoading: false
 };
 
 // ---------------------------------------------------------------
@@ -73,7 +75,10 @@ export const filterSlice = createSlice({
     },
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
-    }
+    },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
   }
 });
 
@@ -90,7 +95,8 @@ export const {
   clearCategoryFilters,
   clearSkillFilters,
   clearCityFilters,
-  setError
+  setError,
+  setLoading
 } = filterSlice.actions;
 
 // ---------------------------------------------------------------
@@ -99,6 +105,7 @@ export const {
 export const selectAllUsers = (state: RootState) => state.filter.users;
 export const selectFilters = (state: RootState) => state.filter.filters;
 export const selectError = (state: RootState) => state.filter.error;
+export const selectIsLoading = (state: RootState) => state.filter.isLoading;
 
 // ---------------------------------------------------------------
 
