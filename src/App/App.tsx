@@ -10,6 +10,9 @@ import { PolicyPage } from '@/pages/Policy';
 import { TermsPage } from '@/pages/Terms';
 import { AboutPage } from '@/pages/About';
 import { BlogPage } from '@/pages/Blog';
+import { RegisterPage } from '@/pages/Auth/Register/RegisterPage';
+import { AuthLayout } from '@/layouts/Auth/AuthLayout';
+import { LoginPage } from '@/pages/Auth/Login';
 
 
 export function App() {
@@ -21,6 +24,7 @@ export function App() {
   return (
     <>
       <Routes location={background || location}>
+
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
@@ -33,7 +37,15 @@ export function App() {
           <Route path="500" element={<ServerErrorPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
+
+        <Route path="/auth" element={<AuthLayout />}>
+          <Route index element={<LoginPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+        </Route>
+
       </Routes>
+
 
       {background && (
         <Routes>
