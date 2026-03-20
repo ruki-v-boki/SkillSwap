@@ -60,9 +60,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps> (({
   return (
     <div className={styles.wrapper}>
       {label && (
-        <label className={styles.label} htmlFor={id}>
+        <label className={`${styles.label} h-body`} htmlFor={id}>
           {label}
-          {required && <span className={styles.required}> *</span>}
+          {/* {required && <span className={styles.required}></span>} */}
         </label>
       )}
 

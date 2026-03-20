@@ -1,6 +1,7 @@
 import { FormHintUI } from '@/components/ui/FormHint';
 import styles from './LoginPage.module.css';
 import lamp from '@/assets/icons/light-bulb.svg';
+import { AuthFormUI } from '@/components/ui/AuthForm';
 
 
 export function LoginPage() {
@@ -10,9 +11,8 @@ export function LoginPage() {
     <div className={styles.loginPage}>
       <div className={`${styles.loginPageTitle} h-2`}>Вход</div>
 
-      <main className={styles.main}>
-        <div>Login FORM</div>
-        {/* <AuthForm type='register' /> */}
+      <main className={styles.loginPageMain}>
+        <AuthFormUI type='login' />
         <FormHintUI
           image={lamp}
           title='С возвращением в SkillSwap!'

@@ -1,0 +1,88 @@
+.authFormContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  min-width: 436px;
+  max-width: 556px;
+  border-radius: var(--radius-button);
+  padding: 60px;
+  background-color: var(--color-input);
+}
+
+.oAuthButtonsBox {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.oAuthButton {
+  outline: 1px solid var(--color-caption);
+  color: var(--color-text);
+}
+
+.oAuthButtonIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.breakWord {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: var(--color-text);
+}
+
+.breakWord::before {
+  content: '';
+  flex: 1;
+  margin-right: 4px;
+  border-bottom: 1px solid var(--color-disabled);
+}
+
+.breakWord::after {
+content: '';
+  flex: 1;
+  margin-left: 4px;
+  border-bottom: 1px solid var(--color-disabled);
+}
+
+.formBox {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.formInput {
+  display: flex;
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--color-caption);
+  border-radius: var(--radius-button);
+  box-shadow: var(--box-shadow-light);
+}
+
+.formInput::placeholder {
+  padding-left: 20px;
+}
+
+.formButtonsBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding-top: 8px;
+}
+
+.registerLink {
+  color: var(--color-text-link);
+}
+
+.registerLink:hover {
+  color: var(--color-accent);
+}
