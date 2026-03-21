@@ -10,7 +10,6 @@
 
 .navLink {
   color: var(--color-text);
-  line-height: var(--line-height-xs);
 }
 
 .navLink:hover {
@@ -19,7 +18,11 @@
 
 .navButton {
   display: flex;
-  line-height: var(--line-height-xs);
+  color: var(--color-text);
+}
+
+.navButton:hover {
+  color: var(--color-text-link);
 }
 
 .skillsBanner {

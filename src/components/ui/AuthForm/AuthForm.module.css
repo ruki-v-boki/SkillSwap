@@ -9,6 +9,7 @@
   max-width: 556px;
   border-radius: var(--radius-button);
   padding: 60px;
+  box-shadow: var(--box-shadow-light);
   background-color: var(--color-input);
 }
 
@@ -70,19 +71,7 @@ content: '';
   padding-left: 20px;
 }
 
-.formButtonsBox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  padding-top: 8px;
-}
-
-.registerLink {
-  color: var(--color-text-link);
-}
-
-.registerLink:hover {
-  color: var(--color-accent);
+.registerNextButton {
+  margin-top: 20px;
+  height: 48px;
 }

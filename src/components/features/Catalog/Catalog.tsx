@@ -1,78 +1,22 @@
+import { selectFilteredUsers, selectHasActiveFilters } from '@/services/slices/filter/filterSlice';
+import { containerVariants, noResultsVariants, sectionVariants } from './framerMotion';
+import { resetFilters } from '@/services/slices/filter/filterSlice';
+import { selectAllUsers } from '@/services/slices/users/userSlice';
+import { CatalogSectionUI } from '../../ui/CatalogSection';
+import noResultsIcon from '@/assets/icons/noResults.svg';
+import { useSelector } from '@/services/store';
+import { useDispatch } from '@/services/store';
+import styles from './Catalog.module.css';
+import { Button } from '../../ui/Button';
+import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 
-import styles from './Catalog.module.css';
-import type { CatalogUIProps } from './type';
-import { CatalogSectionUI } from './CatalogSection';
-import noResultsIcon from '@/assets/icons/noResults.svg'
-import { Button } from '../Button';
-import { type Variants, motion } from 'framer-motion';
 
-// Варианты анимации для контейнера с карточками
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.1
-    }
-  }
-};
-
-// Варианты анимации для отдельной карточки
-// const cardVariants: Variants = {
-//   hidden: { 
-//     opacity: 0,
-//     y: 20,
-//     scale: 0.95
-//   },
-//   visible: { 
-//     opacity: 1,
-//     y: 0,
-//     scale: 1,
-//     transition: {
-//       type: "spring" as const,
-//       stiffness: 100,
-//       damping: 12
-//     }
-//   },
-//   exit: {
-//     opacity: 0,
-//     y: -20,
-//     scale: 0.95,
-//     transition: {
-//       duration: 0.2
-//     }
-//   }
-// };
-
-// Варианты для появления секций
-const sectionVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    x: -20
-  },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.4
-    }
-  }
-};
-
-export function CatalogUI({
-  users,
-  hasFilters,
-  onResetFilters,
-  allUsers
-}: CatalogUIProps) {
-
-  const newUsers = useMemo(() => {
-    return [...allUsers].sort((a, b) =>
-      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    );
-  }, [allUsers]);
+export function Catalog() {
+  const dispatch = useDispatch();
+  const allUsers = useSelector(selectAllUsers);
+  const filteredUsers = useSelector(selectFilteredUsers);
+  const hasFilters = useSelector(selectHasActiveFilters);
 
 // ---------------------------------------------------------------
 
@@ -84,26 +28,23 @@ export function CatalogUI({
 
 // ---------------------------------------------------------------
 
-  // Анимация для сообщения об отсутствии результатов
-  const noResultsVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      scale: 0.8
-    },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        type: "spring" as const
-      }
-    }
+  const newUsers = useMemo(() => {
+    return [...allUsers].sort((a, b) =>
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  }, [allUsers]);
+
+// ---------------------------------------------------------------
+
+  const handleResetFilters = () => {
+    dispatch(resetFilters());
   };
 
 // ---------------------------------------------------------------
 
   if (hasFilters) {
-    if (users.length === 0) {
+
+    if (filteredUsers.length === 0) {
       return (
         <motion.div
           className={styles.noResults}
@@ -139,26 +80,24 @@ export function CatalogUI({
             но мы верим что они появятся в будущем :) а пока, измените параметры поиска...
           </motion.p>
           
-          {onResetFilters && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+          >
+            <Button
+              type='button'
+              variant='prime'
+              onClick={handleResetFilters}
             >
-              <Button
-                type='button'
-                variant='prime'
-                onClick={onResetFilters}
-              >
-                ...или сбросьте все фильтры!
-              </Button>
-            </motion.div>
-          )}
+              ...или сбросьте все фильтры!
+            </Button>
+          </motion.div>
         </motion.div>
       );
     }
 
-// ---------------------------------------------------------------
+  // ---------------------------------------------------------------
 
     return (
       <motion.div
@@ -168,11 +107,10 @@ export function CatalogUI({
         exit="hidden"
       >
         <CatalogSectionUI
-          title={`Подходящие предложения: ${users.length}`}
-          users={users}
-          visibleCardsValue={users.length}
+          title={`Подходящие предложения: ${filteredUsers.length}`}
+          users={filteredUsers}
+          visibleCardsValue={filteredUsers.length}
           containerVariants={containerVariants}
-          // cardVariants={cardVariants}
         />
       </motion.div>
     );
@@ -201,7 +139,6 @@ export function CatalogUI({
           users={popularUsers}
           visibleCardsValue={3}
           containerVariants={containerVariants}
-          // cardVariants={cardVariants}
         />
       </motion.div>
       
@@ -211,7 +148,6 @@ export function CatalogUI({
           users={newUsers}
           visibleCardsValue={3}
           containerVariants={containerVariants}
-          // cardVariants={cardVariants}
         />
       </motion.div>
       
@@ -221,7 +157,6 @@ export function CatalogUI({
           users={allUsers}
           visibleCardsValue={3}
           containerVariants={containerVariants}
-          // cardVariants={cardVariants}
         />
       </motion.div>
     </motion.div>

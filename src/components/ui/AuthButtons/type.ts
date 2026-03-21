@@ -1,5 +1,5 @@
-type TAuthButtons = 'profile' | 'form';
-
 export type AuthButtonsUIProps = {
-  variant: TAuthButtons;
+  variant: 'header' | 'form';
+  onLoginClick?: () => void;
+  onRegisterClick: () => void;
 }

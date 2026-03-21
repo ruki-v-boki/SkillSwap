@@ -1,8 +1,5 @@
 import { useDispatch, useSelector } from '@/services/store';
-import {
-  selectFilters,
-  setFilters,
-} from '@/services/slices/filter/filterSlice';
+import { selectFilters, setFilters } from '@/services/slices/filter/filterSlice';
 import styles from './ActiveFilters.module.css';
 import { ActiveFilterTagUI } from '@/components/ui/ActiveFilterTag';
 import {
@@ -58,6 +55,8 @@ export function ActiveFilters() {
   const handleRemoveMode = () => {
     dispatch(setFilters({ mode: 'all' }));
   };
+
+// ---------------------------------------------------------------
 
   const handleRemoveGender = () => {
     dispatch(setFilters({ authorGender: 'any' }));

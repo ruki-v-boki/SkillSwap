@@ -2,8 +2,8 @@ import { NotificationsButtonUI } from "../NotificationsButton";
 import { ProfileItemUI } from "./ProfileItem/ProfileItem";
 import type { ProfileSectionUIProps } from "./type";
 import styles from './ProfileSection.module.css';
-import { AuthButtonsUI } from "../AuthButtons";
-import { ThemeToggler } from "../ThemeToggler";
+// import { AuthButtonsUI } from "../AuthButtons";
+// import { ThemeToggler } from "../ThemeToggler";
 import { NavLink } from "react-router-dom";
 
 
@@ -12,10 +12,10 @@ export function ProfileSectionUI({
 }:ProfileSectionUIProps) {
   return (
     <div className={styles.container}>
-      {user ? (
+      {user && (
         <div className={styles.profileSection}>
           <div className={styles.iconsBox}>
-            <ThemeToggler />
+            {/* <ThemeToggler /> */}
             <NotificationsButtonUI />
             <NavLink to="/favorites" className={styles.favouritesButton}>
               <svg
@@ -32,14 +32,14 @@ export function ProfileSectionUI({
 
           <ProfileItemUI user={user} />
         </div>
-      ) : (
-        <div className={styles.authBox}>
-          <div className={styles.iconsBox}>
-            <ThemeToggler />
-          </div>
+      // ) : (
+        // <div className={styles.authBox}>
+        //   <div className={styles.iconsBox}>
+        //     <ThemeToggler />
+        //   </div>
 
-          <AuthButtonsUI variant="profile" />
-        </div>
+        //   <AuthButtonsUI variant="header" />
+        // </div>
       )}
     </div>
   );

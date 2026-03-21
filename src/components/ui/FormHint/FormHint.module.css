@@ -9,6 +9,7 @@
   min-height: 692px;
   border-radius: var(--radius-button);
   padding: 60px;
+  box-shadow: var(--box-shadow-light);
   background-color: var(--color-input);
 }
 

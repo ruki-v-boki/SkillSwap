@@ -1,5 +1,5 @@
 import type { IUser } from "@/types/types";
-import type { FiltersState } from "../type";
+import type { FiltersState } from "./type";
 
 
 export const citiesFilter = (user: IUser, filters: FiltersState): boolean => {

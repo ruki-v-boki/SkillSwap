@@ -4,10 +4,12 @@ import type { AuthFormUIProps } from './type';
 import googleIcon from '@/assets/icons/Google.svg';
 import appleIcon from '@/assets/icons/Apple.svg';
 import { Input } from '../Input';
-import { NavLink } from 'react-router-dom';
+import { AuthButtonsUI } from '../AuthButtons';
+import { useNavigate } from 'react-router-dom';
 
 
-export function AuthFormUI ({ type }:AuthFormUIProps) {
+export function AuthFormUI ({ variant }:AuthFormUIProps) {
+  const navigate = useNavigate();
 
   return (
     <div className={styles.authFormContainer}>
@@ -16,21 +18,21 @@ export function AuthFormUI ({ type }:AuthFormUIProps) {
           type='button'
           variant='outline'
           fullWidth
-          onClick={() => console.log('кнопка "Продлжить с Google" кликнута')}
+          onClick={() => console.log('кнопка "Продолжить с Google" кликнута')}
           className={`${styles.oAuthButton} h-body`}
         >
           <img src={googleIcon} alt="google" className={styles.oAuthButtonIcon} />
-          Продлжить с Google
+          Продолжить с Google
         </Button>
         <Button
           type='button'
           variant='outline'
           fullWidth
-          onClick={() => console.log('кнопка "Продлжить с Apple" кликнута')}
+          onClick={() => console.log('кнопка "Продолжить с Apple" кликнута')}
           className={`${styles.oAuthButton} h-body`}
         >
           <img src={appleIcon} alt="apple" className={styles.oAuthButtonIcon} />
-          Продлжить с Apple
+          Продолжить с Apple
         </Button>
       </div>
 
@@ -61,29 +63,24 @@ export function AuthFormUI ({ type }:AuthFormUIProps) {
           className={styles.formInput}
         />
       </form>
-
-      <div className={styles.formButtonsBox}>
+      {variant === 'login' && (
+        <AuthButtonsUI
+          variant='form'
+          onLoginClick={() => console.log('login from form')}
+          onRegisterClick={() => navigate('/auth/register')}
+        />
+      )}
+      {variant === 'register' && (
         <Button
-          type="submit"
-          variant="prime"
-          fullWidth
-          onClick={
-            type==='login'
-            ? () => console.log('кнопка "войти" кликнута')
-            : () => console.log('кнопка "далее" кликнута')
-          }
-        >
-          {type === 'login' ? 'Войти' : 'Далее'}
-        </Button>
-        {type === 'login' && (
-          <NavLink
-            to={'/auth/register'}
-            className={`${styles.registerLink} h-body`}
+            type='button'
+            variant='prime'
+            fullWidth
+            className={styles.registerNextButton}
+            onClick={() => console.log('nextButton clicked')}
           >
-            Зарегистрироваться
-            </NavLink>
-        )}
-      </div>
+            Далее
+          </Button>
+      )}
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { categoryFilter } from "./categoryFilter";
 import { skillsFilter } from "./skillsFilter";
 import { citiesFilter } from "./citiesFilter";
 import { genderFilter } from "./genderFilter";
-import type { FiltersState } from "../type";
+import type { FiltersState } from "./type";
 
 
 export const usersFilter = (users: IUser[], filters: FiltersState): IUser[] => {

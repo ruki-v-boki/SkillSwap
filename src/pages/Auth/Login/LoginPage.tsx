@@ -12,7 +12,7 @@ export function LoginPage() {
       <div className={`${styles.loginPageTitle} h-2`}>Вход</div>
 
       <main className={styles.loginPageMain}>
-        <AuthFormUI type='login' />
+        <AuthFormUI variant='login' />
         <FormHintUI
           image={lamp}
           title='С возвращением в SkillSwap!'

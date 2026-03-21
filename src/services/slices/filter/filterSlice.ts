@@ -1,8 +1,8 @@
-import { usersFilter } from "@/components/features/Filter/filters/usersFilter";
-import type { FiltersState } from "@/components/features/Filter/type";
-import type { RootState } from "@/services/store";
-import type { IUser } from "@/types/types";
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { usersFilter } from '@/components/features/Filter/filters/usersFilter';
+import type { FiltersState } from '@/components/features/Filter/filters/type';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from '@/services/store';
+
 
 const initialFilters: FiltersState = {
   mode: 'all',
@@ -12,18 +12,12 @@ const initialFilters: FiltersState = {
   selectedCities: []
 };
 
-interface filterState {
-  users: IUser[];
+interface FilterState {
   filters: FiltersState;
-  error: string | null;
-  isLoading: boolean;
 }
 
-const initialState: filterState = {
-  users: [],
-  filters: initialFilters,
-  error: null,
-  isLoading: false
+const initialState: FilterState = {
+  filters: initialFilters
 };
 
 // ---------------------------------------------------------------
@@ -32,9 +26,6 @@ export const filterSlice = createSlice({
   name: 'filter',
   initialState,
   reducers: {
-    setUsers: (state, action: PayloadAction<IUser[]>) => {
-      state.users = action.payload;
-    },
     setFilters: (state, action: PayloadAction<Partial<FiltersState>>) => {
       state.filters = {
         ...state.filters,
@@ -73,12 +64,15 @@ export const filterSlice = createSlice({
     clearCityFilters: (state) => {
       state.filters.selectedCities = [];
     },
-    setError: (state, action: PayloadAction<string | null>) => {
-      state.error = action.payload;
+    setMode: (state, action: PayloadAction<FilterState['filters']['mode']>) => {
+      state.filters.mode = action.payload;
     },
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.isLoading = action.payload;
+    setGender: (state, action: PayloadAction<FilterState['filters']['authorGender']>) => {
+      state.filters.authorGender = action.payload;
     },
+    setCities: (state, action: PayloadAction<string[]>) => {
+      state.filters.selectedCities = action.payload;
+    }
   }
 });
 
@@ -86,7 +80,6 @@ export const filterSlice = createSlice({
 
 // Actions
 export const {
-  setUsers,
   setFilters,
   addSkill,
   addSkillWithCategory,
@@ -95,30 +88,30 @@ export const {
   clearCategoryFilters,
   clearSkillFilters,
   clearCityFilters,
-  setError,
-  setLoading
+  setMode,
+  setGender,
+  setCities
 } = filterSlice.actions;
 
 // ---------------------------------------------------------------
 
 // Selectors
-export const selectAllUsers = (state: RootState) => state.filter.users;
 export const selectFilters = (state: RootState) => state.filter.filters;
-export const selectError = (state: RootState) => state.filter.error;
-export const selectIsLoading = (state: RootState) => state.filter.isLoading;
+export const selectSelectedSkills = (state: RootState) => state.filter.filters.selectedSkills;
+export const selectSelectedCategories = (state: RootState) => state.filter.filters.selectedCategories;
 
 // ---------------------------------------------------------------
 
 export const selectFilteredUsers = (state: RootState) => {
-  const users = selectAllUsers(state);
+  const users = state.users.allUsers;
   const filters = selectFilters(state);
   return usersFilter(users, filters);
 };
 
 // ---------------------------------------------------------------
 
-export const selectCities = (state: RootState) => {
-  const users = selectAllUsers(state);
+export const selectAvailableCities = (state: RootState) => {
+  const users = state.users.allUsers;
   return [...new Set(users.map(user => user.location))];
 };
 
@@ -147,21 +140,3 @@ export const selectActiveFiltersCount = (state: RootState) => {
   if (filters.selectedCities.length > 0) count += filters.selectedCities.length;
   return count;
 };
-
-// ---------------------------------------------------------------
-
-export const selectFiltersDescription = (state: RootState) => {
-  const filters = selectFilters(state);
-  const parts = [];
-  if (filters.mode !== 'all') parts.push(`режим: ${filters.mode}`);
-  if (filters.selectedCategories.length > 0) parts.push(`категории: ${filters.selectedCategories.length}`);
-  if (filters.selectedSkills.length > 0) parts.push(`навыки: ${filters.selectedSkills.length}`);
-  if (filters.authorGender !== 'any') parts.push(`пол: ${filters.authorGender}`);
-  if (filters.selectedCities.length > 0) parts.push(`города: ${filters.selectedCities.length}`);
-  return parts.join(', ') || 'нет фильтров';
-};
-
-// ---------------------------------------------------------------
-
-export const selectSelectedSkills = (state: RootState) => state.filter.filters.selectedSkills;
-export const selectSelectedCategories = (state: RootState) => state.filter.filters.selectedCategories;

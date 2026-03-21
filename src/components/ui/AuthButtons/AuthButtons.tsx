@@ -1,31 +1,35 @@
-import styles from './AuthButtons.module.css';
-import { useNavigate } from 'react-router-dom';
-import type { AuthButtonsUIProps } from './type';
 import { Button } from '../Button';
+import styles from './AuthButtons.module.css';
+import type { AuthButtonsUIProps } from './type';
 
 
-export function AuthButtonsUI({ variant }: AuthButtonsUIProps) {
-  const navigate = useNavigate();
+export function AuthButtonsUI({
+  variant,
+  onLoginClick,
+  onRegisterClick
+}: AuthButtonsUIProps) {
 
-  const containerClass = variant === 'profile'
-    ? styles.authButtonsBoxProfile
+  const isHeader = variant === 'header';
+  const containerClass = isHeader
+    ? styles.authButtonsBoxHeader
     : styles.authButtonsBoxForm;
 
   return (
     <div className={containerClass}>
       <Button
-        type="button"
-        variant="outline"
-        onClick={() => navigate('/login')}
-        className={`${styles.loginButton} h-body`}
+        type={isHeader ? "button" : "submit"}
+        variant={isHeader ? "outline" : "prime"}
+        onClick={isHeader ? onLoginClick : undefined}
+        className={`${isHeader && styles.loginButtonHeader} h-body`}
       >
         Войти
       </Button>
+
       <Button
         type="button"
-        variant="prime"
-        onClick={() => navigate('/register')}
-        className={`${styles.registerButton} h-body`}
+        variant={isHeader ? "prime" : "link"}
+        onClick={onRegisterClick}
+        className={`${isHeader && styles.registerButtonHeader} h-body`}
       >
         Зарегистрироваться
       </Button>

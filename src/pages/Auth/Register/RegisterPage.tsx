@@ -7,13 +7,11 @@ import { AuthFormUI } from '@/components/ui/AuthForm';
 export function RegisterPage() {
 
 
-
-
   return (
     <div className={styles.registerPage}>
       <div className={styles.registerPageSteps}>шаги</div>
       <main className={styles.registerPageMain}>
-        <AuthFormUI type='register' />
+        <AuthFormUI variant='register' />
         <FormHintUI
           image={lamp}
           title='Добро пожаловать в SkillSwap!'

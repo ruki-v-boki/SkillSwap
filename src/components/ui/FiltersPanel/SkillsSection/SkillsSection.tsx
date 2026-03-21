@@ -1,3 +1,4 @@
+import { itemVariants, subcategoriesVariants } from './framerMotion';
 import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { SkillsSectionUIProps } from './type';
@@ -18,7 +19,7 @@ export function SkillsSectionUI({
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(propSelectedCategories || []);
   const [selectedSkills, setSelectedSkills] = useState<string[]>(propSelectedSkills || []);
-  
+
   const allCategoryIds = categories.map(cat => cat.id);
   const allCategoriesExpanded = allCategoryIds.length > 0 && 
     allCategoryIds.every(id => expandedCategories.includes(id));
@@ -132,40 +133,6 @@ export function SkillsSectionUI({
       setExpandedCategories(allCategoryIds);
     }
   }, [allCategoriesExpanded, allCategoryIds]);
-
-// ---------------------------------------------------------------
-
-  const subcategoriesVariants = {
-    hidden: {
-      height: 0,
-      opacity: 0,
-      transition: {
-        duration: 0.3
-      }
-    },
-    visible: {
-      height: 'auto',
-      opacity: 1,
-      transition: {
-        duration: 0.3,
-        staggerChildren: 0.07 // задержка между появлением каждого элемента
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: {
-      x: -20,
-      opacity: 0
-    },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.3
-      }
-    }
-  };
 
 // ---------------------------------------------------------------
 

@@ -1,19 +1,23 @@
-.authButtonsBoxProfile {
+/* ----------------- header  */
+.authButtonsBoxHeader {
   display: flex;
   gap: 8px;
 }
 
-.authButtonsBoxForm {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.loginButton {
+.loginButtonHeader {
   display: flex;
   background-color: var(--color-input);
 }
 
-.registerButton {
+.registerButtonHeader {
   display: flex;
+}
+
+/* ----------------- form  */
+.authButtonsBoxForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding-top: 8px;
 }
