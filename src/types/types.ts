@@ -45,4 +45,6 @@ export type WantToLearnSkill = BaseSkill & {
 export type CanTeachSkill = BaseSkill & {
   id: string;
   customName: string;
+  description?: string;
+  images?: string[];
 }

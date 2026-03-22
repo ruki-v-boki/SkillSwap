@@ -1,18 +1,13 @@
-.authFormContainer {
+.LoginFormContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 24px;
   width: 100%;
-  min-width: 436px;
-  max-width: 556px;
-  border-radius: var(--radius-button);
-  padding: 60px;
-  box-shadow: var(--box-shadow-light);
-  background-color: var(--color-input);
 }
 
+/* ---------------------------------------- */
 .oAuthButtonsBox {
   display: flex;
   flex-direction: column;
@@ -30,6 +25,7 @@
   height: 24px;
 }
 
+/* ---------------------------------------- */
 .breakWord {
   display: flex;
   align-items: center;
@@ -51,27 +47,22 @@ content: '';
   border-bottom: 1px solid var(--color-disabled);
 }
 
+/* ---------------------------------------- */
 .formBox {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
   width: 100%;
 }
 
-.formInput {
-  display: flex;
-  width: 100%;
-  min-height: 48px;
-  border: 1px solid var(--color-caption);
-  border-radius: var(--radius-button);
-  box-shadow: var(--box-shadow-light);
-}
-
-.formInput::placeholder {
-  padding-left: 20px;
+/* ---------------------------------------- */
+.errorFormMessage {
+  margin: 8px 0;
+  color: var(--color-error, #ff4d4f);
+  font-size: 14px;
+  text-align: center;
 }
 
 .registerNextButton {
   margin-top: 20px;
-  height: 48px;
 }

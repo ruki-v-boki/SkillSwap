@@ -1,25 +1,24 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from '@/services/store';
 import { getAllUsers, selectAllUsers, selectUserIsLoading } from '@/services/slices/users/userSlice';
-import {
-  checkAuth,
-  // selectIsAuthChecked
-} from '@/services/slices/auth/authSlice';
+import { checkAuth, selectIsAuthChecked } from '@/services/slices/auth/authSlice';
 import { UserCardModal } from '@/components/ui/Modal/UserCardModal/UserCardModal';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { NotFoundPage, ServerErrorPage } from '@/pages/Error';
+import { useDispatch, useSelector } from '@/services/store';
 import { SkillsPage } from '@/pages/Skills/SkillsPage';
 import { MainLayout } from '@/layouts/Main/MainLayout';
+import { AuthLayout } from '@/layouts/Auth/AuthLayout';
 import { HomePage } from '@/pages/Home/HomePage';
 import { ModalUI } from '@/components/ui/Modal';
 import { ContactsPage } from '@/pages/Contacts';
+import { Loader } from '@/components/ui/Loader';
+import { RegisterPage } from '@/pages/Register';
 import { PolicyPage } from '@/pages/Policy';
 import { TermsPage } from '@/pages/Terms';
+import { LoginPage } from '@/pages/Login';
 import { AboutPage } from '@/pages/About';
 import { BlogPage } from '@/pages/Blog';
-import { RegisterPage } from '@/pages/Auth/Register/RegisterPage';
-import { AuthLayout } from '@/layouts/Auth/AuthLayout';
-import { LoginPage } from '@/pages/Auth/Login';
+import { useEffect } from 'react';
+
 
 
 export function App() {
@@ -29,20 +28,28 @@ export function App() {
   const background = location.state?.background;
   const closeModal = () => navigate(-1);
 
-  // Селекторы
   const allUsers = useSelector(selectAllUsers);
-  const isLoading = useSelector(selectUserIsLoading);
-  // const isAuthChecked = useSelector(selectIsAuthChecked);
+  const isUserLoading = useSelector(selectUserIsLoading);
+  const isAuthChecked = useSelector(selectIsAuthChecked);
 
+// ---------------------------------------------------------------
 
   useEffect(() => {
     dispatch(checkAuth());
 
-    if (allUsers.length === 0 && !isLoading) {
+    if (allUsers.length === 0 && !isUserLoading) {
       dispatch(getAllUsers());
     }
-  }, [dispatch, allUsers.length, isLoading]);
 
+  }, [dispatch, allUsers.length, isUserLoading]);
+
+// ---------------------------------------------------------------
+
+  if (!isAuthChecked || isUserLoading) {
+    return <Loader />;
+  }
+
+// ---------------------------------------------------------------
 
   return (
     <>

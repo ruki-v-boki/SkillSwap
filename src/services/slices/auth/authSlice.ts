@@ -113,7 +113,7 @@ export const authSlice = createSlice({
     setAuthChecked: (state) => {
       state.isAuthChecked = true;
     },
-    clearError: (state) => {
+    clearAuthError: (state) => {
       state.error = initialState.error;
     }
   },
@@ -222,10 +222,13 @@ export const authSlice = createSlice({
 // ---------------------------------------------------------------
 
 // actions:
-export const { setAuthChecked, clearError } = authSlice.actions;
+export const {
+  setAuthChecked,
+  clearAuthError
+} = authSlice.actions;
 
 // selectors:
 export const selectUser = (state: RootState) => state.auth.user;
 export const selectIsAuthChecked = (state: RootState) => state.auth.isAuthChecked;
-export const selectIsLoading = (state: RootState) => state.auth.isLoading;
-export const selectError = (state: RootState) => state.auth.error;
+export const selectIsAuthLoading = (state: RootState) => state.auth.isLoading;
+export const selectAuthError = (state: RootState) => state.auth.error;

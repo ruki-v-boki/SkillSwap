@@ -11,7 +11,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps> (({
   id,
   label,
   error,
-  helper,
+  isValid = false,
   required = false,
   disabled = false,
   readOnly = false,
@@ -25,6 +25,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps> (({
   rightIcon,
   hideLeftIconOnFocus = true,
 }, ref) => {
+
   const [focused, setFocused] = useState(false);
   const hasValue = Boolean(value && value.length > 0);
   const shouldHideIcon = hasValue || (focused && hideLeftIconOnFocus && !hasValue);
@@ -38,6 +39,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps> (({
     leftIcon ? styles.withLeftIcon : '',
     rightIcon ? styles.withRightIcon : '',
     shouldHideIcon ? styles.leftIconHidden : '',
+    isValid && !error ? styles.valid : '',
     className,
   ].filter(Boolean).join(' ');
 
@@ -62,7 +64,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps> (({
       {label && (
         <label className={`${styles.label} h-body`} htmlFor={id}>
           {label}
-          {/* {required && <span className={styles.required}></span>} */}
         </label>
       )}
 
@@ -92,11 +93,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps> (({
           autoComplete="off"
         />
 
-        {rightIcon && <span className={styles.rightIcon}>{rightIcon}</span>}
+        {rightIcon && (
+          <span className={styles.rightIconBox}>{rightIcon}</span>
+        )}
+        {error && (
+          <span className={`${styles.errorMessage} h-caption`}>{error}</span>
+        )}
       </div>
-
-      {error && <span className={styles.errorMessage}>{error}</span>}
-      {helper && !error && <span className={styles.helper}>{helper}</span>}
     </div>
   );
 })

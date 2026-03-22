@@ -1,0 +1,32 @@
+.counterBox {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.text {
+  text-align: center;
+}
+
+.tagsBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+}
+
+
+.tag {
+  width: 60px;
+  height: 4px;
+  border-radius: 8px;
+  background-color: var(--color-disabled);
+  transition: background-color 0.3s ease;
+}
+
+.active {
+  background-color: var(--color-accent);
+}

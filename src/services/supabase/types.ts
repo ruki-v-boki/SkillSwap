@@ -21,6 +21,8 @@ export type SupabaseSkill = {
   category_id: string;
   subcategory_id: string;
   custom_name: string | null;
+  description: string | null;
+  images: string[] | null; 
 };
 
 // Трансформер: SupabaseProfile → IUser
@@ -39,7 +41,7 @@ export const transformToIUser = (
     createdAt: supabaseUser.created_at,
     avatar: supabaseUser.avatar_url || undefined,
     rating: supabaseUser.rating,
-    canTeach: teachSkill || { id: '', categoryId: '', subcategoryId: '', customName: '' },
+    canTeach: teachSkill || { id: '', categoryId: '', subcategoryId: '', customName: '', description: '', images: [] },
     wantToLearn: learnSkills || [],
     likedBy: [],
   };

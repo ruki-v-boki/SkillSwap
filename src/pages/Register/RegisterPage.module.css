@@ -1,0 +1,34 @@
+.registerPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  height: 100%;
+}
+
+.registerPageSteps {
+  display: flex;
+}
+
+.registerPageMain {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.pageFormContainer {
+  display: flex;
+  gap: 32px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-width: 436px;
+  max-width: 556px;
+  border-radius: var(--radius-button);
+  padding: 60px;
+  box-shadow: var(--box-shadow-light);
+  background-color: var(--color-input);
+}

@@ -1,0 +1,236 @@
+import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from '@/services/store';
+import type { AuthResponse, RegisterData } from '@/types/auth';
+import type { WantToLearnSkill, TGender } from '@/types/types';
+import { type TCity } from '@/constants/cities';
+import { authAPI } from '@/services/api';
+
+// Базовое состояние без isLoading и error
+const baseInitialState = {
+  step1: {
+    email: '',
+    password: '',
+  },
+  step2: {
+    name: '',
+    age: 0,
+    gender: 'any' as TGender,
+    location: '' as TCity,
+    about: '',
+    avatar: null as string | null,
+    wantToLearn: [] as Omit<WantToLearnSkill, 'id'>[],
+  },
+  step3: {
+    canTeach: {
+      categoryId: '',
+      subcategoryId: '',
+      customName: '',
+      description: '',
+      images: [] as string[],
+    },
+  },
+  currentStep: 1,
+};
+
+interface RegisterState {
+  step1: typeof baseInitialState.step1;
+  step2: typeof baseInitialState.step2;
+  step3: typeof baseInitialState.step3;
+  currentStep: number;
+  isLoading: boolean;
+  error: string | null;  // ← явно указываем тип
+}
+
+// ============================================================
+// ASYNC THUNK ДЛЯ РЕГИСТРАЦИИ
+// ============================================================
+
+export const registerUser = createAsyncThunk<
+  AuthResponse,
+  void,
+  { rejectValue: string }
+>(
+  'register/registerUser',
+  async (_, { getState, rejectWithValue }) => {
+    const state = getState() as RootState;
+    const registerData = selectRegisterData(state);
+    
+    try {
+      const response = await authAPI.register(registerData);
+      localStorage.removeItem('registerForm');
+      return response;
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Ошибка регистрации');
+    }
+  }
+);
+
+// ============================================================
+// ФУНКЦИИ ДЛЯ РАБОТЫ С LOCALSTORAGE
+// ============================================================
+
+const loadInitialState = (): Omit<RegisterState, 'isLoading' | 'error'> => {
+  try {
+    const saved = localStorage.getItem('registerForm');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      return {
+        ...baseInitialState,
+        ...parsed,
+      };
+    }
+  } catch (error) {
+    console.error('Failed to load register state:', error);
+  }
+  return baseInitialState;
+};
+
+const saveToLocalStorage = (state: Omit<RegisterState, 'isLoading' | 'error'>) => {
+  try {
+    const toSave = {
+      step1: state.step1,
+      step2: state.step2,
+      step3: state.step3,
+      currentStep: state.currentStep,
+    };
+    localStorage.setItem('registerForm', JSON.stringify(toSave));
+  } catch (error) {
+    console.error('Failed to save register state:', error);
+  }
+};
+
+// ============================================================
+// SLICE
+// ============================================================
+
+// Явно указываем тип initialState
+const initialState: RegisterState = {
+  ...loadInitialState(),
+  isLoading: false,
+  error: null as string | null,  // ← явно указываем тип
+};
+
+export const registerSlice = createSlice({
+  name: 'register',
+  initialState,
+  reducers: {
+    updateStep1: (state, action: PayloadAction<Partial<RegisterState['step1']>>) => {
+      state.step1 = { ...state.step1, ...action.payload };
+      saveToLocalStorage(state);
+    },
+    updateStep2: (state, action: PayloadAction<Partial<RegisterState['step2']>>) => {
+      state.step2 = { ...state.step2, ...action.payload };
+      saveToLocalStorage(state);
+    },
+    updateStep3: (state, action: PayloadAction<Partial<RegisterState['step3']['canTeach']>>) => {
+      state.step3.canTeach = { ...state.step3.canTeach, ...action.payload };
+      saveToLocalStorage(state);
+    },
+    setCurrentStep: (state, action: PayloadAction<number>) => {
+      state.currentStep = action.payload;
+      saveToLocalStorage(state);
+    },
+    nextStep: (state) => {
+      state.currentStep = Math.min(state.currentStep + 1, 3);
+      saveToLocalStorage(state);
+    },
+    prevStep: (state) => {
+      state.currentStep = Math.max(state.currentStep - 1, 1);
+      saveToLocalStorage(state);
+    },
+    clearStep2: (state) => {
+      state.step2 = baseInitialState.step2;
+      saveToLocalStorage(state);
+    },
+    clearStep3: (state) => {
+      state.step3 = baseInitialState.step3;
+      saveToLocalStorage(state);
+    },
+    resetRegister: (state) => {
+      localStorage.removeItem('registerForm');
+      state.step1 = baseInitialState.step1;
+      state.step2 = baseInitialState.step2;
+      state.step3 = baseInitialState.step3;
+      state.currentStep = 1;
+      state.isLoading = false;
+      state.error = null;
+    },
+    clearError: (state) => {
+      state.error = null;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(registerUser.fulfilled, (state) => {
+        state.isLoading = false;
+        localStorage.removeItem('registerForm');
+        state.step1 = baseInitialState.step1;
+        state.step2 = baseInitialState.step2;
+        state.step3 = baseInitialState.step3;
+        state.currentStep = 1;
+        state.error = null;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.isLoading = false;
+        // Используем as string для приведения типа
+        state.error = (action.payload ?? 'Ошибка регистрации') as string;
+      });
+  },
+});
+
+// ============================================================
+// ACTIONS
+// ============================================================
+
+export const {
+  updateStep1,
+  updateStep2,
+  updateStep3,
+  setCurrentStep,
+  nextStep,
+  prevStep,
+  clearStep2,
+  clearStep3,
+  resetRegister,
+  clearError,
+} = registerSlice.actions;
+
+// ============================================================
+// SELECTORS
+// ============================================================
+
+export const selectRegisterStep1 = (state: RootState) => state.register.step1;
+export const selectRegisterStep2 = (state: RootState) => state.register.step2;
+export const selectRegisterStep3 = (state: RootState) => state.register.step3.canTeach;
+export const selectCurrentStep = (state: RootState) => state.register.currentStep;
+export const selectRegisterIsLoading = (state: RootState) => state.register.isLoading;
+export const selectRegisterError = (state: RootState) => state.register.error;
+
+// Селектор для финальных данных регистрации
+export const selectRegisterData = (state: RootState): RegisterData => {
+  const { step1, step2, step3 } = state.register;
+  return {
+    email: step1.email,
+    password: step1.password,
+    name: step2.name,
+    location: step2.location,
+    age: step2.age,
+    about: step2.about,
+    gender: step2.gender,
+    avatar: step2.avatar,
+    canTeach: {
+      categoryId: step3.canTeach.categoryId,
+      subcategoryId: step3.canTeach.subcategoryId,
+      customName: step3.canTeach.customName,
+      description: step3.canTeach.description,
+      images: step3.canTeach.images,
+    },
+    wantToLearn: step2.wantToLearn,
+  };
+};
+
+export default registerSlice.reducer;

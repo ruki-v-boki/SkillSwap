@@ -94,7 +94,7 @@ export class SupabaseUsersAPI implements IUsersAPI {
     return transformToIUser(user as SupabaseProfile, teachSkill, learnSkills);
   }
 
-  async updateUser(id: string, data: Partial<IUser>): Promise<IUser> {
+    async updateUser(id: string, data: Partial<IUser>): Promise<IUser> {
     const { error } = await supabase
       .from('users')
       .update({

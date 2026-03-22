@@ -4,6 +4,8 @@ import type { LoginCredentials, RegisterData, AuthResponse } from '@/types/auth'
 import type { IUser } from '@/types/types';
 
 export class SupabaseAuthAPI {
+
+
   async register(data: RegisterData): Promise<AuthResponse> {
     // 1. Регистрация в Supabase Auth
     const { data: authData, error: signUpError } = await supabase.auth.signUp({
@@ -19,23 +21,23 @@ export class SupabaseAuthAPI {
     if (signUpError) throw new Error(signUpError.message);
     if (!authData.user) throw new Error('Registration failed');
 
-    // 2. Создаем профиль в таблице users
+    // 2. Создаем профиль в таблице users (со всеми новыми полями)
     const { error: profileError } = await supabase
       .from('users')
       .insert({
         id: authData.user.id,
         name: data.name,
-        location: '',
-        age: 0,
-        about: '',
-        gender: 'male',
-        avatar_url: null,
+        location: data.location || '',
+        age: data.age || 0,
+        about: data.about || '',
+        gender: data.gender || 'any',
+        avatar_url: data.avatar || null,
         rating: 0,
       });
 
     if (profileError) throw new Error(profileError.message);
 
-    // 3. Добавляем навык "могу научить"
+    // 3. Добавляем навык "могу научить" (с описанием и фото)
     const { error: teachError } = await supabase
       .from('skills')
       .insert({
@@ -44,6 +46,8 @@ export class SupabaseAuthAPI {
         category_id: data.canTeach.categoryId,
         subcategory_id: data.canTeach.subcategoryId,
         custom_name: data.canTeach.customName,
+        description: data.canTeach.description || null,
+        images: data.canTeach.images || [],
       });
 
     if (teachError) throw new Error(teachError.message);
@@ -59,6 +63,8 @@ export class SupabaseAuthAPI {
             category_id: skill.categoryId,
             subcategory_id: skill.subcategoryId,
             custom_name: null,
+            description: null,
+            images: null,
           });
 
         if (learnError) throw new Error(learnError.message);
@@ -66,8 +72,7 @@ export class SupabaseAuthAPI {
     }
 
     // 5. Получаем сессию
-    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-    if (sessionError) throw new Error(sessionError.message);
+    const { data: sessionData } = await supabase.auth.getSession();
 
     // 6. Получаем профиль пользователя
     const user = await this.getUserProfile(authData.user.id);
@@ -77,7 +82,7 @@ export class SupabaseAuthAPI {
       accessToken: sessionData.session?.access_token || '',
       refreshToken: sessionData.session?.refresh_token || '',
     };
-  }
+}
 
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     const { data, error } = await supabase.auth.signInWithPassword({

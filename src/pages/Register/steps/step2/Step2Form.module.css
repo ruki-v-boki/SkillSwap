@@ -1,0 +1,19 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  min-width: 436px;
+}
+
+.rowContainer {
+  display: flex;
+  gap: 24px;
+}
+
+.buttonsBox {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding-top: 16px;
+}

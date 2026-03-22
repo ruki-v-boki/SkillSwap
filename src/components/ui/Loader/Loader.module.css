@@ -1,0 +1,57 @@
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loaderBox {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-bg);
+}
+
+.loaderCircle {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.loaderCircle::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  z-index: -1;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    var(--color-input),
+    var(--color-bg),
+    var(--color-accent),
+    var(--color-text-link)
+    );
+  animation: spin 0.5s infinite linear;
+}
+
+.loaderCircle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  bottom: 2px;
+  left: 2px;
+  z-index: -1;
+  border-radius: 50%;
+  background: var(--color-bg);
+}

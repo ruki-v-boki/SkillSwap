@@ -8,7 +8,7 @@ export type InputProps = {
   id?: string;
   label?: string;
   error?: string;
-  helper?: string;
+  isValid?: boolean;
   required?: boolean;
   disabled?: boolean;
   readOnly?: boolean;

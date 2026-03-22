@@ -1,0 +1,33 @@
+.loginPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  height: 100%;
+}
+
+.loginPageTitle {
+  display: flex;
+}
+
+.loginPageMain {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-width: 436px;
+  max-width: 556px;
+  border-radius: var(--radius-button);
+  padding: 60px;
+  box-shadow: var(--box-shadow-light);
+  background-color: var(--color-input);
+}

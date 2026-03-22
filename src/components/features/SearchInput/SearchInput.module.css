@@ -5,16 +5,6 @@
   min-width: 300px;
 }
 
-.searchInput {
-  display: flex;
-  width: 100%;
-  min-width: 200px;
-  min-height: 48px;
-  border: none;
-  border-radius: var(--radius-button);
-  box-shadow: var(--box-shadow-light);
-}
-
 .searchInput:focus {
   outline: 1px solid var(--color-accent);
   transition: auto;
