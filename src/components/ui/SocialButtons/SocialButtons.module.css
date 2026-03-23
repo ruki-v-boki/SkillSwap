@@ -1,0 +1,14 @@
+.socialButton {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  border: none;
+  padding: 0;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.socialButton:hover {
+  color: var(--color-text-link);
+}

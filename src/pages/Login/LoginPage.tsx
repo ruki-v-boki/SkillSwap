@@ -32,7 +32,7 @@ export function LoginPage() {
     }) => {
       try {
         const result = await dispatch(login(data)).unwrap();
-        console.log('Login success:', result.user);
+        console.log('Login success:', result);
         navigate('/');
       } catch (err) {
         console.error('Login failed:', err);

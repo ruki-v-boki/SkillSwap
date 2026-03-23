@@ -3,7 +3,7 @@ import { ProfileItemUI } from "./ProfileItem/ProfileItem";
 import type { ProfileSectionUIProps } from "./type";
 import styles from './ProfileSection.module.css';
 // import { AuthButtonsUI } from "../AuthButtons";
-// import { ThemeToggler } from "../ThemeToggler";
+import { ThemeToggler } from "../ThemeToggler";
 import { NavLink } from "react-router-dom";
 
 
@@ -15,7 +15,7 @@ export function ProfileSectionUI({
       {user && (
         <div className={styles.profileSection}>
           <div className={styles.iconsBox}>
-            {/* <ThemeToggler /> */}
+            <ThemeToggler />
             <NotificationsButtonUI />
             <NavLink to="/favorites" className={styles.favouritesButton}>
               <svg

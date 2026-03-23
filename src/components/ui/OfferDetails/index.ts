@@ -1,0 +1,1 @@
+export { OfferDetailsUI } from './OfferDetails';

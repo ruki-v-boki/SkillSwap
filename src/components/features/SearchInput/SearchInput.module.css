@@ -5,7 +5,11 @@
   min-width: 300px;
 }
 
+.searchInput {
+  outline: none;
+}
+
 .searchInput:focus {
-  outline: 1px solid var(--color-accent);
+  outline: 2px solid var(--color-accent);
   transition: auto;
 }

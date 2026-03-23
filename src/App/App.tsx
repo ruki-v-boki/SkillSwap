@@ -18,6 +18,7 @@ import { LoginPage } from '@/pages/Login';
 import { AboutPage } from '@/pages/About';
 import { BlogPage } from '@/pages/Blog';
 import { useEffect } from 'react';
+import { OfferPage } from '@/pages/Offer';
 
 
 
@@ -57,6 +58,7 @@ export function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
+          <Route path="offer/:id" element={<OfferPage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="skills" element={<SkillsPage />} />
           <Route path="contacts" element={<ContactsPage />} />

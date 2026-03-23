@@ -1,0 +1,50 @@
+.offerDetailsContainer {
+  display: flex;
+  flex-grow: 1;
+  gap: 44px;
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  max-width: 248px;
+}
+
+.titleBox {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  color: var(--color-text);
+}
+
+.tags {
+  color: var(--color-caption);
+  text-transform: capitalize;
+}
+
+
+.description {
+  padding-bottom: 32px;
+  color: var(--color-text);
+}
+
+.buttonsBox{
+  display: flex;
+}
+
+.buttonsBoxOffer {
+  padding-top: 8px;
+}
+
+
+.gallery {
+  width: 100%;
+  background-color: aqua;
+}
