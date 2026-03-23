@@ -1,4 +1,4 @@
-import type { IUser, CanTeachSkill, WantToLearnSkill, TGender } from "./types";
+import type { IUser, WantToLearnSkill, TGender, AvatarInput, CanTeachSkillInput } from "./types";
 
 export type LoginCredentials = {
   email: string;
@@ -15,8 +15,8 @@ export type RegisterData = {
   age: number;
   about: string;
   gender: TGender;
-  avatar?: string | null;
-  canTeach: Omit<CanTeachSkill, 'id'>;
+  avatar?: AvatarInput | null;        // ← File для загрузки
+  canTeach: CanTeachSkillInput;       // ← File[] для загрузки
   wantToLearn: Omit<WantToLearnSkill, 'id'>[];
 }
 

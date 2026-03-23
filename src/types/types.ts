@@ -27,24 +27,29 @@ export type Subcategory = {
   categoryId: string;
 }
 
-// ------------ НАВЫКИ ------------
-export type SkillsCatalog = {
-  categories: Category[];
-  subcategories: Subcategory[];
-}
-
-export type BaseSkill = {
+// // ------------ НАВЫКИ ------------
+export type WantToLearnSkill = {
+  id: string;
   categoryId: string;
   subcategoryId: string;
 }
 
-export type WantToLearnSkill = BaseSkill & {
+// Для отображения (после загрузки)
+export type CanTeachSkill = {
   id: string;
-}
-
-export type CanTeachSkill = BaseSkill & {
-  id: string;
+  categoryId: string;
+  subcategoryId: string;
   customName: string;
   description?: string;
-  images?: string[];
+  images?: string[]; // ← URL
+}
+
+// Для регистрации (до загрузки)
+export type CanTeachSkillInput = Omit<CanTeachSkill, 'id' | 'images'> & {
+  images: File[];  // ← файлы для загрузки
+}
+
+// Для аватара (до загрузки)
+export type AvatarInput = {
+  file: File;  // файл для загрузки
 }

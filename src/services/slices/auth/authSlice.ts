@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { supabase } from '@/services/supabase/client';
 import type { RootState } from '@/services/store';
+import { getAllUsers } from '../users/userSlice';
 import type { IUser } from '@/types/types';
 import { authAPI } from '@/services/api';
 
@@ -52,8 +53,9 @@ export const updateUser = createAsyncThunk(
 
 export const register = createAsyncThunk(
   'auth/register',
-  async (userData: RegisterData) => {
+  async (userData: RegisterData, { dispatch }) => {
     const response = await authAPI.register(userData);
+    await dispatch(getAllUsers());
     return response.user;
   }
 );
@@ -62,8 +64,9 @@ export const register = createAsyncThunk(
 
 export const login = createAsyncThunk(
   'auth/login',
-  async (credentials: LoginCredentials) => {
+  async (credentials: LoginCredentials, { dispatch }) => {
     const response = await authAPI.login(credentials);
+    await dispatch(getAllUsers());
     return response.user;
   }
 );

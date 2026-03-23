@@ -1,24 +1,34 @@
+import { getCategoryName, getSubcategoryName } from '@/utils/helpers';
 import type { OfferDetailsUIProps } from './type';
 import styles from './OfferDetails.module.css';
+import { GalleryUI } from '../Gallery';
 import { Button } from '../Button';
-import { Gallery } from '../Gallery';
 
 
 export function OfferDetailsUI({
   user,
   variant
 }: OfferDetailsUIProps) {
+
+  const categoryName = getCategoryName(user.canTeach.categoryId);
+  const subcategoryName = getSubcategoryName(user.canTeach.subcategoryId);
+
   return (
     <div className={styles.offerDetailsContainer}>
       <div className={styles.content}>
 
         <div className={styles.titleBox}>
-          <h2 className={`${styles.title} h-1`}>{user.canTeach.customName}</h2>
-          <span className={`${styles.tags} h-caption`}>{user.canTeach.categoryId} / {user.canTeach.subcategoryId}</span>
+          <h2 className={`${styles.title} h-1`}>
+            {user.canTeach.customName}
+          </h2>
+          <span className={`${styles.tags} h-caption`}>
+            {categoryName} / {subcategoryName}
+          </span>
         </div>
 
-        <div className={`${styles.description} h-body`}>{user.about}</div>
-
+        <div className={`${styles.description} h-body`}>
+          {user.about}
+        </div>
 
         {variant === 'modal' ? (
           <div className={styles.buttonsBox}>
@@ -40,7 +50,7 @@ export function OfferDetailsUI({
             </Button>
           </div>
         ) : (
-          <div className={`${styles.buttonsBox} ${styles.buttonsBoxOffer}`}>
+          <div className={`${styles.buttonsBox} ${styles.buttonsBoxOfferPage}`}>
             <Button
               variant='prime'
               fullWidth
@@ -51,9 +61,8 @@ export function OfferDetailsUI({
         )}
       </div>
 
-
-      <div className={styles.gallery}>
-        <Gallery
+      <div className={styles.offerDetailsGallery}>
+        <GalleryUI
           images={user.canTeach.images || []}
         />
       </div>

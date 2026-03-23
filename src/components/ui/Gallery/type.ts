@@ -1,4 +1,3 @@
-export type GalleryProps = {
+export type GalleryUIProps = {
   images: File[] | string[];
-  alt?: string;
 }

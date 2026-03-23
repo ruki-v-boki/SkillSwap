@@ -4,7 +4,7 @@ export function useImageUrls(images: File[] | string[]) {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   useEffect(() => {
-    if (!images.length) {
+    if (!images?.length) {
       setImageUrls([]);
       return;
     }
@@ -14,7 +14,9 @@ export function useImageUrls(images: File[] | string[]) {
       return;
     }
 
-    const urls = (images as File[]).map(file => URL.createObjectURL(file));
+    const urls = (images as File[]).map(file => {
+      return URL.createObjectURL(file);
+    });
     setImageUrls(urls);
 
     return () => {

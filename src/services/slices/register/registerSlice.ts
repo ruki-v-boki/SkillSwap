@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/services/store';
 import type { AuthResponse, RegisterData } from '@/types/auth';
-import type { WantToLearnSkill, TGender } from '@/types/types';
+import type { WantToLearnSkill, TGender, AvatarInput, CanTeachSkillInput } from '@/types/types';
 import { type TCity } from '@/constants/cities';
 import { authAPI } from '@/services/api';
 
@@ -16,7 +16,7 @@ const baseInitialState = {
     gender: 'any' as TGender,
     location: '' as TCity,
     about: '',
-    avatar: null as string | null,
+    avatar: null as AvatarInput | null,  // ← File для аватара
     wantToLearn: [] as Omit<WantToLearnSkill, 'id'>[],
   },
   step3: {
@@ -25,8 +25,8 @@ const baseInitialState = {
       subcategoryId: '',
       customName: '',
       description: '',
-      images: [] as File[],
-    },
+      images: [] as File[],  // ← File[]
+    } as CanTeachSkillInput,
   },
   currentStep: 1,
 };

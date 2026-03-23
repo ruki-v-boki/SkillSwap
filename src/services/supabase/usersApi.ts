@@ -40,6 +40,8 @@ export class SupabaseUsersAPI implements IUsersAPI {
         categoryId: teachSkillRaw.category_id,
         subcategoryId: teachSkillRaw.subcategory_id,
         customName: teachSkillRaw.custom_name || '',
+        description: teachSkillRaw.description || undefined,
+        images: teachSkillRaw.images || [],
       } : undefined;
 
       const learnSkills = userSkills
@@ -84,6 +86,8 @@ export class SupabaseUsersAPI implements IUsersAPI {
       categoryId: teachSkillRaw.category_id,
       subcategoryId: teachSkillRaw.subcategory_id,
       customName: teachSkillRaw.custom_name || '',
+      description: teachSkillRaw.description || undefined,
+      images: teachSkillRaw.images || [],
     } : undefined;
 
     const learnSkills = skills

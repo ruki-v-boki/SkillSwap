@@ -1,7 +1,6 @@
 .offerDetailsContainer {
   display: flex;
-  flex-grow: 1;
-  gap: 44px;
+  gap: 77px;
   width: 100%;
 }
 
@@ -11,9 +10,10 @@
   justify-content: space-between;
   gap: 20px;
   width: 100%;
-  max-width: 248px;
+  max-width: 399px;
 }
 
+/* ------------------------------- */
 .titleBox {
   display: flex;
   flex-direction: column;
@@ -26,25 +26,24 @@
 
 .tags {
   color: var(--color-caption);
-  text-transform: capitalize;
 }
 
-
+/* ------------------------------- */
 .description {
   padding-bottom: 32px;
   color: var(--color-text);
 }
 
+/* ------------------------------- */
 .buttonsBox{
   display: flex;
 }
 
-.buttonsBoxOffer {
+.buttonsBoxOfferPage {
   padding-top: 8px;
 }
 
-
-.gallery {
-  width: 100%;
-  background-color: aqua;
+/* ------------------------------- */
+.offerDetailsGallery {
+  display: flex;align-items: center;
 }
