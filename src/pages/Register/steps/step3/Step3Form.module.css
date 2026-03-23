@@ -1,0 +1,140 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  min-width: 436px;
+}
+
+.textareaBox {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--color-text);
+}
+
+.textarea {
+  min-height: 96px;
+  display: flex;
+  align-items: start;
+  border: none;
+  border-radius: var(--radius-button);
+  padding: 12px 20px;
+  outline: 1px solid var(--color-caption);
+  box-shadow: var(--box-shadow);
+  resize: none;
+}
+
+.textarea:focus {
+  outline: 2px solid var(--color-primary);
+}
+
+.errorMessage {
+  color: var(--color-error);
+}
+
+.imagesBox {
+  border: none;
+  outline: 1px dotted var(--color-caption);
+  border-radius: var(--radius-button);
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.imagesBox:focus-within {
+  outline: 2px solid var(--color-primary);
+}
+
+.imageUpload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  min-height: 96px;
+  cursor: pointer;
+  color: var(--color-text-link);
+  transition: all 0.2s ease;
+  background: var(--color-bg);
+}
+
+.dndCaptionBox {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.dndCaptionBox:hover {
+  color: var(--color-accent);
+}
+
+.imageUpload.dragging {
+  background: var(--color-bg);
+  outline: 2px solid var(--color-primary);
+  outline-offset: -1px;
+}
+
+.uploadHint {
+  color: var(--color-caption);
+  text-align: center;
+  pointer-events: none;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+/* Стили для превью изображений */
+.previewContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px;
+  border-top: 1px solid var(--color-caption);
+  background: var(--color-bg);
+}
+
+.previewItem {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-button);
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.removeButton {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.removeButton:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
+}
+
+.buttonsBox {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}

@@ -32,7 +32,9 @@ export function LoginForm({
 
   const isEmailValid = (value: string): boolean => {
     if (value === '') return false;
-    return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(value);
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    return emailRegex.test(value);
   };
 
   const isPasswordValid = (value: string): boolean => {
@@ -45,7 +47,7 @@ export function LoginForm({
   const getEmailErrorMessage = (value: string): string | undefined => {
     if (!attemptedSubmit) return undefined;
     if (value === '') return 'Email обязателен';
-    if (!isEmailValid(value)) return 'Введите корректный email';
+    if (!isEmailValid(value)) return 'Введите корректный email (только латиница)';
     return undefined;
   };
 
@@ -68,7 +70,8 @@ export function LoginForm({
 // ---------------------------------------------------------------
 
   const handleEmailChange = (value: string) => {
-    setEmail(value);
+    const normalized = value.trim().toLowerCase();
+    setEmail(normalized);
     if (attemptedSubmit) {
       setEmailError(undefined);
     }

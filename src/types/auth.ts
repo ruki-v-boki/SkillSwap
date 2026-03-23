@@ -1,11 +1,13 @@
 import type { IUser, CanTeachSkill, WantToLearnSkill, TGender } from "./types";
 
-export interface LoginCredentials {
+export type LoginCredentials = {
   email: string;
   password: string;
 }
 
-export interface RegisterData {
+// ---------------------------------------------------------------
+
+export type RegisterData = {
   email: string;
   password: string;
   name: string;
@@ -18,7 +20,9 @@ export interface RegisterData {
   wantToLearn: Omit<WantToLearnSkill, 'id'>[];
 }
 
-export interface AuthResponse {
+// ---------------------------------------------------------------
+
+export type AuthResponse = {
   user: IUser;
   accessToken: string;
   refreshToken: string;

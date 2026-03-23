@@ -1,17 +1,3 @@
-import {
-  selectRegisterIsLoading,
-  selectRegisterError,
-  selectRegisterStep1,
-  selectRegisterStep2,
-  // selectRegisterStep3,
-  selectCurrentStep,
-  // registerUser,
-  updateStep1,
-  updateStep2,
-  // updateStep3,
-  nextStep,
-  prevStep,
-} from '@/services/slices/register/registerSlice';
 import { StepsCounter } from '@/components/features/StepsCounter';
 import schoolBoardIcon from '@/assets/icons/schoolBoard.svg';
 import { useDispatch, useSelector } from '@/services/store';
@@ -24,6 +10,23 @@ import { Step2Form } from './steps/step2/Step2Form';
 import type { TCity } from '@/constants/cities';
 import styles from './RegisterPage.module.css';
 import type { TGender } from '@/types/types';
+import { Step3Form } from './steps/step3';
+import { useEffect } from 'react';
+import {
+  selectRegisterIsLoading,
+  selectRegisterError,
+  selectRegisterStep1,
+  selectRegisterStep2,
+  selectRegisterStep3,
+  selectCurrentStep,
+  setCurrentStep,
+  registerUser,
+  updateStep1,
+  updateStep2,
+  updateStep3,
+  nextStep,
+  prevStep
+} from '@/services/slices/register/registerSlice';
 
 // ---------------------------------------------------------------
 
@@ -53,9 +56,15 @@ export function RegisterPage() {
   const currentStep = useSelector(selectCurrentStep);
   const step1Data = useSelector(selectRegisterStep1);
   const step2Data = useSelector(selectRegisterStep2);
-  // const step3Data = useSelector(selectRegisterStep3);
+  const step3Data = useSelector(selectRegisterStep3);
   const isLoading = useSelector(selectRegisterIsLoading);
   const error = useSelector(selectRegisterError);
+
+// ---------------------------------------------------------------
+
+  useEffect(() => {
+    dispatch(setCurrentStep(1));
+  }, [dispatch]);
 
 // ---------------------------------------------------------------
 
@@ -83,16 +92,16 @@ export function RegisterPage() {
 
 // ---------------------------------------------------------------
 
-  // const handleStep3Submit = (data: {
-  //   categoryId: string;
-  //   subcategoryId: string;
-  //   customName: string;
-  //   description: string;
-  //   images: string[];
-  // }) => {
-  //   dispatch(updateStep3(data));
-  //   dispatch(registerUser());
-  // };
+  const handleStep3Submit = (data: {
+    customName: string;
+    categoryId: string;
+    subcategoryId: string;
+    description: string;
+    images: File[];
+  }) => {
+    dispatch(updateStep3(data));
+    dispatch(registerUser());
+  };
 
 // ---------------------------------------------------------------
 
@@ -131,14 +140,13 @@ export function RegisterPage() {
               onBack={handleBack}
             />
           )}
-          
-          {/* {currentStep === 3 && (
-            <Step3For
+          {currentStep === 3 && (
+            <Step3Form
               initialData={step3Data}
               onSubmit={handleStep3Submit}
               onBack={handleBack}
             />
-          )} */}
+          )}
         </div>
 
         <FormHintUI

@@ -1,7 +1,8 @@
-import { supabase } from './client';
 import { transformToIUser, type SupabaseProfile, type SupabaseSkill } from './types';
-import type { IUser } from '@/types/types';
 import type { IUsersAPI } from '../api/types';
+import type { IUser } from '@/types/types';
+import { supabase } from './client';
+
 
 export class SupabaseUsersAPI implements IUsersAPI {
   async getAllUsers(): Promise<IUser[]> {
@@ -59,6 +60,8 @@ export class SupabaseUsersAPI implements IUsersAPI {
     return transformedUsers;
   }
 
+// ---------------------------------------------------------------
+
   async getUserById(id: string): Promise<IUser> {
     const { data: user, error: userError } = await supabase
       .from('users')
@@ -93,6 +96,8 @@ export class SupabaseUsersAPI implements IUsersAPI {
 
     return transformToIUser(user as SupabaseProfile, teachSkill, learnSkills);
   }
+
+// ---------------------------------------------------------------
 
     async updateUser(id: string, data: Partial<IUser>): Promise<IUser> {
     const { error } = await supabase

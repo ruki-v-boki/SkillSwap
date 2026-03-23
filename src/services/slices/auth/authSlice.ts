@@ -27,11 +27,11 @@ export const getUser = createAsyncThunk(
   async (_, { getState }) => {
     const state = getState() as RootState;
     const userId = state.auth.user?.id;
-    
+
     if (!userId) {
       throw new Error('User ID not found');
     }
-    
+
     const user = await authAPI.getUserProfile(userId);
     return { user };
   }
@@ -44,11 +44,11 @@ export const updateUser = createAsyncThunk(
   async (userData: Partial<IUser>, { getState }) => {
     const state = getState() as RootState;
     const userId = state.auth.user?.id;
-    
+
     if (!userId) {
       throw new Error('User ID not found');
     }
-    
+
     const updatedUser = await authAPI.updateUser(userId, userData);
     return { user: updatedUser };
   }
@@ -92,7 +92,7 @@ export const checkAuth = createAsyncThunk(
       // Пытаемся получить текущего пользователя
       // const { data: { session } } = await import('@/services/supabase/client').then(m => m.supabase.auth.getSession());
       const { data: { session } } = await supabase.auth.getSession();
-      
+
       if (session?.user) {
         // Если сессия есть, получаем профиль
         await dispatch(getUser()).unwrap();
@@ -220,14 +220,14 @@ export const authSlice = createSlice({
 });
 
 // ---------------------------------------------------------------
-
-// actions:
+// Actions:
 export const {
   setAuthChecked,
   clearAuthError
 } = authSlice.actions;
 
-// selectors:
+// ---------------------------------------------------------------
+// Selectors:
 export const selectUser = (state: RootState) => state.auth.user;
 export const selectIsAuthChecked = (state: RootState) => state.auth.isAuthChecked;
 export const selectIsAuthLoading = (state: RootState) => state.auth.isLoading;

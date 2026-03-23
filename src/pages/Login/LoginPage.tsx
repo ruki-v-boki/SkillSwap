@@ -1,10 +1,11 @@
-import { login, selectIsAuthLoading, selectAuthError } from '@/services/slices/auth/authSlice';
+import { login, selectIsAuthLoading, selectAuthError, selectUser } from '@/services/slices/auth/authSlice';
 import { useDispatch, useSelector } from '@/services/store';
 import { FormHintUI } from '@/components/ui/FormHint';
 import { LoginForm } from '@/components/ui/LoginForm';
 import lamp from '@/assets/icons/light-bulb.svg';
 import { useNavigate } from 'react-router-dom';
 import styles from './LoginPage.module.css';
+import { useEffect } from 'react';
 
 
 export function LoginPage() {
@@ -12,6 +13,15 @@ export function LoginPage() {
   const navigate = useNavigate();
   const isAuthLoading = useSelector(selectIsAuthLoading);
   const error = useSelector(selectAuthError);
+  const user = useSelector(selectUser);
+
+// ---------------------------------------------------------------
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
 // ---------------------------------------------------------------
 

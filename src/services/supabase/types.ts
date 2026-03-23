@@ -13,6 +13,8 @@ export type SupabaseProfile = {
   created_at: string;
 };
 
+// ---------------------------------------------------------------
+
 // Тип навыка в Supabase
 export type SupabaseSkill = {
   id: string;
@@ -22,8 +24,10 @@ export type SupabaseSkill = {
   subcategory_id: string;
   custom_name: string | null;
   description: string | null;
-  images: string[] | null; 
+  images: string[] | null;
 };
+
+// ---------------------------------------------------------------
 
 // Трансформер: SupabaseProfile → IUser
 export const transformToIUser = (
@@ -41,7 +45,14 @@ export const transformToIUser = (
     createdAt: supabaseUser.created_at,
     avatar: supabaseUser.avatar_url || undefined,
     rating: supabaseUser.rating,
-    canTeach: teachSkill || { id: '', categoryId: '', subcategoryId: '', customName: '', description: '', images: [] },
+    canTeach: teachSkill || {
+      id: '',
+      categoryId: '',
+      subcategoryId: '',
+      customName: '',
+      description: '',
+      images: []
+    },
     wantToLearn: learnSkills || [],
     likedBy: [],
   };

@@ -46,5 +46,5 @@ export type CanTeachSkill = BaseSkill & {
   id: string;
   customName: string;
   description?: string;
-  images?: string[];
+  images?: File[];
 }

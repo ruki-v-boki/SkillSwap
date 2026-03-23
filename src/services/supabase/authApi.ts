@@ -1,10 +1,44 @@
-import { supabase } from './client';
-import { transformToIUser, type SupabaseProfile } from './types';
 import type { LoginCredentials, RegisterData, AuthResponse } from '@/types/auth';
-import type { IUser } from '@/types/types';
+import type { IUser, CanTeachSkill, WantToLearnSkill } from '@/types/types';
+import { transformToIUser, type SupabaseProfile } from './types';
+import { supabase } from './client';
+
 
 export class SupabaseAuthAPI {
 
+  // Вспомогательная функция для загрузки изображений в Storage
+  private async uploadImages(userId: string, files: File[]): Promise<string[]> {
+    const urls: string[] = [];
+
+    for (const file of files) {
+      // Создаём уникальное имя файла
+      const fileName = `${userId}/${Date.now()}_${file.name}`;
+
+      // Загружаем файл в Storage
+      const { error: uploadError } = await supabase.storage
+        .from('skill-images')
+        .upload(fileName, file, {
+          cacheControl: '3600',
+          upsert: false,
+        });
+
+      if (uploadError) {
+        console.error('Upload error:', uploadError);
+        throw new Error(`Ошибка загрузки изображения: ${uploadError.message}`);
+      }
+
+      // Получаем публичный URL загруженного файла
+      const { data: urlData } = supabase.storage
+        .from('skill-images')
+        .getPublicUrl(fileName);
+
+      urls.push(urlData.publicUrl);
+    }
+
+    return urls;
+  }
+
+// ---------------------------------------------------------------
 
   async register(data: RegisterData): Promise<AuthResponse> {
     // 1. Регистрация в Supabase Auth
@@ -21,11 +55,14 @@ export class SupabaseAuthAPI {
     if (signUpError) throw new Error(signUpError.message);
     if (!authData.user) throw new Error('Registration failed');
 
-    // 2. Создаем профиль в таблице users (со всеми новыми полями)
+    const userId = authData.user.id;
+
+    // 2. Создаем профиль в таблице users
     const { error: profileError } = await supabase
       .from('users')
       .insert({
-        id: authData.user.id,
+        id: userId,
+        email: data.email,
         name: data.name,
         location: data.location || '',
         age: data.age || 0,
@@ -37,28 +74,40 @@ export class SupabaseAuthAPI {
 
     if (profileError) throw new Error(profileError.message);
 
-    // 3. Добавляем навык "могу научить" (с описанием и фото)
+    // 3. Загружаем изображения навыка в Storage (если есть)
+    let imageUrls: string[] = [];
+    if (data.canTeach.images && data.canTeach.images.length > 0) {
+      try {
+        imageUrls = await this.uploadImages(userId, data.canTeach.images);
+      } catch (uploadError) {
+        // Если загрузка не удалась, можно продолжить без изображений или выбросить ошибку
+        console.error('Image upload failed:', uploadError);
+        // throw uploadError; // если хотим прервать регистрацию
+      }
+    }
+
+    // 4. Добавляем навык "могу научить" с URL изображений
     const { error: teachError } = await supabase
       .from('skills')
       .insert({
-        user_id: authData.user.id,
+        user_id: userId,
         type: 'teach',
         category_id: data.canTeach.categoryId,
         subcategory_id: data.canTeach.subcategoryId,
         custom_name: data.canTeach.customName,
         description: data.canTeach.description || null,
-        images: data.canTeach.images || [],
+        images: imageUrls, // ← сохраняем URL в БД
       });
 
     if (teachError) throw new Error(teachError.message);
 
-    // 4. Добавляем навыки "хочу научиться"
+    // 5. Добавляем навыки "хочу научиться"
     if (data.wantToLearn && data.wantToLearn.length > 0) {
       for (const skill of data.wantToLearn) {
         const { error: learnError } = await supabase
           .from('skills')
           .insert({
-            user_id: authData.user.id,
+            user_id: userId,
             type: 'learn',
             category_id: skill.categoryId,
             subcategory_id: skill.subcategoryId,
@@ -71,18 +120,20 @@ export class SupabaseAuthAPI {
       }
     }
 
-    // 5. Получаем сессию
+    // 6. Получаем сессию
     const { data: sessionData } = await supabase.auth.getSession();
 
-    // 6. Получаем профиль пользователя
-    const user = await this.getUserProfile(authData.user.id);
+    // 7. Получаем профиль пользователя
+    const user = await this.getUserProfile(userId);
 
     return {
       user,
       accessToken: sessionData.session?.access_token || '',
       refreshToken: sessionData.session?.refresh_token || '',
     };
-}
+  }
+
+// ---------------------------------------------------------------
 
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -101,7 +152,10 @@ export class SupabaseAuthAPI {
     };
   }
 
+// ---------------------------------------------------------------
+
   async getUserProfile(userId: string): Promise<IUser> {
+    // Получаем данные пользователя
     const { data: userData, error: userError } = await supabase
       .from('users')
       .select('id, name, location, age, about, gender, avatar_url, rating, created_at')
@@ -110,6 +164,7 @@ export class SupabaseAuthAPI {
 
     if (userError) throw new Error(userError.message);
 
+    // Получаем все навыки пользователя
     const { data: skillsData, error: skillsError } = await supabase
       .from('skills')
       .select('*')
@@ -117,15 +172,19 @@ export class SupabaseAuthAPI {
 
     if (skillsError) throw new Error(skillsError.message);
 
+    // Находим навык "могу научить"
     const teachSkillRaw = skillsData.find(s => s.type === 'teach');
-    const teachSkill = teachSkillRaw ? {
+    const teachSkill: CanTeachSkill | undefined = teachSkillRaw ? {
       id: teachSkillRaw.id,
       categoryId: teachSkillRaw.category_id,
       subcategoryId: teachSkillRaw.subcategory_id,
       customName: teachSkillRaw.custom_name || '',
+      description: teachSkillRaw.description || undefined,
+      images: teachSkillRaw.images || [], // images в IUser будут File[], но здесь приходят URL
     } : undefined;
 
-    const learnSkills = skillsData
+    // Находим навыки "хочу научиться"
+    const learnSkills: WantToLearnSkill[] = skillsData
       .filter(s => s.type === 'learn')
       .map(s => ({
         id: s.id,
@@ -135,6 +194,8 @@ export class SupabaseAuthAPI {
 
     return transformToIUser(userData as SupabaseProfile, teachSkill, learnSkills);
   }
+
+// ---------------------------------------------------------------
 
   async updateUser(userId: string, data: Partial<IUser>): Promise<IUser> {
     const { error } = await supabase
@@ -155,6 +216,8 @@ export class SupabaseAuthAPI {
     return this.getUserProfile(userId);
   }
 
+// ---------------------------------------------------------------
+
   async refreshToken(refreshToken: string): Promise<{ accessToken: string }> {
     const { data, error } = await supabase.auth.refreshSession({
       refresh_token: refreshToken,
@@ -164,6 +227,8 @@ export class SupabaseAuthAPI {
 
     return { accessToken: data.session?.access_token || '' };
   }
+
+// ---------------------------------------------------------------
 
   async logout(): Promise<void> {
     const { error } = await supabase.auth.signOut();
