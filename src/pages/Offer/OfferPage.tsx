@@ -23,7 +23,7 @@ export function OfferPage() {
       {user && (
         <main className={styles.offerSection}>
           <div className={styles.offerCardWrapper}>
-            <CardUI user={user} styleType='profile' />
+            <CardUI user={user} styleType='profile' onCardClick={()=>{}}/>
           </div>
           <div className={styles.offerDetailsWrapper}>
             <SocialButtonsUI

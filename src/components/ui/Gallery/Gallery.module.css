@@ -1,7 +1,6 @@
 .gallery {
   display: flex;
   gap: 24px;
-  height: 100%;
 }
 
 /* -------------------------- */
@@ -17,6 +16,7 @@
   height: 100%;
   border-radius: 12px;
   object-fit: cover;
+  box-shadow: var(--box-shadow-smooth);
 }
 
 /* -------------------------- */
@@ -73,6 +73,11 @@
   overflow: hidden;
   background: none;
   cursor: pointer;
+  box-shadow: var(--box-shadow);
+}
+
+.thumb:hover {
+  box-shadow: var(--box-shadow-smooth);
 }
 
 .thumb img {

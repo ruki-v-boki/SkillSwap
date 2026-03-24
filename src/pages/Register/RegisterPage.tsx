@@ -27,6 +27,9 @@ import {
   nextStep,
   prevStep
 } from '@/services/slices/register/registerSlice';
+import { Loader } from '@/components/ui/Loader';
+import { useNavigate } from 'react-router-dom';
+import { selectUser } from '@/services/slices/auth/authSlice';
 
 // ---------------------------------------------------------------
 
@@ -59,12 +62,24 @@ export function RegisterPage() {
   const step3Data = useSelector(selectRegisterStep3);
   const isLoading = useSelector(selectRegisterIsLoading);
   const error = useSelector(selectRegisterError);
+  const authUser = useSelector(selectUser);
+  const navigate = useNavigate();
 
 // ---------------------------------------------------------------
 
   useEffect(() => {
     dispatch(setCurrentStep(1));
   }, [dispatch]);
+
+// ---------------------------------------------------------------
+
+  useEffect(() => {
+    if (!isLoading && !error && authUser) {
+      navigate(`/offer/${authUser.id}/modal`, {
+        state: { background: location.pathname }
+      });
+    }
+  }, [isLoading, error, authUser, navigate]);
 
 // ---------------------------------------------------------------
 
@@ -112,7 +127,12 @@ export function RegisterPage() {
 // ---------------------------------------------------------------
 
   if (isLoading) {
-    return <div className={styles.loader}>Отправка данных...</div>;
+    return (
+      <>
+        <Loader />
+        <div className={styles.loader}>Отправка данных...</div>
+      </>
+    );
   }
 
   if (error) {

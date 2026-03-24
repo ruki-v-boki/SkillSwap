@@ -19,6 +19,7 @@ import { AboutPage } from '@/pages/About';
 import { BlogPage } from '@/pages/Blog';
 import { useEffect } from 'react';
 import { OfferPage } from '@/pages/Offer';
+import { UserOfferModal } from '@/components/ui/Modal/UserOfferModal';
 
 
 
@@ -83,6 +84,14 @@ export function App() {
             element={
               <ModalUI onClose={closeModal}>
                 <UserCardModal />
+              </ModalUI>
+            }
+          />
+          <Route
+            path='offer/:id/modal'
+            element={
+              <ModalUI onClose={closeModal}>
+                <UserOfferModal />
               </ModalUI>
             }
           />

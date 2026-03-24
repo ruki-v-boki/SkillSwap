@@ -10,7 +10,8 @@ import { SkillsListUI } from './SkillsList';
 
 export function CardUI({
   user,
-  styleType
+  styleType,
+  onCardClick
 }: CardUIProps) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -53,7 +54,7 @@ export function CardUI({
       }
     };
   });
-  // ----------------- TO DO 2 --------------   унести логику? 
+  // ----------------- TO DO 2 --------------   унести логику?
 // ---------------------------------------------------------------
 
   const handleCardClick = (e: React.MouseEvent) => {
@@ -78,7 +79,7 @@ export function CardUI({
           ? `${styles.card} ${styles.cardProfile}`
           : styles.card
       }
-      onClick={handleCardClick}>
+      onClick={onCardClick ? onCardClick : handleCardClick}>
       <header className={styles.header}>
         <div className={styles.userBox}>
           <div className={styles.imageBox}>

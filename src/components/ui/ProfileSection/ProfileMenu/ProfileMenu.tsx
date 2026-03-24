@@ -1,7 +1,6 @@
 import type { ProfileMenuUIProps } from './type';
 import styles from './ProfileMenu.module.css';
 import { NavLink } from 'react-router-dom';
-import { Button } from '../../Button';
 
 
 export function ProfileMenuUI({
@@ -17,10 +16,9 @@ export function ProfileMenuUI({
         Личный кабинет
       </NavLink>
 
-      <Button
+      <button
         type="button"
         className={styles.logoutButton}
-        variant={'link'}
         onClick={() => {
           onLinkClick()
           // dispatch( здесь будет логика выхода );
@@ -38,7 +36,7 @@ export function ProfileMenuUI({
           <path fill="currentColor"  d="M9.1 12.7h11q.8 0 .8-.7t-.7-.7H9q-.6 0-.7.7t.7.7"/>
           <path fill="currentColor"  d="M18 16q.3 0 .5-.2l3.3-3.3q.4-.5 0-1l-3.3-3.3a1 1 0 0 0-1 0q-.4.6 0 1l2.7 2.8-2.7 2.7q-.4.6 0 1 .2.3.5.3"/>
         </svg>
-      </Button>
+      </button>
     </>
   )
 }

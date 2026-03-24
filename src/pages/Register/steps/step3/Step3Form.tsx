@@ -205,7 +205,7 @@ export function Step3Form({
 
 // ---------------------------------------------------------------
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     setAttemptedSubmit(true);
 

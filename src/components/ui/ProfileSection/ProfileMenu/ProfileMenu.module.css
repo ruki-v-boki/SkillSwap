@@ -7,6 +7,17 @@
 }
 
 .logoutButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border: none;
   padding: 0;
   color: var(--color-text);
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.logoutButton:hover {
+  color: var(--color-text-link);
 }

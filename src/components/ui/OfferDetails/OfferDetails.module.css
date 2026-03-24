@@ -4,6 +4,10 @@
   width: 100%;
 }
 
+.offerDetailsContainerModal {
+  gap: 44px;
+}
+
 .content {
   display: flex;
   flex-direction: column;
@@ -30,13 +34,13 @@
 
 /* ------------------------------- */
 .description {
-  padding-bottom: 32px;
   color: var(--color-text);
 }
 
 /* ------------------------------- */
 .buttonsBox{
   display: flex;
+  gap: 12px;
 }
 
 .buttonsBoxOfferPage {

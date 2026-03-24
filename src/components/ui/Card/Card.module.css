@@ -15,8 +15,8 @@
 }
 
 .card:hover {
-  cursor: pointer;
   box-shadow: var(--box-shadow-smooth);
+  cursor: pointer;
 }
 
 /* ============ CATALOG-CARD ============ */
@@ -97,6 +97,7 @@
 
 .cardProfile:hover {
   box-shadow: var(--box-shadow-light);
+  cursor: default;
 }
 
 .description {

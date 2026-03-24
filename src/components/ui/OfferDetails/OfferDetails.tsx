@@ -3,6 +3,7 @@ import type { OfferDetailsUIProps } from './type';
 import styles from './OfferDetails.module.css';
 import { GalleryUI } from '../Gallery';
 import { Button } from '../Button';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 export function OfferDetailsUI({
@@ -12,9 +13,21 @@ export function OfferDetailsUI({
 
   const categoryName = getCategoryName(user.canTeach.categoryId);
   const subcategoryName = getSubcategoryName(user.canTeach.subcategoryId);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const handleOpenOfferModal = () => {
+      navigate(`/offer/${user.id}/modal`, {
+        state: { background: location.pathname }
+      })};
+
 
   return (
-    <div className={styles.offerDetailsContainer}>
+    <div
+    className={variant === 'offerPage'
+      ? `${styles.offerDetailsContainer}`
+      : `${styles.offerDetailsContainer}
+        ${styles.offerDetailsContainerModal}`}
+    >
       <div className={styles.content}>
 
         <div className={styles.titleBox}>
@@ -27,7 +40,7 @@ export function OfferDetailsUI({
         </div>
 
         <div className={`${styles.description} h-body`}>
-          {user.about}
+          {user.canTeach.description}
         </div>
 
         {variant === 'modal' ? (
@@ -37,16 +50,16 @@ export function OfferDetailsUI({
               fullWidth
             >
               Редактировать
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M6 19q-.8 0-1.4-.6-.7-.7-.6-1.9l.3-3q.1-1 .8-1.8l7.7-8.1q3-3 6-.2 3 3 .2 6l-7.7 8.1q-.8.6-1.7 1l-3 .4zm9.8-15.6q-1 0-2 1.1l-7.7 8.2q-.3.3-.4 1l-.3 3q0 .4.2.7t.7.1l3-.5q.5-.1 1-.5l7.6-8.1c1.2-1.2 1.6-2.4 0-4q-1.2-1-2-1"/>
+                <path fill="currentColor" d="M17.2 11H17c-3-.4-5.3-2.6-5.7-5.5q0-.6.5-.8.7 0 .9.6a5 5 0 0 0 4.4 4.2q.6.1.7.8-.1.6-.7.6M20.6 22H3.7a1 1 0 0 1-.7-.7q0-.6.7-.7h16.9q.6 0 .7.7t-.7.7"/>
+              </svg>
             </Button>
             <Button
               variant='prime'
               fullWidth
             >
               Готово
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M6 19q-.8 0-1.4-.6-.7-.7-.6-1.9l.3-3q.1-1 .8-1.8l7.7-8.1q3-3 6-.2 3 3 .2 6l-7.7 8.1q-.8.6-1.7 1l-3 .4zm9.8-15.6q-1 0-2 1.1l-7.7 8.2q-.3.3-.4 1l-.3 3q0 .4.2.7t.7.1l3-.5q.5-.1 1-.5l7.6-8.1c1.2-1.2 1.6-2.4 0-4q-1.2-1-2-1"/>
-                <path fill="currentColor" d="M17.2 11H17c-3-.4-5.3-2.6-5.7-5.5q0-.6.5-.8.7 0 .9.6a5 5 0 0 0 4.4 4.2q.6.1.7.8-.1.6-.7.6M20.6 22H3.7a1 1 0 0 1-.7-.7q0-.6.7-.7h16.9q.6 0 .7.7t-.7.7"/>
-              </svg>
             </Button>
           </div>
         ) : (
@@ -54,6 +67,7 @@ export function OfferDetailsUI({
             <Button
               variant='prime'
               fullWidth
+              onClick={handleOpenOfferModal}
             >
               Предложить обмен
             </Button>
