@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { OfferDetailsUI } from '../../OfferDetails';
 // import { selectUser } from '@/services/slices/auth/authSlice';
 import { useParams } from 'react-router-dom';
-import { selectAllUsers } from '@/services/slices/users/userSlice';
+import { selectAllUsers } from '@/services/slices/userSlice';
 import styles from './UserOfferModal.module.css';
 // import type { UserOfferModalProps } from './type';
 

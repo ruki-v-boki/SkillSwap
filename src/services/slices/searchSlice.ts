@@ -1,6 +1,7 @@
+import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { APP_SUBCATEGORIES } from "@/constants/skills";
+import { addSkillWithCategory } from "./filterSlice";
 import type { RootState } from "@/services/store";
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 
 export interface SearchResult {
@@ -29,6 +30,32 @@ const initialState: SearchState = {
   isOpen: false
 };
 
+// ---------------------------------------------------------------
+
+export const selectSkillFromSearch = createAsyncThunk(
+  'search/selectSkill',
+  async (skillId: string, { dispatch }) => {
+
+    const skill = APP_SUBCATEGORIES.find(s => s.id === skillId);
+
+    if (skill) {
+      dispatch(addSkillWithCategory({
+        skillId,
+        categoryId: skill.categoryId
+      }));
+    } else {
+      dispatch(addSkillWithCategory({ skillId, categoryId: '' }));
+    }
+
+    dispatch(clearSearch());
+    dispatch(setIsOpen(false));
+    
+    return skillId;
+  }
+);
+
+// ---------------------------------------------------------------
+
 export const searchSlice = createSlice({
   name: 'search',
   initialState,
@@ -46,21 +73,17 @@ export const searchSlice = createSlice({
         skill.name.toLowerCase().includes(lowerQuery)
       );
     },
-    
     setSelectedIndex: (state, action: PayloadAction<number>) => {
       state.selectedIndex = action.payload;
     },
-    
     setIsOpen: (state, action: PayloadAction<boolean>) => {
       state.isOpen = action.payload;
     },
-    
     clearSearch: (state) => {
       state.query = '';
       state.results = initialResults;
       state.selectedIndex = -1;
     },
-
     resetSearch: () => initialState
   }
 });

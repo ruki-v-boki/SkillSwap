@@ -1,9 +1,8 @@
-import { useEffect } from 'react';
+import { selectSearchQuery, selectSkillFromSearch } from '@/services/slices/searchSlice';
 import { useDispatch, useSelector } from '@/services/store';
-import { useDebounce } from './useDebounce';
 import { APP_SUBCATEGORIES } from '@/constants/skills';
-import { selectSearchQuery } from '@/services/slices/search/searchSlice';
-import { selectSkillFromSearch } from '@/services/slices/search/searchThunks';
+import { useDebounce } from './useDebounce';
+import { useEffect } from 'react';
 
 
 export function useSkillSearchSync() {

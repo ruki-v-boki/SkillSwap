@@ -1,14 +1,15 @@
 import { ProfileSectionUI } from '@/components/ui/ProfileSection';
-import { selectUser } from '@/services/slices/auth/authSlice';
+
 import { AuthButtonsUI } from '@/components/ui/AuthButtons';
 import { useSelector } from '@/services/store';
 import { useNavigate } from 'react-router-dom';
 import { ThemeToggler } from '@/components/ui/ThemeToggler';
 import styles from './ProfileSection.module.css';
+import { selectCurrentUser } from '@/services/slices/userSlice';
 
 
 export function ProfileSection() {
-  const currentUser = useSelector(selectUser);
+  const currentUser = useSelector(selectCurrentUser);
   const navigate = useNavigate();
 
   if (currentUser) {

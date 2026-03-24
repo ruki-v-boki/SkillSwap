@@ -1,5 +1,5 @@
-import { getAllUsers, selectAllUsers, selectUserIsLoading } from '@/services/slices/users/userSlice';
-import { checkAuth, selectIsAuthChecked } from '@/services/slices/auth/authSlice';
+import { getAllUsers, selectAllUsers, selectUserIsLoading } from '@/services/slices/userSlice';
+import { checkAuth, selectIsAuthChecked } from '@/services/slices/authSlice';
 import { UserCardModal } from '@/components/ui/Modal/UserCardModal/UserCardModal';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { UserOfferModal } from '@/components/ui/Modal/UserOfferModal';

@@ -1,4 +1,4 @@
-import { selectAllUsers } from '@/services/slices/users/userSlice';
+import { selectAllUsers } from '@/services/slices/userSlice';
 import { SocialButtonsUI } from '@/components/ui/SocialButtons';
 import { OfferDetailsUI } from '@/components/ui/OfferDetails';
 import { SliderUI } from '@/components/ui/Slider';

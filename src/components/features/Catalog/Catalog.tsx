@@ -1,7 +1,7 @@
-import { selectFilteredUsers, selectHasActiveFilters } from '@/services/slices/filter/filterSlice';
+import { selectFilteredUsers, selectHasActiveFilters } from '@/services/slices/filterSlice';
 import { containerVariants, noResultsVariants, sectionVariants } from './framerMotion';
-import { resetFilters } from '@/services/slices/filter/filterSlice';
-import { selectAllUsers } from '@/services/slices/users/userSlice';
+import { resetFilters } from '@/services/slices/filterSlice';
+import { selectAllUsers } from '@/services/slices/userSlice';
 import { CatalogSectionUI } from '../../ui/CatalogSection';
 import noResultsIcon from '@/assets/icons/noResults.svg';
 import { useSelector } from '@/services/store';

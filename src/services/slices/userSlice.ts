@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/tool
 import type { IUser } from '@/types/types';
 import type { RootState } from '@/services/store';
 import { usersAPI } from '@/services/api';
-
+import { supabase } from '@/services/supabase/client';
 
 interface IUserState {
   allUsers: IUser[];
@@ -62,6 +62,50 @@ export const updateCurrentUser = createAsyncThunk(
 
 // ---------------------------------------------------------------
 
+export const updateUserEmail = createAsyncThunk(
+  'user/updateUserEmail',
+  async ({ userId, newEmail }: { userId: string; newEmail: string }, { rejectWithValue }) => {
+    try {
+      const { error: authError } = await supabase.auth.updateUser({ email: newEmail });
+      if (authError) throw new Error(authError.message);
+
+      const { error: dbError } = await supabase
+        .from('users')
+        .update({ email: newEmail })
+        .eq('id', userId);
+      if (dbError) throw new Error(dbError.message);
+
+      const updatedUser = await usersAPI.getUserById(userId);
+      return updatedUser;
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Ошибка обновления email');
+    }
+  }
+);
+
+// ---------------------------------------------------------------
+
+export const uploadAvatar = createAsyncThunk(
+  'user/uploadAvatar',
+  async ({ userId, file }: { userId: string; file: File }, { rejectWithValue }) => {
+    try {
+      const fileName = `${userId}/avatar_${Date.now()}_${file.name}`;
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(fileName, file);
+      if (uploadError) throw new Error(uploadError.message);
+
+      const { data: urlData } = supabase.storage.from('avatars').getPublicUrl(fileName);
+      const updatedUser = await usersAPI.updateUser(userId, { avatar: urlData.publicUrl });
+      return updatedUser;
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Ошибка загрузки аватара');
+    }
+  }
+);
+
+// ---------------------------------------------------------------
+
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -81,7 +125,6 @@ export const usersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // -------------------- All Users
       .addCase(getAllUsers.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -94,8 +137,6 @@ export const usersSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string || 'Ошибка загрузки всех пользователей';
       })
-
-      // -------------------- Current User
       .addCase(getCurrentUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -108,42 +149,33 @@ export const usersSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string || 'Ошибка загрузки профиля';
       })
-
-      // -------------------- Update Current User
-      .addCase(updateCurrentUser.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
       .addCase(updateCurrentUser.fulfilled, (state, action: PayloadAction<IUser>) => {
         state.isLoading = false;
         state.currentUser = action.payload;
-
-        // Также обновляем пользователя в allUsers, если он там есть
         const index = state.allUsers.findIndex(u => u.id === action.payload.id);
-        if (index !== -1) {
-          state.allUsers[index] = action.payload;
-        }
+        if (index !== -1) state.allUsers[index] = action.payload;
       })
-      .addCase(updateCurrentUser.rejected, (state, action) => {
+      .addCase(updateUserEmail.fulfilled, (state, action: PayloadAction<IUser>) => {
         state.isLoading = false;
-        state.error = action.payload as string || 'Ошибка обновления профиля';
+        state.currentUser = action.payload;
+        const index = state.allUsers.findIndex(u => u.id === action.payload.id);
+        if (index !== -1) state.allUsers[index] = action.payload;
+      })
+      .addCase(uploadAvatar.fulfilled, (state, action: PayloadAction<IUser>) => {
+        state.isLoading = false;
+        state.currentUser = action.payload;
+        const index = state.allUsers.findIndex(u => u.id === action.payload.id);
+        if (index !== -1) state.allUsers[index] = action.payload;
       });
   }
 });
 
 // ---------------------------------------------------------------
 
-// Actions
-export const {
-  setAllUsers,
-  setCurrentUser,
-  clearCurrentUser,
-  clearUserError,
-} = usersSlice.actions;
+export const { setAllUsers, setCurrentUser, clearCurrentUser, clearUserError } = usersSlice.actions;
 
 // ---------------------------------------------------------------
 
-// Selectors
 export const selectAllUsers = (state: RootState) => state.users.allUsers;
 export const selectCurrentUser = (state: RootState) => state.users.currentUser;
 export const selectUserIsLoading = (state: RootState) => state.users.isLoading;

@@ -1,4 +1,4 @@
-import { selectAllUsers } from '@/services/slices/users/userSlice';
+import { selectAllUsers } from '@/services/slices/userSlice';
 import { useSelector } from '@/services/store';
 import { useParams } from 'react-router-dom';
 import { CardUI } from '../../Card';

@@ -1,8 +1,8 @@
-import { registerSlice } from './slices/register/registerSlice';
-import { searchSlice } from './slices/search/searchSlice';
-import { filterSlice } from './slices/filter/filterSlice';
-import { usersSlice } from './slices/users/userSlice';
-import { authSlice } from './slices/auth/authSlice';
+import { registerSlice } from './slices/registerSlice';
+import { searchSlice } from './slices/searchSlice';
+import { filterSlice } from './slices/filterSlice';
+import { usersSlice } from './slices/userSlice';
+import { authSlice } from './slices/authSlice';
 import { combineSlices } from '@reduxjs/toolkit';
 
 

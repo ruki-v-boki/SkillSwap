@@ -1,14 +1,13 @@
-import { selectSkillFromSearch } from '@/services/slices/search/searchThunks';
-import { selectSelectedSkills } from '@/services/slices/filter/filterSlice';
 import { SearchSuggestions } from './SearchSuggestions/SearchSuggestions';
+import { selectSelectedSkills } from '@/services/slices/filterSlice';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from '@/services/store';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { Input } from '@/components/ui/Input/Input';
-import searchIcon from '@/assets/icons/search.svg'
+import searchIcon from '@/assets/icons/search.svg';
 import { useDebounce } from '@/hooks/useDebounce';
-import styles from './SearchInput.module.css';
 import { useNavigate } from 'react-router-dom';
+import styles from './SearchInput.module.css';
 import {
   setQuery,
   setIsOpen,
@@ -17,7 +16,8 @@ import {
   selectIsSearchOpen,
   selectSearchResults,
   selectSelectedIndex,
-} from '@/services/slices/search/searchSlice';
+  selectSkillFromSearch,
+} from '@/services/slices/searchSlice';
 
 
 export function SearchInput() {
@@ -172,7 +172,7 @@ export function SearchInput() {
         onFocus={handleFocus}
         placeholder="Искать навык"
         className={styles.searchInput}
-        leftIcon={<img src={searchIcon} alt="иконка поиска" />}
+        leftIcon={<img src={searchIcon} />}
         hideLeftIconOnFocus={true}
       />
 

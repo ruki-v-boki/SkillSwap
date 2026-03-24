@@ -1,4 +1,5 @@
-import { login, selectIsAuthLoading, selectAuthError, selectUser } from '@/services/slices/auth/authSlice';
+import { login, selectIsAuthLoading, selectAuthError } from '@/services/slices/authSlice';
+import { selectCurrentUser } from '@/services/slices/userSlice';
 import { useDispatch, useSelector } from '@/services/store';
 import { FormHintUI } from '@/components/ui/FormHint';
 import { LoginForm } from '@/components/ui/LoginForm';
@@ -13,7 +14,7 @@ export function LoginPage() {
   const navigate = useNavigate();
   const isAuthLoading = useSelector(selectIsAuthLoading);
   const error = useSelector(selectAuthError);
-  const user = useSelector(selectUser);
+  const user = useSelector(selectCurrentUser);
 
 // ---------------------------------------------------------------
 

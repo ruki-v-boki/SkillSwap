@@ -1,5 +1,5 @@
+import { selectCurrentUser } from '@/services/slices/userSlice';
 import { StepsCounter } from '@/components/features/StepsCounter';
-import { selectUser } from '@/services/slices/auth/authSlice';
 import type { TCity, WantToLearnSkill } from '@/types/types';
 import schoolBoardIcon from '@/assets/icons/schoolBoard.svg';
 import { useDispatch, useSelector } from '@/services/store';
@@ -28,7 +28,7 @@ import {
   updateStep3,
   nextStep,
   prevStep
-} from '@/services/slices/register/registerSlice';
+} from '@/services/slices/registerSlice';
 
 // ---------------------------------------------------------------
 
@@ -61,7 +61,7 @@ export function RegisterPage() {
   const step3Data = useSelector(selectRegisterStep3);
   const isLoading = useSelector(selectRegisterIsLoading);
   const error = useSelector(selectRegisterError);
-  const authUser = useSelector(selectUser);
+  const authUser = useSelector(selectCurrentUser);
   const navigate = useNavigate();
 
 // ---------------------------------------------------------------

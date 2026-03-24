@@ -1,4 +1,4 @@
-import { selectUser, updateUser, updateUserEmail } from '@/services/slices/auth/authSlice';
+
 import { CITY_OPTIONS, GENDER_OPTIONS } from '@/constants/options';
 import { AvatarLoader } from '@/components/features/AvatarLoader';
 import { useDispatch, useSelector } from '@/services/store';
@@ -17,6 +17,7 @@ import {
   validateName,
   validateAge,
 } from '@/utils/validators';
+import { selectCurrentUser, updateCurrentUser, updateUserEmail } from '@/services/slices/userSlice';
 
 
 export function ProfilePage() {
@@ -25,7 +26,7 @@ export function ProfilePage() {
   const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
   const [isUpdatingEmail, setIsUpdatingEmail] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const user = useSelector(selectUser);
+  const user = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
 
   const {
@@ -60,7 +61,7 @@ export function ProfilePage() {
       if (data.email !== user.email) {
         setIsUpdatingEmail(true);
         try {
-          await dispatch(updateUserEmail(data.email)).unwrap();
+          await dispatch(updateUserEmail({ userId: user.id, newEmail: data.email })).unwrap();
         } catch (error) {
           console.error('Email update failed:', error);
           setIsUpdatingEmail(false);
@@ -77,7 +78,7 @@ export function ProfilePage() {
       if (data.about !== user.about) profileUpdates.about = data.about;
 
       if (Object.keys(profileUpdates).length > 0) {
-        await dispatch(updateUser(profileUpdates));
+        await dispatch(updateCurrentUser({ userId: user.id, data: profileUpdates })).unwrap();
       }
     },
   });
@@ -125,7 +126,7 @@ export function ProfilePage() {
 
     try {
       const avatarUrl = await uploadAvatar(user.id, file);
-      await dispatch(updateUser({ avatar: avatarUrl })).unwrap();
+      await dispatch(updateCurrentUser({ userId: user.id, data: { avatar: avatarUrl } })).unwrap();
       URL.revokeObjectURL(preview);
     } catch (error) {
       console.error('Avatar upload failed:', error);

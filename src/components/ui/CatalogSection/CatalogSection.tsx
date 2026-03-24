@@ -1,4 +1,4 @@
-import { selectHasActiveFilters } from '@/services/slices/filter/filterSlice';
+import { selectHasActiveFilters } from '@/services/slices/filterSlice';
 import type { CatalogSectionUIProps } from './type';
 import styles from './CatalogSection.module.css';
 import { ChevronIcon } from '../ChevronIcon';

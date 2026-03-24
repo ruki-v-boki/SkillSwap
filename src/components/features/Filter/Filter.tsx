@@ -8,8 +8,8 @@ import {
   setFilters,
   selectAvailableCities,
   selectActiveFiltersCount,
-} from '@/services/slices/filter/filterSlice';
-import { clearSearch, selectSearchQuery } from '@/services/slices/search/searchSlice';
+} from '@/services/slices/filterSlice';
+import { clearSearch, selectSearchQuery } from '@/services/slices/searchSlice';
 import { APP_CATEGORIES, APP_SUBCATEGORIES } from '@/constants/skills';
 
 
