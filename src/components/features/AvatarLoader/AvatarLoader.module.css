@@ -1,0 +1,61 @@
+.avatarContainerRegister {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-text);
+  cursor: pointer;
+  box-shadow: var(--box-shadow);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+}
+
+.avatarPreview {
+  max-width: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+}
+
+.avatarPreview:hover {
+  box-shadow: var(--box-shadow-smooth);
+}
+
+.loadButton {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  color: var(--color-input);
+  background-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.loadButton:hover {
+  background-color: var(--color-text-link);
+}
+
+.input {
+  display: none;
+}
+
+
+.avatarContainerProfile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+}

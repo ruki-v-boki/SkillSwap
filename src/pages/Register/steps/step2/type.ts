@@ -4,6 +4,7 @@ import type { TCity } from "@/constants/cities";
 
 export type Step2FormProps = {
   initialData?: {
+      avatar?: { file: File; preview: string } | null;
       name?: string;
       age?: number;
       gender?: TGender;
@@ -12,6 +13,7 @@ export type Step2FormProps = {
       wantToLearn?: Omit<WantToLearnSkill, 'id'>[];
     };
   onSubmit: (data: {
+      avatar?: { file: File; preview: string } | null;
       name: string;
       age: number;
       gender: TGender;

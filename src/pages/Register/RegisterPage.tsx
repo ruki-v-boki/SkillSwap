@@ -1,4 +1,5 @@
 import { StepsCounter } from '@/components/features/StepsCounter';
+import { selectUser } from '@/services/slices/auth/authSlice';
 import schoolBoardIcon from '@/assets/icons/schoolBoard.svg';
 import { useDispatch, useSelector } from '@/services/store';
 import userInfoIcon from '@/assets/icons/userInfo.svg';
@@ -8,6 +9,8 @@ import lampIcon from '@/assets/icons/light-bulb.svg';
 import { Step1Form } from './steps/step1/Step1Form';
 import { Step2Form } from './steps/step2/Step2Form';
 import type { TCity } from '@/constants/cities';
+import { Loader } from '@/components/ui/Loader';
+import { useNavigate } from 'react-router-dom';
 import styles from './RegisterPage.module.css';
 import type { TGender } from '@/types/types';
 import { Step3Form } from './steps/step3';
@@ -27,9 +30,6 @@ import {
   nextStep,
   prevStep
 } from '@/services/slices/register/registerSlice';
-import { Loader } from '@/components/ui/Loader';
-import { useNavigate } from 'react-router-dom';
-import { selectUser } from '@/services/slices/auth/authSlice';
 
 // ---------------------------------------------------------------
 
@@ -94,6 +94,7 @@ export function RegisterPage() {
 // ---------------------------------------------------------------
 
   const handleStep2Submit = (data: {
+    avatar?: { file: File; preview: string } | null;
     name: string;
     age: number;
     gender: TGender;

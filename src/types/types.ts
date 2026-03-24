@@ -51,5 +51,6 @@ export type CanTeachSkillInput = Omit<CanTeachSkill, 'id' | 'images'> & {
 
 // Для аватара (до загрузки)
 export type AvatarInput = {
-  file: File;  // файл для загрузки
-}
+  file: File;
+  preview: string;  // ← добавляем preview
+} | null;

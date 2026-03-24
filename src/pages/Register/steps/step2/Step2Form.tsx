@@ -1,5 +1,6 @@
+import { AvatarLoader } from '@/components/features/AvatarLoader/AvatarLoader';
 import { APP_CATEGORIES, APP_SUBCATEGORIES } from '@/constants/skills';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Select } from '@/components/ui/Select';
 import type { TCity } from '@/constants/cities';
 import { Button } from '@/components/ui/Button';
@@ -17,6 +18,7 @@ export function Step2Form({
 }: Step2FormProps) {
 
   const [formData, setFormData] = useState({
+    avatar: null as { file: File; preview: string } | null,
     name: initialData?.name || '',
     age: initialData?.age || 0,
     gender: initialData?.gender || 'any',
@@ -31,6 +33,7 @@ export function Step2Form({
   );
 
   const [errors, setErrors] = useState<{
+    avatar?: string;
     name?: string;
     age?: string;
     location?: string;
@@ -215,6 +218,7 @@ export function Step2Form({
 
     if (validateAll()) {
       onSubmit({
+        avatar: formData.avatar,
         name: formData.name,
         age: formData.age,
         gender: formData.gender,
@@ -226,15 +230,42 @@ export function Step2Form({
   };
 
 // ---------------------------------------------------------------
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(initialData?.avatar?.preview || null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+
+  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const preview = URL.createObjectURL(file);
+      setAvatarPreview(preview);
+      setFormData(prev => ({
+        ...prev,
+        avatar: { file, preview }
+      }));
+    }
+  };
+
+
+  useEffect(() => {
+    return () => {
+      if (avatarPreview) {
+        URL.revokeObjectURL(avatarPreview);
+      }
+    };
+  }, [avatarPreview]);
+
+// ---------------------------------------------------------------
 
   return (
     <form onSubmit={handleSubmit} className={styles.formContainer} noValidate>
       {/* -------------------- Фото --------------------*/}
-      <div>
-        <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" fill="none" viewBox="0 0 56 56">
-          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M45.7 48a22.5 22.5 0 0 0-35.9 0m35.9 0a27 27 0 1 0-35.9 0m35.9 0a27 27 0 0 1-35.9 0m27-27a9 9 0 1 1-18 0 9 9 0 0 1 18 0"/>
-        </svg>
-      </div>
+        <AvatarLoader
+          ref={fileInputRef}
+          variant="registerForm"
+          onChange={handleAvatarChange}
+          previewUrl={avatarPreview}
+        />
       {/* -------------------- Имя --------------------*/}
       <Input
         label="Имя"

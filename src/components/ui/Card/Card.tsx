@@ -89,8 +89,7 @@ export function CardUI({
           <div className={styles.userInfoBox}>
             <h4 className={styles.userName}>{user.name}</h4>
             <span className={`${styles.bio} h-caption`}>
-              {user.location},
-              {user.age}
+              {user.location}, {user.age}
               {getAgeWord(user.age)}
             </span>
           </div>
