@@ -1,14 +1,14 @@
-import { FILTER_MODE_OPTIONS, GENDER_OPTIONS } from '@/constants/filter';
-import { useCallback, memo } from 'react';
-import styles from './FiltersPanel.module.css';
-import { RadioGroupUI } from './RadioGroup';
+import { FILTER_MODE_OPTIONS, GENDER_OPTIONS } from '@/constants/options';
 import { SkillsSectionUI } from './SkillsSection';
 import { CitiesSectionUI } from './CitiesSection';
+import styles from './FiltersPanel.module.css';
+import { RadioGroupUI } from './RadioGroup';
+import { useCallback, memo } from 'react';
 import { Button } from '../Button';
 import {
+  type FiltersPanelUIProps,
   type AuthorGender,
   type FilterMode,
-  type FiltersPanelUIProps
 } from './type';
 
 

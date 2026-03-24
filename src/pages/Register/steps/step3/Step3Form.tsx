@@ -1,10 +1,18 @@
-import { APP_CATEGORIES, APP_SUBCATEGORIES } from '@/constants/skills';
+import { getSubcategoryOptions } from '@/utils/helpers';
+import { CATEGORY_OPTIONS } from '@/constants/options';
 import { useState, useRef, useCallback } from 'react';
 import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import type { Step3FormProps } from './type';
 import styles from './Step3Form.module.css';
+import { useForm } from '@/hooks/useForm';
+import {
+  validateSubcategoryId,
+  validateDescription,
+  validateCategoryId,
+  validateSkillName,
+} from '@/utils/validators';
 
 
 export function Step3Form({
@@ -13,122 +21,50 @@ export function Step3Form({
   onBack
 }: Step3FormProps) {
 
-  const [attemptedSubmit, setAttemptedSubmit] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-// ---------------------------------------------------------------
+  const [isDragging, setIsDragging] = useState(false);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
 
-  const [formData, setFormData] = useState({
-    customName: initialData?.customName || '',
-    categoryId: initialData?.categoryId || '',
-    subcategoryId: initialData?.subcategoryId || '',
-    description: initialData?.description || '',
-    images: initialData?.images || [] as File[],
+  const {
+    values: formData,
+    getError,
+    isValid,
+    attemptedSubmit,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = useForm({
+    initialValues: {
+      customName: initialData?.customName || '',
+      categoryId: initialData?.categoryId || '',
+      subcategoryId: initialData?.subcategoryId || '',
+      description: initialData?.description || '',
+      images: initialData?.images || [] as File[],
+    },
+    validators: {
+      customName: validateSkillName,
+      categoryId: validateCategoryId,
+      subcategoryId: validateSubcategoryId,
+      description: validateDescription,
+    },
+    onSubmit: (data) => {
+      onSubmit({
+        customName: data.customName,
+        categoryId: data.categoryId,
+        subcategoryId: data.subcategoryId,
+        description: data.description,
+        images: data.images,
+      });
+    },
   });
 
-  const [errors, setErrors] = useState<{
-    customName?: string;
-    categoryId?: string;
-    subcategoryId?: string;
-    description?: string;
-  }>({});
-
-  const [touched, setTouched] = useState<{
-    customName: boolean;
-    categoryId: boolean;
-    subcategoryId: boolean;
-    description: boolean;
-  }>({
-    customName: false,
-    categoryId: false,
-    subcategoryId: false,
-    description: false,
-  });
+  const isFormValid = isValid('customName') && isValid('categoryId') && 
+                      isValid('subcategoryId') && isValid('description');
 
 // ---------------------------------------------------------------
 
-  const categoryOptions = APP_CATEGORIES.map(category => ({
-    value: category.id,
-    label: category.name,
-  }));
-
-// ---------------------------------------------------------------
-
-  const availableSubcategories = APP_SUBCATEGORIES.filter(
-    sub => sub.categoryId === formData.categoryId
-  );
-
-  const subcategoryOptions = availableSubcategories.map(subcategory => ({
-    value: subcategory.id,
-    label: subcategory.name,
-  }));
-
-// ---------------------------------------------------------------
-
-  const handleCustomNameChange = (value: string) => {
-    setFormData(prev => ({ ...prev, customName: value }));
-    setErrors(prev => ({ ...prev, customName: undefined }));
-  };
-
-  const handleCategoryChange = (value: string | string[]) => {
-    const categoryId = value as string;
-    setFormData(prev => ({ ...prev, categoryId, subcategoryId: '' }));
-    setTouched(prev => ({ ...prev, categoryId: true, subcategoryId: true }));
-    setErrors(prev => ({ ...prev, categoryId: undefined, subcategoryId: undefined }));
-  };
-
-  const handleSubcategoryChange = (value: string | string[]) => {
-    const subcategoryId = value as string;
-    setFormData(prev => ({ ...prev, subcategoryId }));
-    setTouched(prev => ({ ...prev, subcategoryId: true }));
-    setErrors(prev => ({ ...prev, subcategoryId: undefined }));
-  };
-
-  const handleDescriptionChange = (value: string) => {
-    setFormData(prev => ({ ...prev, description: value }));
-    setErrors(prev => ({ ...prev, description: undefined }));
-  };
-
-// ---------------------------------------------------------------
-
-  const validateCustomName = (value: string): string | undefined => {
-    if (value.trim() === '') return 'Название навыка обязательно';
-    if (value.length < 3) return 'Название должно быть не менее 3 символов';
-    return undefined;
-  };
-
-  const validateCategoryId = (value: string): string | undefined => {
-    if (value === '') return 'Выберите категорию';
-    return undefined;
-  };
-
-  const validateSubcategoryId = (value: string): string | undefined => {
-    if (value === '') return 'Выберите подкатегорию';
-    return undefined;
-  };
-
-  const validateDescription = (value: string): string | undefined => {
-    if (value.trim() === '') return 'Описание обязательно';
-    if (value.length < 20) return 'Описание должно быть не менее 20 символов';
-    return undefined;
-  };
-
-// ---------------------------------------------------------------
-
-  const isCustomNameValid = formData.customName.trim() !== '' && !validateCustomName(formData.customName);
-  const isCategoryIdValid = formData.categoryId !== '' && !validateCategoryId(formData.categoryId);
-  const isSubcategoryIdValid = formData.subcategoryId !== '' && !validateSubcategoryId(formData.subcategoryId);
-  const isDescriptionValid = formData.description.trim() !== '' && !validateDescription(formData.description);
-  const isFormValid = isCustomNameValid && isCategoryIdValid && isSubcategoryIdValid && isDescriptionValid;
-
-// ---------------------------------------------------------------
-
-  const showCustomNameError = errors.customName && (touched.customName || attemptedSubmit);
-  const showCategoryIdError = errors.categoryId && (touched.categoryId || attemptedSubmit);
-  const showSubcategoryIdError = errors.subcategoryId && (touched.subcategoryId || attemptedSubmit);
-  const showDescriptionError = errors.description && (touched.description || attemptedSubmit);
+  const subcategoryOptions = getSubcategoryOptions(formData.categoryId);
 
 // ---------------------------------------------------------------
 
@@ -146,13 +82,9 @@ export function Step3Form({
       }
     });
 
-    setFormData(prev => ({
-      ...prev,
-      images: [...prev.images, ...validFiles]
-    }));
-
+    handleChange('images', [...formData.images, ...validFiles]);
     setImagePreviews(prev => [...prev, ...validPreviews]);
-  }, []);
+  }, [formData.images, handleChange]);
 
 // ---------------------------------------------------------------
 
@@ -172,9 +104,7 @@ export function Step3Form({
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
-
-    const files = e.dataTransfer.files;
-    processFiles(files);
+    processFiles(e.dataTransfer.files);
   };
 
 // ---------------------------------------------------------------
@@ -183,9 +113,10 @@ export function Step3Form({
     fileInputRef.current?.click();
   };
 
+// ---------------------------------------------------------------
+
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     processFiles(e.target.files);
-
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -195,48 +126,9 @@ export function Step3Form({
 
   const removeImage = (index: number) => {
     URL.revokeObjectURL(imagePreviews[index]);
-
     setImagePreviews(prev => prev.filter((_, i) => i !== index));
-    setFormData(prev => ({
-      ...prev,
-      images: prev.images.filter((_, i) => i !== index)
-    }));
-  };
-
-// ---------------------------------------------------------------
-
-  const handleSubmit = (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    setAttemptedSubmit(true);
-
-    setTouched({
-      customName: true,
-      categoryId: true,
-      subcategoryId: true,
-      description: true,
-    });
-
-    const customNameError = validateCustomName(formData.customName);
-    const categoryIdError = validateCategoryId(formData.categoryId);
-    const subcategoryIdError = validateSubcategoryId(formData.subcategoryId);
-    const descriptionError = validateDescription(formData.description);
-
-    setErrors({
-      customName: customNameError,
-      categoryId: categoryIdError,
-      subcategoryId: subcategoryIdError,
-      description: descriptionError,
-    });
-
-    if (!customNameError && !categoryIdError && !subcategoryIdError && !descriptionError) {
-      onSubmit({
-        customName: formData.customName,
-        categoryId: formData.categoryId,
-        subcategoryId: formData.subcategoryId,
-        description: formData.description,
-        images: formData.images,
-      });
-    }
+    const newImages = formData.images.filter((_, i) => i !== index);
+    handleChange('images', newImages);
   };
 
 // ---------------------------------------------------------------
@@ -247,47 +139,48 @@ export function Step3Form({
       className={styles.formContainer}
       noValidate
     >
-      {/* -------------------- Название -------------------- */}
       <Input
         label="Название навыка"
         placeholder="Введите название вашего навыка"
         value={formData.customName}
-        onChange={(e) => handleCustomNameChange(e.target.value)}
-        onBlur={() => setTouched(prev => ({ ...prev, customName: true }))}
-        error={showCustomNameError ? errors.customName : undefined}
-        isValid={isCustomNameValid}
+        onChange={(e) => handleChange('customName', e.target.value)}
+        onBlur={() => handleBlur('customName')}
+        error={getError('customName')}
+        isValid={isValid('customName')}
         required
       />
-      {/* -------------------- Категория -------------------- */}
+
       <Select
         type="single"
         label="Категория навыка"
         placeholder="Выберите категорию"
         value={formData.categoryId}
-        onChange={handleCategoryChange}
-        options={categoryOptions}
-        error={showCategoryIdError ? errors.categoryId : undefined}
-        isValid={isCategoryIdValid}
+        onChange={(v) => handleChange('categoryId', v)}
+        onBlur={() => handleBlur('categoryId')}
+        options={CATEGORY_OPTIONS}
+        error={getError('categoryId')}
+        isValid={isValid('categoryId')}
         required
         attemptedSubmit={attemptedSubmit}
       />
-      {/* -------------------- Подкатегория -------------------- */}
+
       <Select
         type="single"
         label="Подкатегория навыка"
         placeholder={formData.categoryId ? "Выберите подкатегорию" : "Сначала выберите категорию"}
         value={formData.subcategoryId}
-        onChange={handleSubcategoryChange}
+        onChange={(v) => handleChange('subcategoryId', v)}
+        onBlur={() => handleBlur('subcategoryId')}
         options={subcategoryOptions}
         disabled={!formData.categoryId}
-        error={showSubcategoryIdError ? errors.subcategoryId : undefined}
-        isValid={isSubcategoryIdValid}
+        error={getError('subcategoryId')}
+        isValid={isValid('subcategoryId')}
         required
         attemptedSubmit={attemptedSubmit}
       />
-      {/* -------------------- Описание -------------------- */}
+
       <div className={styles.textareaBox}>
-        <label htmlFor="description" className={`h-body`}>
+        <label htmlFor="description" className="h-body">
           Описание
         </label>
         <textarea
@@ -295,14 +188,14 @@ export function Step3Form({
           className={styles.textarea}
           placeholder="Коротко опишите, чему можете научить"
           value={formData.description}
-          onChange={(e) => handleDescriptionChange(e.target.value)}
-          onBlur={() => setTouched(prev => ({ ...prev, description: true }))}
+          onChange={(e) => handleChange('description', e.target.value)}
+          onBlur={() => handleBlur('description')}
         />
-        {showDescriptionError && (
-          <span className={styles.errorMessage}>{errors.description}</span>
+        {getError('description') && (
+          <span className={styles.errorMessage}>{getError('description')}</span>
         )}
       </div>
-      {/* -------------------- Фото -------------------- */}
+
       <div className={styles.imagesBox}>
         <div
           className={`${styles.imageUpload} ${isDragging ? styles.dragging : ''}`}
@@ -323,7 +216,6 @@ export function Step3Form({
             </svg>
             <p>Выбрать изображения</p>
           </div>
-
           <input
             ref={fileInputRef}
             type="file"
@@ -334,7 +226,7 @@ export function Step3Form({
           />
         </div>
 
-        {/* ---------- Превью загруженных изображений ---------- */}
+
         {imagePreviews.length > 0 && (
           <div className={styles.previewContainer}>
             {imagePreviews.map((preview, index) => (
@@ -359,12 +251,13 @@ export function Step3Form({
           </div>
         )}
       </div>
-      {/* -------------------- Кнопки -------------------- */}
+
+
       <div className={styles.buttonsBox}>
         <Button
           variant="outline"
-          onClick={onBack}
           type="button"
+          onClick={onBack}
           fullWidth
         >
           Назад

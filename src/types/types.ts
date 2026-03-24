@@ -1,8 +1,11 @@
-import type { TCity } from "@/constants/cities";
+import type { CATEGORY_CONFIG } from "@/constants/category";
+import type { CITIES } from "@/constants/cities";
+
 
 export type TGender = 'male' | 'female' | 'any'
+export type TCity = typeof CITIES[number];
 
-export interface IUser {
+export type IUser = {
   id: string;
   email?: string;
   name: string;
@@ -29,6 +32,8 @@ export type Subcategory = {
   name: string;
   categoryId: string;
 }
+
+export type CategoryId = keyof typeof CATEGORY_CONFIG;
 
 // // ------------ НАВЫКИ ------------
 export type WantToLearnSkill = {

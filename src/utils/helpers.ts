@@ -1,5 +1,6 @@
 import { APP_CATEGORIES, APP_SUBCATEGORIES } from "@/constants/skills";
-import { categoryConfig } from "@/constants/category";
+import { CATEGORY_CONFIG } from "@/constants/category";
+import type { CategoryId } from "@/types/types";
 
 
 export const getAgeWord = (age: number): string => {
@@ -18,7 +19,7 @@ export const getAgeWord = (age: number): string => {
   return 'лет';
 };
 
-// ------------- КАТЕГОРИИ ----------- 
+// ---------------------------------------------------------------
 
 export const getCategoryById = (id: string) => {
   return APP_CATEGORIES.find(c => c.id === id);
@@ -36,7 +37,6 @@ export const getSubcategoryName = (id: string) => {
   return APP_SUBCATEGORIES.find(s => s.id === id)?.name || id;
 };
 
-
 export const getSubcategoriesByCategoryId = (categoryId: string) => {
   return APP_SUBCATEGORIES.filter(s => s.categoryId === categoryId);
 };
@@ -49,13 +49,30 @@ export const getCategoriesWithSubcategories = () => {
 };
 
 export const getCategoryConfig = (categoryId: string) => {
-  if (Object.hasOwn(categoryConfig, categoryId)) {
-    return categoryConfig[categoryId as keyof typeof categoryConfig];
+  if (Object.hasOwn(CATEGORY_CONFIG, categoryId)) {
+    return CATEGORY_CONFIG[categoryId as keyof typeof CATEGORY_CONFIG];
   }
-  
+
   return {
     colorClass: 'default',
     icon: '',
     label: categoryId
   };
+};
+
+export const getCategoryColorClass = (categoryId: string): string => {
+  const keys = Object.keys(CATEGORY_CONFIG) as CategoryId[];
+  if (keys.includes(categoryId as CategoryId)) {
+    return CATEGORY_CONFIG[categoryId as CategoryId].colorClass;
+  }
+  return 'default';
+};
+
+export const getSubcategoryOptions = (categoryId: string) => {
+  return APP_SUBCATEGORIES
+    .filter(sub => sub.categoryId === categoryId)
+    .map(sub => ({
+      value: sub.id,
+      label: sub.name,
+    }));
 };

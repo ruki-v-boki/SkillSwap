@@ -4,9 +4,16 @@ import appleIcon from '@/assets/icons/Apple.svg';
 import { AuthButtonsUI } from '../AuthButtons';
 import type { LoginFormProps } from './type';
 import styles from './LoginForm.module.css';
-import { useState, useEffect } from 'react';
+import { useForm } from '@/hooks/useForm';
+import { useRef, useState } from 'react';
 import { Button } from '../Button';
 import { Input } from '../Input';
+import {
+  validatePassword,
+  isPasswordValid,
+  validateEmail,
+  isEmailValid,
+} from '@/utils/validators';
 
 
 export function LoginForm({
@@ -21,80 +28,38 @@ export function LoginForm({
   initialPassword = '',
 }: LoginFormProps) {
 
-  const [email, setEmail] = useState(initialEmail);
-  const [password, setPassword] = useState(initialPassword);
+  const formRef = useRef<HTMLFormElement>(null);
   const [showPassword, setShowPassword] = useState(false);
-  const [emailError, setEmailError] = useState<string | undefined>();
-  const [passwordError, setPasswordError] = useState<string | undefined>();
-  const [attemptedSubmit, setAttemptedSubmit] = useState(false);
+
+  const {
+      values,
+      getError,
+      handleChange,
+      handleBlur,
+      handleSubmit,
+    } = useForm({
+      initialValues: {
+        email: initialEmail,
+        password: initialPassword,
+      },
+      validators: {
+        email: validateEmail,
+        password: validatePassword,
+      },
+      onSubmit: (data) => {
+        onLoginClick(data);
+      },
+    });
+
+  const isEmailFieldValid = values.email !== '' && isEmailValid(values.email);
+  const isPasswordFieldValid = values.password !== '' && isPasswordValid(values.password);
 
 // ---------------------------------------------------------------
 
-  const isEmailValid = (value: string): boolean => {
-    if (value === '') return false;
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    return emailRegex.test(value);
-  };
-
-  const isPasswordValid = (value: string): boolean => {
-    if (value === '') return false;
-    return value.length >= 8;
-  };
-
-// ---------------------------------------------------------------
-
-  const getEmailErrorMessage = (value: string): string | undefined => {
-    if (!attemptedSubmit) return undefined;
-    if (value === '') return 'Email обязателен';
-    if (!isEmailValid(value)) return 'Введите корректный email (только латиница)';
-    return undefined;
-  };
-
-  const getPasswordErrorMessage = (value: string): string | undefined => {
-    if (!attemptedSubmit) return undefined;
-    if (value === '') return 'Пароль обязателен';
-    if (!isPasswordValid(value)) return 'Пароль должен быть не менее 8 символов';
-    return undefined;
-  };
-
-// ---------------------------------------------------------------
-
-  useEffect(() => {
-    if (attemptedSubmit) {
-      setEmailError(getEmailErrorMessage(email));
-      setPasswordError(getPasswordErrorMessage(password));
-    }
-  }, [attemptedSubmit, email, password]);
-
-// ---------------------------------------------------------------
-
-  const handleEmailChange = (value: string) => {
-    const normalized = value.trim().toLowerCase();
-    setEmail(normalized);
-    if (attemptedSubmit) {
-      setEmailError(undefined);
-    }
-  };
-
-  const handlePasswordChange = (value: string) => {
-    setPassword(value);
-    if (attemptedSubmit) {
-      setPasswordError(undefined);
-    }
-  };
-
-// ---------------------------------------------------------------
-
-  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setAttemptedSubmit(true);
-
-    const emailValid = email !== '' && isEmailValid(email);
-    const passwordValid = password !== '' && isPasswordValid(password);
-
-    if (emailValid && passwordValid) {
-      onLoginClick({ email, password });
+  const triggerSubmit = () => {
+    if (formRef.current) {
+      const event = new Event('submit', { bubbles: true, cancelable: true });
+      formRef.current.dispatchEvent(event);
     }
   };
 
@@ -150,10 +115,11 @@ export function LoginForm({
           id="email"
           label="Email"
           placeholder="Введите email"
-          value={email}
-          onChange={(e) => handleEmailChange(e.target.value)}
-          error={emailError}
-          isValid={email !== '' && isEmailValid(email)}
+          value={values.email}
+          onChange={(e) => handleChange('email', e.target.value.trim().toLowerCase())}
+          onBlur={() => handleBlur('email')}
+          error={getError('email')}
+          isValid={isEmailFieldValid}
           required
           disabled={isLoading}
         />
@@ -164,49 +130,30 @@ export function LoginForm({
           id="password"
           label="Пароль"
           placeholder={variant === 'loginPage' ? "Введите ваш пароль" : "Придумайте надёжный пароль"}
-          value={password}
-          onChange={(e) => handlePasswordChange(e.target.value)}
-          error={passwordError}
-          isValid={password !== '' && isPasswordValid(password)}
+          value={values.password}
+          onChange={(e) => handleChange('password', e.target.value)}
+          onBlur={() => handleBlur('password')}
+          error={getError('password')}
+          isValid={isPasswordFieldValid}
           required
           disabled={isLoading}
-          rightIcon={
-            <PasswordToggle
-              onToggle={(show) => setShowPassword(show)}
-            />
-          }
+          rightIcon={<PasswordToggle onToggle={setShowPassword} />}
         />
 
         {loginError && <div className={styles.errorFormMessage}>Ошибка: {loginError}</div>}
-        {variant === 'loginPage' && (
+
+        {variant === 'loginPage' ? (
           <AuthButtonsUI
             variant='form'
-            onLoginClick={() => {
-              setAttemptedSubmit(true);
-              const emailValid = email !== '' && isEmailValid(email);
-              const passwordValid = password !== '' && isPasswordValid(password);
-
-              if (emailValid && passwordValid) {
-                onLoginClick({ email, password });
-              }
-            }}
+            onLoginClick={triggerSubmit}
             onRegisterClick={onRegisterClick}
           />
-        )}
-        {variant === 'registerPage' && (
+        ) : (
           <Button
-            type='submit'
-            variant='prime'
+            type="submit"
+            variant="prime"
+            fullWidth
             className={styles.registerNextButton}
-            onClick={() => {
-              setAttemptedSubmit(true);
-              const emailValid = email !== '' && isEmailValid(email);
-              const passwordValid = password !== '' && isPasswordValid(password);
-
-              if (emailValid && passwordValid) {
-                onLoginClick({ email, password });
-              }
-            }}
           >
             Далее
           </Button>

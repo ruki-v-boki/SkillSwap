@@ -7,6 +7,7 @@ export type SelectProps = {
   type?: 'single' | 'multiple';
   value: string | string[];
   onChange: (value: string | string[]) => void;
+  onBlur?: () => void;
   options: Option[];
   label?: string;
   placeholder?: string;

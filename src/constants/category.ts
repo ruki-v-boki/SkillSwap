@@ -4,8 +4,9 @@ import LanguagesIcon from '@/assets/icons/categories/languages.svg';
 import EducationIcon from '@/assets/icons/categories/education.svg';
 import HomeIcon from '@/assets/icons/categories/home.svg';
 import HealthIcon from '@/assets/icons/categories/health.svg';
+import type { CategoryId } from '@/types/types';
 
-export const categoryConfig = {
+export const CATEGORY_CONFIG = {
   business: {
     colorClass: 'business',
     icon: BusinessIcon,
@@ -50,16 +51,6 @@ export const categoryConfig = {
   }
 } as const;
 
-export type CategoryId = keyof typeof categoryConfig;
-
-export const CATEGORIES_FROM_CONFIG = Object.values(categoryConfig)
+export const CATEGORIES_FROM_CONFIG = Object.values(CATEGORY_CONFIG)
   .filter(cat => cat.id !== 'plus')
   .map(({ id, label }) => ({ id, name: label })) as { id: CategoryId; name: string }[];
-
-export const getCategoryColorClass = (categoryId: string): string => {
-  const keys = Object.keys(categoryConfig) as CategoryId[];
-  if (keys.includes(categoryId as CategoryId)) {
-    return categoryConfig[categoryId as CategoryId].colorClass;
-  }
-  return 'default';
-};

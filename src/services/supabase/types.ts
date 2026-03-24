@@ -1,5 +1,4 @@
-import type { TCity } from '@/constants/cities';
-import type { IUser, CanTeachSkill, WantToLearnSkill, TGender } from '@/types/types';
+import type { IUser, CanTeachSkill, WantToLearnSkill, TGender, TCity } from '@/types/types';
 
 
 export type SupabaseProfile = {

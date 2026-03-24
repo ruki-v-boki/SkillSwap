@@ -1,14 +1,13 @@
 import { StepsCounter } from '@/components/features/StepsCounter';
 import { selectUser } from '@/services/slices/auth/authSlice';
+import type { TCity, WantToLearnSkill } from '@/types/types';
 import schoolBoardIcon from '@/assets/icons/schoolBoard.svg';
 import { useDispatch, useSelector } from '@/services/store';
 import userInfoIcon from '@/assets/icons/userInfo.svg';
 import { FormHintUI } from '@/components/ui/FormHint';
-import type { WantToLearnSkill } from '@/types/types';
 import lampIcon from '@/assets/icons/light-bulb.svg';
 import { Step1Form } from './steps/step1/Step1Form';
 import { Step2Form } from './steps/step2/Step2Form';
-import type { TCity } from '@/constants/cities';
 import { Loader } from '@/components/ui/Loader';
 import { useNavigate } from 'react-router-dom';
 import styles from './RegisterPage.module.css';

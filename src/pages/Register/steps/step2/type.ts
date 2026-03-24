@@ -1,5 +1,4 @@
-import type { TGender, WantToLearnSkill } from "@/types/types";
-import type { TCity } from "@/constants/cities";
+import type { TCity, TGender, WantToLearnSkill } from "@/types/types";
 
 
 export type Step2FormProps = {

@@ -1,5 +1,3 @@
-export type TCity = typeof CITIES[number];
-
 export const CITIES = [
   'Москва',
   'Санкт-Петербург',

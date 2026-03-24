@@ -1,8 +1,8 @@
 import type { IAuthAPI, IUsersAPI } from './types';
 import type { LoginCredentials, RegisterData, AuthResponse } from '@/types/auth';
-import type { IUser } from '@/types/types';
+import type { IUser, TCity } from '@/types/types';
 import { MOCK_USERS } from '@/mock/users';
-import type { TCity } from '@/constants/cities';
+
 
 const generateMockToken = () => 'mock-jwt-token-' + Date.now();
 

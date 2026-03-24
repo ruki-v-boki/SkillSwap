@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/services/store';
 import type { AuthResponse, RegisterData } from '@/types/auth';
-import type { WantToLearnSkill, TGender, AvatarInput, CanTeachSkillInput } from '@/types/types';
-import { type TCity } from '@/constants/cities';
+import type { WantToLearnSkill, TGender, AvatarInput, CanTeachSkillInput, TCity } from '@/types/types';
 import { authAPI } from '@/services/api';
 
 const baseInitialState = {

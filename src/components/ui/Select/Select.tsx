@@ -7,18 +7,19 @@ import { useState, useRef } from 'react';
 
 export function Select({
   type = 'single',
-  value,
-  onChange,
-  options,
-  label,
-  placeholder = 'Выберите вариант',
-  disabled = false,
-  error,
   id,
   name,
+  label,
+  error,
+  value,
+  onBlur,
+  options,
+  onChange,
+  isValid = false,
+  disabled = false,
   required = false,
   attemptedSubmit = false,
-  isValid = false,
+  placeholder = 'Выберите вариант',
 }: SelectProps) {
 
   const [isOpen, setIsOpen] = useState(false);
@@ -28,9 +29,10 @@ export function Select({
 
   useClickOutside(containerRef, () => setIsOpen(false));
 
-  // ------------------------- Single
+// Single mode
+// ---------------------------------------------------------------
   const selectedValue = type === 'single' ? (value as string) : '';
-  const selectedOption = type === 'single' 
+  const selectedOption = type === 'single'
     ? options.find(opt => opt.value === selectedValue)
     : undefined;
 
@@ -39,12 +41,13 @@ export function Select({
       onChange(selectedValue);
       setIsOpen(false);
       setTouched(true);
+      onBlur?.();
     }
   };
 
-  // ------------------------- Multiple
+// Multiple mode
+// ---------------------------------------------------------------
   const selectedValues = type === 'multiple' ? (value as string[]) : [];
-
   const handleMultipleToggle = (optionValue: string) => {
     if (disabled) return;
 
@@ -54,11 +57,16 @@ export function Select({
 
     onChange(newValues);
     setTouched(true);
+    onBlur?.();
   };
 
-  const hasSelection = type === 'single' 
+// ---------------------------------------------------------------
+
+  const hasSelection = type === 'single'
     ? !!selectedOption 
     : selectedValues.length > 0;
+
+// ---------------------------------------------------------------
 
   const getDisplayText = () => {
     if (type === 'single') {
@@ -78,11 +86,12 @@ export function Select({
     }
   };
 
+// ---------------------------------------------------------------
 
   const showError = error && (touched || attemptedSubmit);
   const showRequiredError = required && !hasSelection && (touched || attemptedSubmit);
-  const isRequiredValid = required ? hasSelection : true;
 
+// ---------------------------------------------------------------
 
   const handleTriggerClick = () => {
     if (!disabled) {
@@ -90,6 +99,8 @@ export function Select({
       setTouched(true);
     }
   };
+
+// ---------------------------------------------------------------
 
   return (
     <div className={styles.wrapper} ref={containerRef}>
@@ -107,7 +118,6 @@ export function Select({
           className={`
             ${styles.triggerButton}
             ${showError || showRequiredError ? styles.error : ''}
-            ${!isRequiredValid && (touched || attemptedSubmit) && !error ? styles.requiredInvalid : ''}
             ${isValid && !error && hasSelection ? styles.valid : ''}
             ${disabled ? styles.disabled : ''}
           `}
@@ -123,6 +133,8 @@ export function Select({
           </span>
           <ChevronIcon open={isOpen} />
         </button>
+
+        {/* --------------------------------------------------------------- */}
 
         {isOpen && (
           <div className={styles.dropdownBox}>
@@ -153,13 +165,14 @@ export function Select({
                     }
                   >
                     {type === 'multiple' && (
-                      <input
-                        type="checkbox"
-                        checked={selectedValues.includes(option.value)}
-                        onChange={() => {}}
-                        className={`checkbox`}
-                        onClick={(e) => e.stopPropagation()}
-                      />
+                      <label className={`checkbox`}>
+                        <input
+                          type="checkbox"
+                          checked={selectedValues.includes(option.value)}
+                          onChange={() => {}}
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                      </label>
                     )}
                     <span>{option.label}</span>
                   </li>
@@ -169,11 +182,8 @@ export function Select({
           </div>
         )}
       </div>
-      
-      {/* Показываем ошибку если есть */}
+
       {showError && <span className={styles.errorMessage}>{error}</span>}
-      
-      {/* Показываем ошибку required если поле не выбрано */}
       {showRequiredError && !error && (
         <span className={styles.errorMessage}>Обязательное поле</span>
       )}
