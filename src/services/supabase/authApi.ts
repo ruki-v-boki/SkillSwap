@@ -28,6 +28,8 @@ export class SupabaseAuthAPI {
     return urlData.publicUrl;
   }
 
+// ---------------------------------------------------------------
+
   // Загрузка нескольких файлов (навыки)
   private async uploadImages(userId: string, files: File[]): Promise<string[]> {
     const urls: string[] = [];
@@ -57,11 +59,13 @@ export class SupabaseAuthAPI {
     return urls;
   }
 
+// ---------------------------------------------------------------
+
   async getUserProfile(userId: string): Promise<IUser> {
     // Получаем данные пользователя
     const { data: userData, error: userError } = await supabase
       .from('users')
-      .select('id, name, location, age, about, gender, avatar_url, rating, created_at')
+      .select('id, email, name, location, age, about, gender, avatar_url, rating, created_at')
       .eq('id', userId)
       .single();
 
@@ -96,6 +100,8 @@ export class SupabaseAuthAPI {
       }));
     return transformToIUser(userData as SupabaseProfile, teachSkill, learnSkills);
   }
+
+// ---------------------------------------------------------------
 
   async register(data: RegisterData): Promise<AuthResponse> {
     // 1. Регистрация в Supabase Auth
@@ -198,6 +204,8 @@ export class SupabaseAuthAPI {
     };
   }
 
+// ---------------------------------------------------------------
+
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     const { data, error } = await supabase.auth.signInWithPassword({
       email: credentials.email,
@@ -214,6 +222,8 @@ export class SupabaseAuthAPI {
       refreshToken: data.session.refresh_token,
     };
   }
+
+// ---------------------------------------------------------------
 
   async updateUser(userId: string, data: Partial<IUser>): Promise<IUser> {
     const { error } = await supabase
@@ -234,6 +244,8 @@ export class SupabaseAuthAPI {
     return this.getUserProfile(userId);
   }
 
+// ---------------------------------------------------------------
+
   async refreshToken(refreshToken: string): Promise<{ accessToken: string }> {
     const { data, error } = await supabase.auth.refreshSession({
       refresh_token: refreshToken,
@@ -243,6 +255,8 @@ export class SupabaseAuthAPI {
 
     return { accessToken: data.session?.access_token || '' };
   }
+
+// ---------------------------------------------------------------
 
   async logout(): Promise<void> {
     const { error } = await supabase.auth.signOut();

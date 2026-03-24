@@ -1,9 +1,12 @@
+import type { TCity } from "@/constants/cities";
+
 export type TGender = 'male' | 'female' | 'any'
 
 export interface IUser {
   id: string;
+  email?: string;
   name: string;
-  location: string;
+  location: TCity;
   age: number;
   about: string;
   gender: TGender;
@@ -52,5 +55,5 @@ export type CanTeachSkillInput = Omit<CanTeachSkill, 'id' | 'images'> & {
 // Для аватара (до загрузки)
 export type AvatarInput = {
   file: File;
-  preview: string;  // ← добавляем preview
+  preview: string;
 } | null;

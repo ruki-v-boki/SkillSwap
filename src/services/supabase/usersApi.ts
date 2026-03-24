@@ -5,11 +5,12 @@ import { supabase } from './client';
 
 
 export class SupabaseUsersAPI implements IUsersAPI {
+
   async getAllUsers(): Promise<IUser[]> {
     // 1. Получаем всех пользователей
     const { data: users, error: usersError } = await supabase
       .from('users')
-      .select('id, name, location, age, about, gender, avatar_url, rating, created_at');
+      .select('id, email, name, location, age, about, gender, avatar_url, rating, created_at');
 
     if (usersError) throw new Error(usersError.message);
 
@@ -67,7 +68,7 @@ export class SupabaseUsersAPI implements IUsersAPI {
   async getUserById(id: string): Promise<IUser> {
     const { data: user, error: userError } = await supabase
       .from('users')
-      .select('id, name, location, age, about, gender, avatar_url, rating, created_at')
+      .select('id, email, name, location, age, about, gender, avatar_url, rating, created_at')
       .eq('id', id)
       .single();
 
@@ -103,7 +104,7 @@ export class SupabaseUsersAPI implements IUsersAPI {
 
 // ---------------------------------------------------------------
 
-    async updateUser(id: string, data: Partial<IUser>): Promise<IUser> {
+  async updateUser(id: string, data: Partial<IUser>): Promise<IUser> {
     const { error } = await supabase
       .from('users')
       .update({

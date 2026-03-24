@@ -2,6 +2,7 @@ import type { IAuthAPI, IUsersAPI } from './types';
 import type { LoginCredentials, RegisterData, AuthResponse } from '@/types/auth';
 import type { IUser } from '@/types/types';
 import { MOCK_USERS } from '@/mock/users';
+import type { TCity } from '@/constants/cities';
 
 const generateMockToken = () => 'mock-jwt-token-' + Date.now();
 
@@ -25,7 +26,7 @@ export class MockAuthAPI implements IAuthAPI {
     const newUser: IUser = {
       id: String(MOCK_USERS.length + 1),
       name: data.name,
-      location: '',
+      location: '' as TCity,
       age: 0,
       about: '',
       gender: 'male',

@@ -1,4 +1,4 @@
-import { logout, selectIsAuthLoading } from '@/services/slices/auth/authSlice';
+import { logout, selectIsAuthLoading, selectUser } from '@/services/slices/auth/authSlice';
 import { useDispatch, useSelector } from '@/services/store';
 import { NavLink, useNavigate } from 'react-router-dom';
 import type { ProfileMenuUIProps } from './type';
@@ -12,6 +12,7 @@ export function ProfileMenuUI({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoading = useSelector(selectIsAuthLoading);
+  const user = useSelector(selectUser)
 
 // ---------------------------------------------------------------
 
@@ -30,7 +31,7 @@ export function ProfileMenuUI({
   return (
     <>
       <NavLink
-        to={'/profile'}
+        to={`/profile/${user?.id}`}
         className={styles.profileLink}
         onClick={() => onLinkClick()}
       >

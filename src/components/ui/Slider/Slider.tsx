@@ -56,7 +56,7 @@ export function SliderUI({
 // ---------------------------------------------------------------
 
   return (
-    <div className={styles.sliderContainer}>
+    <div className={styles.sliderMainContainer}>
       {/* Кнопка "Назад" */}
       {canScrollLeft && (
         <button

@@ -1,10 +1,12 @@
+import type { TCity } from '@/constants/cities';
 import type { IUser, CanTeachSkill, WantToLearnSkill, TGender } from '@/types/types';
 
-// Тип для ответа от Supabase (без email, так как email не входит в IUser)
+
 export type SupabaseProfile = {
   id: string;
+  email: string;
   name: string;
-  location: string;
+  location: TCity;
   age: number;
   about: string;
   gender: TGender;
@@ -15,7 +17,6 @@ export type SupabaseProfile = {
 
 // ---------------------------------------------------------------
 
-// Тип навыка в Supabase
 export type SupabaseSkill = {
   id: string;
   user_id: string;
@@ -29,7 +30,6 @@ export type SupabaseSkill = {
 
 // ---------------------------------------------------------------
 
-// Трансформер: SupabaseProfile → IUser
 export const transformToIUser = (
   supabaseUser: SupabaseProfile,
   teachSkill?: CanTeachSkill,
@@ -37,6 +37,7 @@ export const transformToIUser = (
 ): IUser => {
   return {
     id: supabaseUser.id,
+    email: supabaseUser.email,
     name: supabaseUser.name,
     location: supabaseUser.location,
     age: supabaseUser.age,

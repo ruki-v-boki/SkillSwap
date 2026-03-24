@@ -1,4 +1,4 @@
-.sliderContainer {
+.sliderMainContainer {
   position: relative;
   display: flex;
   align-items: center;
@@ -14,10 +14,20 @@
   scroll-behavior: smooth;
   scrollbar-width: none;
   -ms-overflow-style: none;
-}
-
-.cardsContainer::-webkit-scrollbar {
-  display: none;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 1%,
+    black 99%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 1%,
+    black 99%,
+    transparent 100%
+  );
 }
 
 .sliderButton {

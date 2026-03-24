@@ -2,6 +2,7 @@ import { getAllUsers, selectAllUsers, selectUserIsLoading } from '@/services/sli
 import { checkAuth, selectIsAuthChecked } from '@/services/slices/auth/authSlice';
 import { UserCardModal } from '@/components/ui/Modal/UserCardModal/UserCardModal';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { UserOfferModal } from '@/components/ui/Modal/UserOfferModal';
 import { NotFoundPage, ServerErrorPage } from '@/pages/Error';
 import { useDispatch, useSelector } from '@/services/store';
 import { SkillsPage } from '@/pages/Skills/SkillsPage';
@@ -12,15 +13,14 @@ import { ModalUI } from '@/components/ui/Modal';
 import { ContactsPage } from '@/pages/Contacts';
 import { Loader } from '@/components/ui/Loader';
 import { RegisterPage } from '@/pages/Register';
+import { ProfilePage } from '@/pages/Profile';
 import { PolicyPage } from '@/pages/Policy';
 import { TermsPage } from '@/pages/Terms';
 import { LoginPage } from '@/pages/Login';
 import { AboutPage } from '@/pages/About';
+import { OfferPage } from '@/pages/Offer';
 import { BlogPage } from '@/pages/Blog';
 import { useEffect } from 'react';
-import { OfferPage } from '@/pages/Offer';
-import { UserOfferModal } from '@/components/ui/Modal/UserOfferModal';
-
 
 
 export function App() {
@@ -60,6 +60,7 @@ export function App() {
           <Route index element={<HomePage />} />
           <Route path="home" element={<HomePage />} />
           <Route path="offer/:id" element={<OfferPage />} />
+          <Route path="profile/:id" element={<ProfilePage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="skills" element={<SkillsPage />} />
           <Route path="contacts" element={<ContactsPage />} />

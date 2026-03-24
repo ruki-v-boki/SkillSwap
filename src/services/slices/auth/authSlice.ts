@@ -51,6 +51,41 @@ export const updateUser = createAsyncThunk(
 
 // ---------------------------------------------------------------
 
+export const updateUserEmail = createAsyncThunk(
+  'auth/updateUserEmail',
+  async (newEmail: string, { getState, rejectWithValue }) => {
+    const state = getState() as RootState;
+    const userId = state.auth.user?.id;
+
+    if (!userId) {
+      throw new Error('User ID not found');
+    }
+
+    try {
+      const { error: authError } = await supabase.auth.updateUser({
+        email: newEmail
+      });
+
+      if (authError) throw new Error(authError.message);
+
+      const { error: dbError } = await supabase
+        .from('users')
+        .update({ email: newEmail })
+        .eq('id', userId);
+
+      if (dbError) throw new Error(dbError.message);
+
+      const updatedUser = await authAPI.getUserProfile(userId);
+      return updatedUser;
+
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Ошибка обновления email');
+    }
+  }
+);
+
+// ---------------------------------------------------------------
+
 export const register = createAsyncThunk(
   'auth/register',
   async (userData: RegisterData, { dispatch }) => {
@@ -146,7 +181,22 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message || 'Ошибка обновления данных';
       })
-
+      // ------ ОБНОВЛЕНИЕ EMAIL ------
+      .addCase(updateUserEmail.pending, (state) => {
+        state.error = null;
+        state.isLoading = true;
+      })
+      .addCase(
+        updateUserEmail.fulfilled,
+        (state, action: PayloadAction<IUser>) => {
+          state.isLoading = false;
+          state.user = action.payload;
+        }
+      )
+      .addCase(updateUserEmail.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Ошибка обновления email';
+      })
       // ------ ПРОВЕРКА АВТОРИЗАЦИИ ------
       .addCase(checkAuth.pending, (state) => {
         state.error = null;
@@ -167,7 +217,6 @@ export const authSlice = createSlice({
         state.isAuthChecked = true;
         state.error = action.error.message || 'Ошибка проверки авторизации';
       })
-
       // ------ РЕГИСТРАЦИЯ ------
       .addCase(register.pending, (state) => {
         state.error = null;
@@ -184,7 +233,6 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message || 'Ошибка регистрации';
       })
-
       // ------ ВХОД ------
       .addCase(login.pending, (state) => {
         state.error = null;
@@ -201,7 +249,6 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message || 'Ошибка входа';
       })
-
       // ------ ВЫХОД ------
       .addCase(logout.pending, (state) => {
         state.error = null;
