@@ -31,7 +31,6 @@ export class MockAuthAPI implements IAuthAPI {
       about: '',
       gender: 'male',
       createdAt: new Date().toISOString(),
-      rating: 0,
       canTeach: {
         id: `teach-${Date.now()}`,
         categoryId: data.canTeach.categoryId,
@@ -101,5 +100,28 @@ export class MockUsersAPI implements IUsersAPI {
     const updatedUser = { ...MOCK_USERS[userIndex], ...data };
     MOCK_USERS[userIndex] = updatedUser;
     return updatedUser;
+  }
+
+  async toggleLike(currentUserId: string, targetUserId: string): Promise<boolean> {
+    // Имитация задержки сети
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    // Находим пользователя в моковых данных
+    const userIndex = MOCK_USERS.findIndex(u => u.id === targetUserId);
+    if (userIndex === -1) throw new Error('User not found');
+    
+    const user = MOCK_USERS[userIndex];
+    const currentLikes = user.likedBy || [];
+    const isLiked = currentLikes.includes(currentUserId);
+    
+    // Обновляем массив лайков
+    const newLikes = isLiked
+      ? currentLikes.filter(id => id !== currentUserId)
+      : [...currentLikes, currentUserId];
+    
+    // Обновляем моковые данные
+    MOCK_USERS[userIndex] = { ...user, likedBy: newLikes };
+    
+    return !isLiked;
   }
 }

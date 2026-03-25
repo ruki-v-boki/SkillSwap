@@ -1,6 +1,6 @@
 import { APP_CATEGORIES, APP_SUBCATEGORIES } from "@/constants/skills";
 import { CATEGORY_CONFIG } from "@/constants/category";
-import type { CategoryId } from "@/types/types";
+import type { CategoryId, IUser } from "@/types/types";
 
 
 export const getAgeWord = (age: number): string => {
@@ -18,6 +18,10 @@ export const getAgeWord = (age: number): string => {
   }
   return 'лет';
 };
+
+// ---------------------------------------------------------------
+
+export const getUserRating = (user: IUser): number => user.likedBy?.length || 0;
 
 // ---------------------------------------------------------------
 

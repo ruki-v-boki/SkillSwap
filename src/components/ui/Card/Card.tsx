@@ -1,4 +1,4 @@
-import { getAgeWord, getCategoryById, getSubcategoryById } from '@/utils/helpers';
+import { getAgeWord, getCategoryById, getSubcategoryById, getUserRating } from '@/utils/helpers';
 import styles from './Card.module.css'
 import type { CardUIProps } from './type'
 import { Button } from '../Button';
@@ -6,6 +6,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { LikeButtonUI } from '../LikeButtonUI';
 import { useState } from 'react';
 import { SkillsListUI } from './SkillsList';
+import { useDispatch, useSelector } from '@/services/store';
+import { selectUserId } from '@/services/slices/authSlice';
+import { toggleLike } from '@/services/slices/userSlice';
 
 
 export function CardUI({
@@ -15,20 +18,31 @@ export function CardUI({
 }: CardUIProps) {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const currentUserId = useSelector(selectUserId);
   const isExpandedView = styleType === 'profile' || styleType === 'modal';
   const isInteractive = styleType === 'catalog' || styleType === 'modal';
   const isCatalog = styleType === 'catalog';
+  const isLiked = currentUserId ? user.likedBy?.includes(currentUserId) || false : false;
+  const rating = getUserRating(user);
+  const [isPending, setIsPending] = useState(false);
 
-  // ----------------- TO DO 1 --------------
-  const [isLiked, setIsLiked] = useState(false); // ВРЕМЕННОЕ Состояние для лайка
-  const handleLikeClick = (e: React.MouseEvent) => {
+  const handleLikeClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsLiked(!isLiked);
-    console.log('лайк кликнут', !isLiked);
-    // Здесь потом будет API вызов
+    if (!currentUserId || isPending) return;
+    
+    setIsPending(true);
+    try {
+      await dispatch(toggleLike({
+        currentUserId,
+        targetUserId: user.id
+      })).unwrap();
+    } catch (error) {
+      console.error('Failed to toggle like:', error);
+    } finally {
+      setIsPending(false);
+    }
   };
-  // ----------------- TO DO 1 --------------
-
 
   const teachTags = [{
     id: user.canTeach.id,
@@ -38,8 +52,6 @@ export function CardUI({
       name: user.canTeach.categoryId
     }
   }];
-
-// ---------------------------------------------------------------
 
   const learnTags = user.wantToLearn.map(skill => {
     const subcategory = getSubcategoryById(skill.subcategoryId);
@@ -54,8 +66,6 @@ export function CardUI({
       }
     };
   });
-  // ----------------- TO DO 2 --------------   унести логику?
-// ---------------------------------------------------------------
 
   const handleCardClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -68,9 +78,8 @@ export function CardUI({
         background: location.pathname
       }
     });
-};
+  };
 
-// ---------------------------------------------------------------
 
   return (
     <div
@@ -79,7 +88,8 @@ export function CardUI({
           ? `${styles.card} ${styles.cardProfile}`
           : styles.card
       }
-      onClick={onCardClick ? onCardClick : handleCardClick}>
+      onClick={onCardClick ? onCardClick : handleCardClick}
+    >
       <header className={styles.header}>
         <div className={styles.userBox}>
           <div className={styles.imageBox}>
@@ -94,15 +104,22 @@ export function CardUI({
             </span>
           </div>
         </div>
-{/* --------------------------------------------------------------- */}
+
+        {/* Лайки */}
         {isInteractive && (
           <div className={styles.likeButtonBox}>
-            <LikeButtonUI isLiked={isLiked} onClick={handleLikeClick} />
-            <span className="h-caption">{user.rating}</span>
+            <LikeButtonUI
+              isLiked={isLiked}
+              onClick={handleLikeClick}
+              disabled={!currentUserId || isPending}
+            />
+            {rating > 0 && (
+              <span className="h-caption">{rating}</span>
+            )}
           </div>
         )}
       </header>
-{/* --------------------------------------------------------------- */}
+
       {isExpandedView && (
         <p className={`${styles.description} h-body`}>
           {user.about}
@@ -129,7 +146,7 @@ export function CardUI({
           styleType={styleType}
         />
       </div>
-{/* --------------------------------------------------------------- */}
+
       {isInteractive && (
         <Button
           fullWidth

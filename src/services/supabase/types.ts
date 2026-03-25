@@ -10,7 +10,7 @@ export type SupabaseProfile = {
   about: string;
   gender: TGender;
   avatar_url: string | null;
-  rating: number;
+  liked_by: string[];
   created_at: string;
 };
 
@@ -44,7 +44,7 @@ export const transformToIUser = (
     gender: supabaseUser.gender,
     createdAt: supabaseUser.created_at,
     avatar: supabaseUser.avatar_url || undefined,
-    rating: supabaseUser.rating,
+    likedBy: supabaseUser.liked_by || [],
     canTeach: teachSkill || {
       id: '',
       categoryId: '',
@@ -54,6 +54,5 @@ export const transformToIUser = (
       images: []
     },
     wantToLearn: learnSkills || [],
-    likedBy: [],
   };
 };

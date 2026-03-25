@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/tool
 import type { IUser } from '@/types/types';
 import type { RootState } from '@/services/store';
 import { usersAPI } from '@/services/api';
+import { logout } from './authSlice';
 import { supabase } from '@/services/supabase/client';
 
 interface IUserState {
@@ -106,6 +107,21 @@ export const uploadAvatar = createAsyncThunk(
 
 // ---------------------------------------------------------------
 
+// usersSlice.ts
+export const toggleLike = createAsyncThunk(
+  'user/toggleLike',
+  async ({ currentUserId, targetUserId }: { currentUserId: string; targetUserId: string }, { rejectWithValue }) => {
+    try {
+      const isLiked = await usersAPI.toggleLike(currentUserId, targetUserId);
+      return { targetUserId, currentUserId, isLiked };
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Ошибка при изменении лайка');
+    }
+  }
+);
+
+// ---------------------------------------------------------------
+
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -118,6 +134,9 @@ export const usersSlice = createSlice({
     },
     clearCurrentUser: (state) => {
       state.currentUser = null;
+    },
+    clearAllUsers: (state) => {
+      state.allUsers = [];
     },
     clearUserError: (state) => {
       state.error = null;
@@ -166,13 +185,56 @@ export const usersSlice = createSlice({
         state.currentUser = action.payload;
         const index = state.allUsers.findIndex(u => u.id === action.payload.id);
         if (index !== -1) state.allUsers[index] = action.payload;
+      })
+      .addCase(toggleLike.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(toggleLike.fulfilled, (state, action) => {
+        const { targetUserId, currentUserId, isLiked } = action.payload;
+
+        const userIndex = state.allUsers.findIndex(u => u.id === targetUserId);
+        if (userIndex !== -1) {
+          const user = state.allUsers[userIndex];
+          let currentLikes = user.likedBy || [];
+
+          if (isLiked) {
+            if (!currentLikes.includes(currentUserId)) {
+              user.likedBy = [...currentLikes, currentUserId];
+            }
+          } else {
+            user.likedBy = currentLikes.filter(id => id !== currentUserId);
+          }
+
+          state.allUsers[userIndex] = user;
+        }
+
+        // Обновляем currentUser, если это он
+        if (state.currentUser?.id === targetUserId) {
+          let currentLikes = state.currentUser.likedBy || [];
+          if (isLiked) {
+            if (!currentLikes.includes(currentUserId)) {
+              state.currentUser.likedBy = [...currentLikes, currentUserId];
+            }
+          } else {
+            state.currentUser.likedBy = currentLikes.filter(id => id !== currentUserId);
+          }
+        }
+      })
+      .addCase(toggleLike.rejected, (state, action) => {
+        state.error = action.payload as string || 'Ошибка при изменении лайка';
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.currentUser = null;
+        state.allUsers = [];
+        state.isLoading = false;
+        state.error = null;
       });
   }
 });
 
 // ---------------------------------------------------------------
 
-export const { setAllUsers, setCurrentUser, clearCurrentUser, clearUserError } = usersSlice.actions;
+export const { setAllUsers, setCurrentUser, clearCurrentUser, clearUserError, clearAllUsers } = usersSlice.actions;
 
 // ---------------------------------------------------------------
 

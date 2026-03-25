@@ -14,4 +14,5 @@ export interface IUsersAPI {
   getAllUsers(): Promise<IUser[]>;
   getUserById(id: string): Promise<IUser>;
   updateUser(id: string, data: Partial<IUser>): Promise<IUser>;
+  toggleLike(currentUserId: string, targetUserId: string): Promise<boolean>;
 }

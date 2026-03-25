@@ -9,7 +9,7 @@ export const MOCK_USERS: IUser[] = [
     age: 35,
     about: 'Бизнес-тренер и предприниматель. Помогаю запускать стартапы с нуля.',
     avatar: 'https://i.pinimg.com/736x/bf/00/bd/bf00bd9059e7878787893fa3e174bffd.jpg',
-    rating: 42,
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-03-15T10:30:00Z',
     canTeach: {
@@ -33,7 +33,7 @@ export const MOCK_USERS: IUser[] = [
     age: 32,
     about: 'Project Manager в IT. Обучаю проектному управлению и Agile.',
     avatar: 'https://i.pinimg.com/videos/thumbnails/originals/a0/a0/a9/a0a0a92d972e0891c1662fe3cc97ddac.0000000.jpg',
-    rating: 38,
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-05-22T14:45:00Z',
     canTeach: {
@@ -59,7 +59,7 @@ export const MOCK_USERS: IUser[] = [
     age: 29,
     about: 'Эксперт по тайм-менеджменту и личной эффективности.',
     avatar: 'https://img.freepik.com/free-photo/adorable-cat-lifestyle_23-2151593350.jpg?semt=ais_hybrid&w=740',
-    rating: 27,
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-07-10T09:15:00Z',
     canTeach: {
@@ -81,7 +81,7 @@ export const MOCK_USERS: IUser[] = [
     age: 31,
     about: 'HR-специалист. Помогаю с резюме и подготовкой к собеседованиям.',
     avatar: 'https://i.ytimg.com/vi/BDT3cHRyvCU/oardefault.jpg?sqp=-oaymwEkCJUDENAFSFqQAgHyq4qpAxMIARUAAAAAJQAAyEI9AICiQ3gB&amp;rs=AOn4CLAnDwX5phD_QwN4FM0Yq0fL-6abAg',
-    rating: 31,
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-09-05T16:20:00Z',
     canTeach: {
@@ -104,7 +104,7 @@ export const MOCK_USERS: IUser[] = [
     age: 28,
     about: 'Специалист по личному бренду и SMM.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    rating: 24,
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-11-18T11:30:00Z',
     canTeach: {
@@ -126,7 +126,7 @@ export const MOCK_USERS: IUser[] = [
     age: 34,
     about: 'Эксперт по продажам и переговорам. Тренирую навыки убеждения.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    rating: 45,
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-01-12T13:40:00Z',
     canTeach: {
@@ -148,7 +148,7 @@ export const MOCK_USERS: IUser[] = [
     age: 37,
     about: 'Директор по маркетингу. Обучаю стратегиям продвижения.',
     avatar: 'https://i.pinimg.com/736x/bf/00/bd/bf00bd9059e7878787893fa3e174bffd.jpg',
-    rating: 41,
+    likedBy: [],
     gender: 'male',
     createdAt: '2025-03-28T08:50:00Z',
     canTeach: {
@@ -172,7 +172,7 @@ export const MOCK_USERS: IUser[] = [
     age: 33,
     about: 'Team Lead с опытом управления распределенными командами.',
     avatar: 'https://i.pinimg.com/videos/thumbnails/originals/a0/a0/a9/a0a0a92d972e0891c1662fe3cc97ddac.0000000.jpg',
-    rating: 36,
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-06-14T17:25:00Z',
     canTeach: {
@@ -195,7 +195,7 @@ export const MOCK_USERS: IUser[] = [
     age: 27,
     about: 'Художник-иллюстратор. Работаю в digital и традиционных техниках.',
     avatar: 'https://img.freepik.com/free-photo/adorable-cat-lifestyle_23-2151593350.jpg?semt=ais_hybrid&w=740',
-    rating: 29,
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-04-02T12:10:00Z',
     canTeach: {
@@ -218,7 +218,7 @@ export const MOCK_USERS: IUser[] = [
     age: 31,
     about: 'Профессиональный фотограф. Специализация - портрет и предметка.',
     avatar: 'https://i.ytimg.com/vi/BDT3cHRyvCU/oardefault.jpg?sqp=-oaymwEkCJUDENAFSFqQAgHyq4qpAxMIARUAAAAAJQAAyEI9AICiQ3gB&amp;rs=AOn4CLAnDwX5phD_QwN4FM0Yq0fL-6abAg',
-    rating: 48,
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-06-19T15:05:00Z',
     canTeach: {
@@ -241,7 +241,7 @@ export const MOCK_USERS: IUser[] = [
     age: 26,
     about: 'Видеомонтажер. Работаю в Adobe Premiere Pro и DaVinci Resolve.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    rating: 23,
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-08-24T10:35:00Z',
     canTeach: {
@@ -263,7 +263,7 @@ export const MOCK_USERS: IUser[] = [
     age: 24,
     about: 'Музыкант и вокалистка. Обучаю игре на гитаре и вокалу.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    rating: 32,
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-11-07T19:50:00Z',
     canTeach: {
@@ -287,7 +287,7 @@ export const MOCK_USERS: IUser[] = [
     age: 29,
     about: 'Актриса театра и кино. Преподаю актерское мастерство и сценическую речь.',
     avatar: 'https://i.pinimg.com/736x/bf/00/bd/bf00bd9059e7878787893fa3e174bffd.jpg',
-    rating: 37,
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-01-30T14:15:00Z',
     canTeach: {
@@ -309,7 +309,7 @@ export const MOCK_USERS: IUser[] = [
     age: 30,
     about: 'Писатель и копирайтер. Обучаю креативному письму и сторителлингу.',
     avatar: 'https://i.pinimg.com/videos/thumbnails/originals/a0/a0/a9/a0a0a92d972e0891c1662fe3cc97ddac.0000000.jpg',
-    rating: 26,
+    likedBy: [],
     gender: 'male',
     createdAt: '2025-04-12T09:40:00Z',
     canTeach: {
@@ -331,7 +331,7 @@ export const MOCK_USERS: IUser[] = [
     age: 35,
     about: 'Арт-терапевт. Помогаю через творчество справляться со стрессом.',
     avatar: 'https://img.freepik.com/free-photo/adorable-cat-lifestyle_23-2151593350.jpg?semt=ais_hybrid&w=740',
-    rating: 33,
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-06-25T18:20:00Z',
     canTeach: {
@@ -353,7 +353,7 @@ export const MOCK_USERS: IUser[] = [
     age: 28,
     about: 'Мастер hand-made. Создаю декор и учу DIY.',
     avatar: 'https://i.ytimg.com/vi/BDT3cHRyvCU/oardefault.jpg?sqp=-oaymwEkCJUDENAFSFqQAgHyq4qpAxMIARUAAAAAJQAAyEI9AICiQ3gB&amp;rs=AOn4CLAnDwX5phD_QwN4FM0Yq0fL-6abAg',
-    rating: 22,
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-09-08T11:55:00Z',
     canTeach: {
@@ -377,7 +377,7 @@ export const MOCK_USERS: IUser[] = [
     age: 29,
     about: 'Преподаватель английского с опытом 7 лет. Готовлю к IELTS.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    rating: 51,
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-02-14T08:30:00Z',
     canTeach: {
@@ -399,7 +399,7 @@ export const MOCK_USERS: IUser[] = [
     age: 32,
     about: 'Переводчик и преподаватель французского. Жила во Франции.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    rating: 39,
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-04-27T13:20:00Z',
     canTeach: {
@@ -422,7 +422,7 @@ export const MOCK_USERS: IUser[] = [
     age: 34,
     about: 'Носитель испанского языка. Преподаю испанский и латиноамериканскую культуру.',
     avatar: 'https://i.pinimg.com/736x/bf/00/bd/bf00bd9059e7878787893fa3e174bffd.jpg',
-    rating: 47,
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-07-03T10:45:00Z',
     canTeach: {
@@ -445,7 +445,7 @@ export const MOCK_USERS: IUser[] = [
     age: 27,
     about: 'Преподаватель немецкого языка. Готовлю к Goethe-Zertifikat.',
     avatar: 'https://i.pinimg.com/videos/thumbnails/originals/a0/a0/a9/a0a0a92d972e0891c1662fe3cc97ddac.0000000.jpg',
-    rating: 35,
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-09-15T16:35:00Z',
     canTeach: {
@@ -466,7 +466,7 @@ export const MOCK_USERS: IUser[] = [
     age: 30,
     about: 'Китаист. Жил в Пекине 3 года. Обучаю разговорному китайскому.',
     avatar: 'https://img.freepik.com/free-photo/adorable-cat-lifestyle_23-2151593350.jpg?semt=ais_hybrid&w=740',
-    rating: 41,
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-12-01T12:15:00Z',
     canTeach: {
@@ -490,7 +490,7 @@ export const MOCK_USERS: IUser[] = [
     age: 26,
     about: 'Японист. Преподаю японский язык и готовлю к JLPT.',
     avatar: 'https://i.ytimg.com/vi/BDT3cHRyvCU/oardefault.jpg?sqp=-oaymwEkCJUDENAFSFqQAgHyq4qpAxMIARUAAAAAJQAAyEI9AICiQ3gB&amp;rs=AOn4CLAnDwX5phD_QwN4FM0Yq0fL-6abAg',
-    rating: 33,
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-02-18T19:10:00Z',
     canTeach: {
@@ -513,7 +513,7 @@ export const MOCK_USERS: IUser[] = [
     age: 38,
     about: 'Носитель английского. Эксперт по подготовке к TOEFL и IELTS.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    rating: 54,
+    likedBy: [],
     gender: 'male',
     createdAt: '2025-05-09T14:50:00Z',
     canTeach: {
@@ -540,7 +540,7 @@ export const MOCK_USERS: IUser[] = [
     age: 36,
     about: 'Коуч и психолог. Помогаю в личностном развитии и самореализации.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    rating: 44,
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-03-08T11:25:00Z',
     canTeach: {
@@ -562,7 +562,7 @@ export const MOCK_USERS: IUser[] = [
     age: 29,
     about: 'Специалист по эффективному обучению. Помогаю учиться быстрее.',
     avatar: 'https://i.pinimg.com/736x/bf/00/bd/bf00bd9059e7878787893fa3e174bffd.jpg',
-    rating: 38,
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-05-30T17:45:00Z',
     canTeach: {
@@ -585,7 +585,7 @@ export const MOCK_USERS: IUser[] = [
     age: 33,
     about: 'Нейропсихолог. Обучаю когнитивным техникам и мнемотехнике.',
     avatar: 'https://i.pinimg.com/videos/thumbnails/originals/a0/a0/a9/a0a0a92d972e0891c1662fe3cc97ddac.0000000.jpg',
-    rating: 41,
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-08-11T09:55:00Z',
     canTeach: {
@@ -606,7 +606,7 @@ export const MOCK_USERS: IUser[] = [
     age: 31,
     about: 'Тренер по скорочтению и развитию памяти.',
     avatar: 'https://img.freepik.com/free-photo/adorable-cat-lifestyle_23-2151593350.jpg?semt=ais_hybrid&w=740',
-    rating: 36,
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-10-22T14:30:00Z',
     canTeach: {
@@ -629,7 +629,7 @@ export const MOCK_USERS: IUser[] = [
     age: 45,
     about: 'Педагог с 20-летним стажем. Обучаю методикам преподавания.',
     avatar: 'https://i.ytimg.com/vi/BDT3cHRyvCU/oardefault.jpg?sqp=-oaymwEkCJUDENAFSFqQAgHyq4qpAxMIARUAAAAAJQAAyEI9AICiQ3gB&amp;rs=AOn4CLAnDwX5phD_QwN4FM0Yq0fL-6abAg',
-    rating: 52,
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-01-05T12:40:00Z',
     canTeach: {
@@ -651,7 +651,7 @@ export const MOCK_USERS: IUser[] = [
     age: 39,
     about: 'Профессиональный коуч (ICF). Помогаю в достижении целей.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    rating: 43,
+    likedBy: [],
     gender: 'male',
     createdAt: '2025-03-19T16:15:00Z',
     canTeach: {
@@ -675,7 +675,7 @@ export const MOCK_USERS: IUser[] = [
     age: 42,
     about: 'Эксперт по организации пространства. Помогаю с уборкой и систематизацией.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    rating: 39,
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-04-09T10:20:00Z',
     canTeach: {
@@ -698,7 +698,7 @@ export const MOCK_USERS: IUser[] = [
     age: 38,
     about: 'Финансовый консультант. Обучаю управлению личными финансами.',
     avatar: 'https://i.pinimg.com/736x/bf/00/bd/bf00bd9059e7878787893fa3e174bffd.jpg',
-    rating: 44,
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-06-25T15:50:00Z',
     canTeach: {
@@ -719,7 +719,7 @@ export const MOCK_USERS: IUser[] = [
     age: 31,
     about: 'Шеф-повар. Обучаю приготовлению блюд разных кухонь мира.',
     avatar: 'https://i.pinimg.com/videos/thumbnails/originals/a0/a0/a9/a0a0a92d972e0891c1662fe3cc97ddac.0000000.jpg',
-    rating: 47,
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-09-13T18:05:00Z',
     canTeach: {
@@ -743,7 +743,7 @@ export const MOCK_USERS: IUser[] = [
     age: 29,
     about: 'Ботаник и коллекционер редких растений.',
     avatar: 'https://img.freepik.com/free-photo/adorable-cat-lifestyle_23-2151593350.jpg?semt=ais_hybrid&w=740',
-    rating: 35,
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-11-28T13:30:00Z',
     canTeach: {
@@ -765,7 +765,7 @@ export const MOCK_USERS: IUser[] = [
     age: 45,
     about: 'Мастер на все руки. Помогаю с ремонтом и строительством.',
     avatar: 'https://i.ytimg.com/vi/BDT3cHRyvCU/oardefault.jpg?sqp=-oaymwEkCJUDENAFSFqQAgHyq4qpAxMIARUAAAAAJQAAyEI9AICiQ3gB&amp;rs=AOn4CLAnDwX5phD_QwN4FM0Yq0fL-6abAg',
-    rating: 48,
+    likedBy: [],
     gender: 'male',
     createdAt: '2025-02-10T11:40:00Z',
     canTeach: {
@@ -786,7 +786,7 @@ export const MOCK_USERS: IUser[] = [
     age: 27,
     about: 'Организатор пространства. Помогаю с хранением вещей и зонированием.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    rating: 32,
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-04-18T09:25:00Z',
     canTeach: {
@@ -810,7 +810,7 @@ export const MOCK_USERS: IUser[] = [
     age: 34,
     about: 'Инструктор по йоге и медитации. Провожу ретриты.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    rating: 46,
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-03-21T08:55:00Z',
     canTeach: {
@@ -833,7 +833,7 @@ export const MOCK_USERS: IUser[] = [
     age: 33,
     about: 'Нутрициолог. Помогаю выстроить здоровое питание.',
     avatar: 'https://i.pinimg.com/736x/bf/00/bd/bf00bd9059e7878787893fa3e174bffd.jpg',
-    rating: 41,
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-05-17T14:35:00Z',
     canTeach: {
@@ -855,7 +855,7 @@ export const MOCK_USERS: IUser[] = [
     age: 36,
     about: 'Психолог-консультант. Помогаю с ментальным здоровьем и выгоранием.',
     avatar: 'https://i.pinimg.com/videos/thumbnails/originals/a0/a0/a9/a0a0a92d972e0891c1662fe3cc97ddac.0000000.jpg',
-    rating: 49,
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-07-29T19:45:00Z',
     canTeach: {
@@ -878,7 +878,7 @@ export const MOCK_USERS: IUser[] = [
     age: 30,
     about: 'Преподаватель осознанности и медитации. Практикую майндфулнес.',
     avatar: 'https://img.freepik.com/free-photo/adorable-cat-lifestyle_23-2151593350.jpg?semt=ais_hybrid&w=740',
-    rating: 38,
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-10-11T12:10:00Z',
     canTeach: {
@@ -899,7 +899,7 @@ export const MOCK_USERS: IUser[] = [
     age: 29,
     about: 'Фитнес-тренер. Специализация - функциональный тренинг.',
     avatar: 'https://i.ytimg.com/vi/BDT3cHRyvCU/oardefault.jpg?sqp=-oaymwEkCJUDENAFSFqQAgHyq4qpAxMIARUAAAAAJQAAyEI9AICiQ3gB&amp;rs=AOn4CLAnDwX5phD_QwN4FM0Yq0fL-6abAg',
-    rating: 42,
+    likedBy: [],
     gender: 'male',
     createdAt: '2025-01-22T17:30:00Z',
     canTeach: {
@@ -922,7 +922,7 @@ export const MOCK_USERS: IUser[] = [
     age: 32,
     about: 'Сомнолог. Помогаю наладить сон и восстановление.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    rating: 37,
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-04-04T15:20:00Z',
     canTeach: {
@@ -944,7 +944,7 @@ export const MOCK_USERS: IUser[] = [
     age: 35,
     about: 'Коуч по балансу жизни и работы. Помогаю найти гармонию.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    rating: 40,
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-06-30T10:50:00Z',
     canTeach: {
@@ -967,7 +967,7 @@ export const MOCK_USERS: IUser[] = [
     age: 35,
     about: 'Коуч по балансу жизни и работы. Помогаю найти гармонию.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    rating: 40,
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-06-30T10:50:00Z',
     canTeach: {
@@ -989,7 +989,7 @@ export const MOCK_USERS: IUser[] = [
     age: 35,
     about: 'Коуч по балансу жизни и работы. Помогаю найти гармонию.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    rating: 40,
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-06-30T10:50:00Z',
     canTeach: {

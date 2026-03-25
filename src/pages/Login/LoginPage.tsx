@@ -1,12 +1,17 @@
-import { login, selectIsAuthLoading, selectAuthError } from '@/services/slices/authSlice';
-import { selectCurrentUser } from '@/services/slices/userSlice';
+import {
+  login,
+  selectIsAuthLoading,
+  selectAuthError,
+  // selectUserId
+} from '@/services/slices/authSlice';
 import { useDispatch, useSelector } from '@/services/store';
 import { FormHintUI } from '@/components/ui/FormHint';
 import { LoginForm } from '@/components/ui/LoginForm';
 import lamp from '@/assets/icons/light-bulb.svg';
 import { useNavigate } from 'react-router-dom';
 import styles from './LoginPage.module.css';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
+import { Loader } from '@/components/ui/Loader';
 
 
 export function LoginPage() {
@@ -14,15 +19,15 @@ export function LoginPage() {
   const navigate = useNavigate();
   const isAuthLoading = useSelector(selectIsAuthLoading);
   const error = useSelector(selectAuthError);
-  const user = useSelector(selectCurrentUser);
+  // const user = useSelector(selectUserId);
 
 // ---------------------------------------------------------------
 
-  useEffect(() => {
-    if (user) {
-      navigate('/');
-    }
-  }, [user, navigate]);
+  // useEffect(() => {
+  //   if (user) {
+  //     navigate('/');
+  //   }
+  // }, [user, navigate]);
 
 // ---------------------------------------------------------------
 
@@ -32,8 +37,7 @@ export function LoginPage() {
       password: string
     }) => {
       try {
-        const result = await dispatch(login(data)).unwrap();
-        console.log('Login success:', result);
+        await dispatch(login(data)).unwrap();
         navigate('/');
       } catch (err) {
         console.error('Login failed:', err);
@@ -45,6 +49,10 @@ export function LoginPage() {
   const handleRegisterClick = () => {
     navigate('/auth/register');
   };
+
+// ---------------------------------------------------------------
+
+  if(isAuthLoading) return <Loader />
 
 // ---------------------------------------------------------------
 
@@ -60,7 +68,7 @@ export function LoginPage() {
             onAppleClick={() => console.log('appleButton clicked')}
             onLoginClick={handleLogin}
             onRegisterClick={handleRegisterClick}
-            isLoading={isAuthLoading}
+            // isLoading={isAuthLoading}
             loginError={error}
           />
         </div>

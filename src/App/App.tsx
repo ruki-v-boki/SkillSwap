@@ -1,6 +1,6 @@
 import { getAllUsers, selectAllUsers, selectUserIsLoading } from '@/services/slices/userSlice';
-import { checkAuth, selectIsAuthChecked } from '@/services/slices/authSlice';
 import { UserCardModal } from '@/components/ui/Modal/UserCardModal/UserCardModal';
+import { checkAuth, selectIsAuthChecked } from '@/services/slices/authSlice';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { UserOfferModal } from '@/components/ui/Modal/UserOfferModal';
 import { NotFoundPage, ServerErrorPage } from '@/pages/Error';
@@ -47,7 +47,11 @@ export function App() {
 
 // ---------------------------------------------------------------
 
-  if (!isAuthChecked || isUserLoading) {
+  // if (!isAuthChecked || isUserLoading) {
+  //   return <Loader />;
+  // }
+
+  if (!isAuthChecked) {
     return <Loader />;
   }
 

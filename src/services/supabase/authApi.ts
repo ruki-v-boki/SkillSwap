@@ -65,9 +65,10 @@ export class SupabaseAuthAPI {
     // Получаем данные пользователя
     const { data: userData, error: userError } = await supabase
       .from('users')
-      .select('id, email, name, location, age, about, gender, avatar_url, rating, created_at')
+      .select('id, email, name, location, age, about, gender, avatar_url, liked_by, created_at')
       .eq('id', userId)
-      .single();
+      // .single();
+      .maybeSingle()
 
     if (userError) throw new Error(userError.message);
 
@@ -142,7 +143,6 @@ export class SupabaseAuthAPI {
         about: data.about || '',
         gender: data.gender || 'any',
         avatar_url: avatarUrl,
-        rating: 0,
       });
 
     if (profileError) throw new Error(profileError.message);
@@ -235,7 +235,7 @@ export class SupabaseAuthAPI {
         about: data.about,
         gender: data.gender,
         avatar_url: data.avatar,
-        rating: data.rating,
+        liked_by: data.likedBy,
       })
       .eq('id', userId);
 

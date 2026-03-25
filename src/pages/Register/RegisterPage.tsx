@@ -1,4 +1,4 @@
-import { selectCurrentUser } from '@/services/slices/userSlice';
+// import { selectCurrentUser } from '@/services/slices/userSlice';
 import { StepsCounter } from '@/components/features/StepsCounter';
 import type { TCity, WantToLearnSkill } from '@/types/types';
 import schoolBoardIcon from '@/assets/icons/schoolBoard.svg';
@@ -29,6 +29,7 @@ import {
   nextStep,
   prevStep
 } from '@/services/slices/registerSlice';
+import { selectUserId } from '@/services/slices/authSlice';
 
 // ---------------------------------------------------------------
 
@@ -61,7 +62,8 @@ export function RegisterPage() {
   const step3Data = useSelector(selectRegisterStep3);
   const isLoading = useSelector(selectRegisterIsLoading);
   const error = useSelector(selectRegisterError);
-  const authUser = useSelector(selectCurrentUser);
+  // const authUser = useSelector(selectCurrentUser);
+  const userId = useSelector(selectUserId);
   const navigate = useNavigate();
 
 // ---------------------------------------------------------------
@@ -73,12 +75,12 @@ export function RegisterPage() {
 // ---------------------------------------------------------------
 
   useEffect(() => {
-    if (!isLoading && !error && authUser) {
-      navigate(`/offer/${authUser.id}/modal`, {
+    if (!isLoading && !error && userId) {
+      navigate(`/offer/${userId}/modal`, {
         state: { background: location.pathname }
       });
     }
-  }, [isLoading, error, authUser, navigate]);
+  }, [isLoading, error, userId, navigate]);
 
 // ---------------------------------------------------------------
 

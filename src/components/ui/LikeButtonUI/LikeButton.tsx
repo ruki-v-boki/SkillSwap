@@ -6,7 +6,8 @@ import like from '@/assets/icons/like.svg';
 
 export function LikeButtonUI({
   isLiked,
-  onClick
+  onClick,
+  disabled
 }: LikeButtonUIProps) {
   return (
     <button
@@ -14,6 +15,7 @@ export function LikeButtonUI({
       type='button'
       onClick={onClick}
       aria-label={isLiked ? 'Убрать лайк' : 'Поставить лайк'}
+      disabled={disabled}
     >
       <img
         src={isLiked ? likeActive : like}

@@ -15,8 +15,7 @@ export type IUser = {
   gender: TGender;
   createdAt: string;
   avatar?: string;
-  rating?: number;
-  likedBy?: string[];
+  likedBy: string[];
   canTeach: CanTeachSkill;
   wantToLearn: WantToLearnSkill[];
 }

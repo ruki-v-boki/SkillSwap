@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/services/store';
-import type { AuthResponse, RegisterData } from '@/types/auth';
+import type { RegisterData } from '@/types/auth';
 import type { WantToLearnSkill, TGender, AvatarInput, CanTeachSkillInput, TCity } from '@/types/types';
 import { authAPI } from '@/services/api';
+import { authSlice } from './authSlice';
+
 
 const baseInitialState = {
   step1: {
@@ -41,19 +43,19 @@ interface RegisterState {
 
 // ---------------------------------------------------------------
 
-export const registerUser = createAsyncThunk<
-    AuthResponse,
-    void,
-    { rejectValue: string }
-  >(
-    'register/registerUser',
-  async (_, { getState, rejectWithValue }) => {
+export const registerUser = createAsyncThunk(
+  'register/registerUser',
+  async (_, { getState, rejectWithValue, dispatch }) => {  // ← добавляем dispatch
     const state = getState() as RootState;
     const registerData = selectRegisterData(state);
 
     try {
       const response = await authAPI.register(registerData);
       localStorage.removeItem('registerForm');
+      
+      // ✅ После успешной регистрации обновляем authSlice
+      dispatch(authSlice.actions.setUserId(response.user.id));
+      
       return response;
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Ошибка регистрации');

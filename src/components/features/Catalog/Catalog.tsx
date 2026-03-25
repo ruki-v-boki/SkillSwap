@@ -4,6 +4,7 @@ import { resetFilters } from '@/services/slices/filterSlice';
 import { selectAllUsers } from '@/services/slices/userSlice';
 import { CatalogSectionUI } from '../../ui/CatalogSection';
 import noResultsIcon from '@/assets/icons/noResults.svg';
+import { getUserRating } from '@/utils/helpers';
 import { useSelector } from '@/services/store';
 import { useDispatch } from '@/services/store';
 import styles from './Catalog.module.css';
@@ -22,7 +23,7 @@ export function Catalog() {
 
   const popularUsers = useMemo(() => {
     return [...allUsers].sort((a, b) =>
-      (b.rating || 0) - (a.rating || 0)
+      getUserRating(b) - getUserRating(a)
     );
   }, [allUsers]);
 
@@ -61,7 +62,7 @@ export function Catalog() {
           >
             Сейчас подходящих предложений не найдено :(
           </motion.p>
-          
+
           <motion.img
             src={noResultsIcon} 
             alt="Ничего не найдено" 
@@ -70,7 +71,7 @@ export function Catalog() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4, type: "spring" as const }}
           />
-          
+
           <motion.p
             className={`h-3`}
             initial={{ opacity: 0 }}

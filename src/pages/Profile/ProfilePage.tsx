@@ -17,7 +17,14 @@ import {
   validateName,
   validateAge,
 } from '@/utils/validators';
-import { selectCurrentUser, updateCurrentUser, updateUserEmail } from '@/services/slices/userSlice';
+import {
+  getCurrentUser,
+  selectCurrentUser,
+  updateCurrentUser,
+  updateUserEmail
+} from '@/services/slices/userSlice';
+import { selectUserId } from '@/services/slices/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 export function ProfilePage() {
@@ -26,8 +33,25 @@ export function ProfilePage() {
   const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
   const [isUpdatingEmail, setIsUpdatingEmail] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  // const user = useSelector(selectCurrentUser);
+  const userId = useSelector(selectUserId);
   const user = useSelector(selectCurrentUser);
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+
+
+  useEffect(() => {
+    if (!userId) {
+      navigate('/auth/login');
+      return;
+    }
+    if (userId && !user) {
+      dispatch(getCurrentUser(userId));
+    }
+  }, [userId, user, dispatch, navigate]);
+
 
   const {
     values: formData,
@@ -139,9 +163,9 @@ export function ProfilePage() {
 
 // ---------------------------------------------------------------
 
-  if (!user) {
-    return <div className={styles.loading}>Загрузка профиля...</div>;
-  }
+  // if (!user) {
+  //   return <div className={styles.loading}>Загрузка профиля...</div>;
+  // }
 
 // ---------------------------------------------------------------
 
@@ -276,7 +300,8 @@ export function ProfilePage() {
         <AvatarLoader
           ref={fileInputRef}
           variant="profileForm"
-          previewUrl={avatarPreview || user.avatar}
+          // previewUrl={avatarPreview || user.avatar}
+          previewUrl={avatarPreview || user?.avatar}
           onChange={handleAvatarChange}
           isLoading={isUploadingAvatar}
         />

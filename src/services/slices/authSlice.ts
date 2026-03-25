@@ -4,6 +4,7 @@ import { supabase } from '@/services/supabase/client';
 import type { RootState } from '@/services/store';
 import type { LoginCredentials } from '@/types/auth';
 import { authAPI } from '@/services/api';
+import { usersSlice } from './userSlice';
 
 type TAuthState = {
   userId: string | null;
@@ -31,8 +32,13 @@ export const login = createAsyncThunk(
 
 // ---------------------------------------------------------------
 
-export const logout = createAsyncThunk('auth/logout', async () => {
+export const logout = createAsyncThunk('auth/logout', async (_, { dispatch }) => {
   await authAPI.logout();
+  
+  // ✅ Очищаем данные пользователя
+  dispatch(usersSlice.actions.clearCurrentUser());
+  dispatch(usersSlice.actions.clearAllUsers());
+  
   return null;
 });
 
@@ -64,6 +70,9 @@ export const authSlice = createSlice({
     },
     clearAuthError: (state) => {
       state.error = initialState.error;
+    },
+    setUserId: (state, action: PayloadAction<string>) => {
+      state.userId = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -99,6 +108,7 @@ export const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(logout.fulfilled, (state) => {
+        console.log('🔍 logout.fulfilled - очищаем userId');
         state.isLoading = false;
         state.userId = null;
       })
@@ -111,7 +121,7 @@ export const authSlice = createSlice({
 
 // ---------------------------------------------------------------
 
-export const { setAuthChecked, clearAuthError } = authSlice.actions;
+export const { setAuthChecked, clearAuthError, setUserId } = authSlice.actions;
 
 // ---------------------------------------------------------------
 

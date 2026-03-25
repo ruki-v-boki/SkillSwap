@@ -15,7 +15,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--color-bg);
   background-color: transparent;
 }
 
