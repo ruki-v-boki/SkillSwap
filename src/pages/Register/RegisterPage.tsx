@@ -13,7 +13,7 @@ import { Loader } from '@/components/ui/Loader';
 import styles from './RegisterPage.module.css';
 import type { TGender } from '@/types/types';
 import { Step3Form } from './steps/step3';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   selectRegisterIsLoading,
   selectRegisterError,
@@ -29,6 +29,9 @@ import {
   nextStep,
   prevStep
 } from '@/services/slices/registerSlice';
+import { ModalUI } from '@/components/ui/Modal';
+import { UserOfferModal } from '@/components/ui/Modal/UserOfferModal';
+import type { RegisterData } from '@/types/auth';
 // import { selectUserId } from '@/services/slices/authSlice';
 
 // ---------------------------------------------------------------
@@ -62,6 +65,8 @@ export function RegisterPage() {
   const step3Data = useSelector(selectRegisterStep3);
   const isLoading = useSelector(selectRegisterIsLoading);
   const error = useSelector(selectRegisterError);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [previewData, setPreviewData] = useState<RegisterData | null>(null);
   // const authUser = useSelector(selectCurrentUser);
   // const userId = useSelector(selectUserId);
   // const navigate = useNavigate();
@@ -117,7 +122,28 @@ export function RegisterPage() {
     images: File[];
   }) => {
     dispatch(updateStep3(data));
-    dispatch(registerUser());
+    // Собираем previewData из существующих данных
+    const preview: RegisterData = {
+      email: step1Data.email,
+      password: step1Data.password,
+      name: step2Data.name,
+      location: step2Data.location,
+      age: step2Data.age,
+      about: step2Data.about,
+      gender: step2Data.gender,
+      avatar: step2Data.avatar,
+      canTeach: {
+        categoryId: data.categoryId,
+        subcategoryId: data.subcategoryId,
+        customName: data.customName,
+        description: data.description,
+        images: data.images,  // ← File[]
+      },
+      wantToLearn: step2Data.wantToLearn,
+    };
+
+    setPreviewData(preview);
+    setIsModalOpen(true);
   };
 
 // ---------------------------------------------------------------
@@ -126,6 +152,20 @@ export function RegisterPage() {
     dispatch(prevStep());
   };
 
+// ---------------------------------------------------------------
+
+  const handleEdit = () => {
+    // Закрываем модалку
+    setIsModalOpen(false);
+    // Возвращаемся на шаг 3 (данные уже в store)
+    // dispatch(setCurrentStep(3)); // если нужно принудительно установить шаг
+  };
+
+  const handleConfirm = () => {
+    // Реальная регистрация с теми же данными
+    dispatch(registerUser());
+    setIsModalOpen(false);
+  };
 // ---------------------------------------------------------------
 
   if (isLoading) {
@@ -176,6 +216,15 @@ export function RegisterPage() {
           title={STEP_HINTS[currentStep as keyof typeof STEP_HINTS].title}
           text={STEP_HINTS[currentStep as keyof typeof STEP_HINTS].text}
         />
+        {isModalOpen && previewData && (
+          <ModalUI onClose={() => setIsModalOpen(false)}>
+            <UserOfferModal
+              previewData={previewData}
+              onConfirm={handleConfirm}
+              onEdit={handleEdit}
+            />
+          </ModalUI>
+        )}
       </main>
     </div>
   );

@@ -1,9 +1,8 @@
 import { UserCardModal } from '@/components/ui/Modal/UserCardModal/UserCardModal';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-// import { UserOfferModal } from '@/components/ui/Modal/UserOfferModal';
-import { NotFoundPage, ServerErrorPage } from '@/pages/Error';
-import { getAllUsers, getCurrentUser, selectCurrentUser, selectUserIsLoading } from '@/services/slices/userSlice';
 import { checkAuth, selectUserId } from '@/services/slices/authSlice';
+import { NotFoundPage, ServerErrorPage } from '@/pages/Error';
+import { useDispatch, useSelector } from '@/services/store';
 import { SkillsPage } from '@/pages/Skills/SkillsPage';
 import { MainLayout } from '@/layouts/Main/MainLayout';
 import { AuthLayout } from '@/layouts/Auth/AuthLayout';
@@ -11,7 +10,6 @@ import { HomePage } from '@/pages/Home/HomePage';
 import { ModalUI } from '@/components/ui/Modal';
 import { ContactsPage } from '@/pages/Contacts';
 import { RegisterPage } from '@/pages/Register';
-import { useDispatch, useSelector } from '@/services/store';
 import { ProfilePage } from '@/pages/Profile';
 import { PolicyPage } from '@/pages/Policy';
 import { TermsPage } from '@/pages/Terms';
@@ -20,7 +18,18 @@ import { AboutPage } from '@/pages/About';
 import { OfferPage } from '@/pages/Offer';
 import { ProtectedRoute } from '@/routes';
 import { BlogPage } from '@/pages/Blog';
+import {
+  selectUserIsLoading,
+  selectCurrentUser,
+  getCurrentUser,
+  getAllUsers,
+} from '@/services/slices/userSlice';
 import { useEffect } from 'react';
+import { UserSkillsPage } from '@/pages/Profile/UserSkills/UserSkillsPage';
+import { PersonalDataPage } from '@/pages/Profile/PersonalData/PersonalDataPage';
+import { RequestsPage } from '@/pages/Profile/Requests/RequestsPage';
+import { FavouritesPage } from '@/pages/Profile/Favourites/FavouritesPage';
+import { ExchangesPage } from '@/pages/Profile/Exchanges/ExchangesPage';
 
 
 export function App() {
@@ -28,11 +37,12 @@ export function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const background = location.state?.background;
   const closeModal = () => navigate(-1);
   const userId = useSelector(selectUserId);
+  const background = location.state?.background;
+
   const currentUser = useSelector(selectCurrentUser);
-  const isLoading = useSelector(selectUserIsLoading)
+  const isLoading = useSelector(selectUserIsLoading);
 
 // ---------------------------------------------------------------
 
@@ -79,7 +89,13 @@ export function App() {
         {/* ---------- МАРШРУТЫ ДЛЯ АВТОРИЗОВАННЫХ (MainLayout) ---------- */}
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
-            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile" element={<ProfilePage />}>
+            <Route index element={<PersonalDataPage />} />
+            <Route path="requests" element={<RequestsPage />} />
+            <Route path="favourites" element={<FavouritesPage />} />
+            <Route path="exchanges" element={<ExchangesPage />} />
+            <Route path="my-skills" element={<UserSkillsPage />} />
+            </Route>
           </Route>
         </Route>
       </Routes>
@@ -95,14 +111,6 @@ export function App() {
               </ModalUI>
             }
           />
-          {/* <Route
-            path='offer/:id/modal'
-            element={
-              <ModalUI onClose={closeModal}>
-                <UserOfferModal />
-              </ModalUI>
-            }
-          /> */}
         </Routes>
       )}
     </>
