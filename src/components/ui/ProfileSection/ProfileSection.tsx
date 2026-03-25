@@ -17,7 +17,7 @@ export function ProfileSectionUI({
           <div className={styles.iconsBox}>
             <ThemeToggler />
             <NotificationsButtonUI />
-            <NavLink to="/favorites" className={styles.favouritesButton}>
+            <NavLink to="/profile/favourites" className={styles.favouritesButton}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

@@ -1,6 +1,7 @@
 export type SocialButtonsUIProps = {
   className?: string;
-  onFavoriteClick: () => void;
+  isLiked: boolean;
+  onFavoriteClick: (e: React.MouseEvent) => void;
   onShareClick: () => void;
   onMoreClick: () => void;
 }

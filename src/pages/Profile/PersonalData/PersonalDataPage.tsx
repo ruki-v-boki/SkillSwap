@@ -139,7 +139,7 @@ export function PersonalDataPage() {
 // ---------------------------------------------------------------
 
   return (
-    <>
+    <main className={styles.personalDataContainer}>
     <form
           onSubmit={handleSubmit}
           className={styles.profileForm}
@@ -266,6 +266,6 @@ export function PersonalDataPage() {
           onChange={handleAvatarChange}
           isLoading={isUploadingAvatar}
         />
-    </>
+    </main>
   )
 }

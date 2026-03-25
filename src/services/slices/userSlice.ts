@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, type PayloadAction, createSelector } from '@reduxjs/toolkit';
 import type { IUser } from '@/types/types';
 import type { RootState } from '@/services/store';
 import { usersAPI } from '@/services/api';
@@ -245,3 +245,11 @@ export const selectAllUsers = (state: RootState) => state.users.allUsers;
 export const selectCurrentUser = (state: RootState) => state.users.currentUser;
 export const selectUserIsLoading = (state: RootState) => state.users.isLoading;
 export const selectUserError = (state: RootState) => state.users.error;
+
+export const selectFavouriteUsers = createSelector(
+  [selectAllUsers, selectCurrentUser],
+  (allUsers, currentUser) => {
+    if (!currentUser?.id) return [];
+    return allUsers.filter(user => user.likedBy?.includes(currentUser.id));
+  }
+);

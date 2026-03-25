@@ -7,7 +7,13 @@ import type { OfferDetailsUIProps } from './type';
 
 
 
-export function OfferDetailsUI({ previewData, user, variant, onEdit, onConfirm }: OfferDetailsUIProps) {
+export function OfferDetailsUI({
+  previewData,
+  user,
+  variant,
+  onEdit,
+  onConfirm
+}: OfferDetailsUIProps) {
   // Используем previewData или user
   const isPreview = !!previewData;
   const data = previewData || user;

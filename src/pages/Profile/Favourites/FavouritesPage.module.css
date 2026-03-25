@@ -1,0 +1,61 @@
+.favouritesPage {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 36px;
+}
+
+.emptyState {
+  display: flex;
+  background-color: antiquewhite;
+}
+
+.favouritesGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.favouriteOfferWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  box-shadow: var(--box-shadow-light);
+  background-color: var(--color-input);
+  border-radius: var(--radius-button);
+  padding: 30px 30px 48px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.userBio {
+  display: flex;
+  gap: 16px;
+}
+
+.avatarBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  box-shadow: var(--box-shadow);
+  width: 60px;
+}
+
+.infoBox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.socials {
+  display: flex;
+  gap: 16px;
+}

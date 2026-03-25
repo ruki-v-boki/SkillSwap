@@ -2,6 +2,7 @@
   display: flex;
   gap: 77px;
   width: 100%;
+  justify-content: space-between;
 }
 
 .offerDetailsContainerModal {

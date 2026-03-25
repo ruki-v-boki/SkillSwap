@@ -1,41 +1,67 @@
-import { selectAllUsers } from '@/services/slices/userSlice';
+import { useDispatch, useSelector } from '@/services/store';
+import { selectAllUsers, toggleLike } from '@/services/slices/userSlice';
+import { selectUserId } from '@/services/slices/authSlice';
 import { SocialButtonsUI } from '@/components/ui/SocialButtons';
 import { OfferDetailsUI } from '@/components/ui/OfferDetails';
 import { SliderUI } from '@/components/ui/Slider';
 import { CardUI } from '@/components/ui/Card';
 import { useParams } from 'react-router-dom';
 import styles from './OfferPage.module.css';
-import { useSelector } from 'react-redux';
-
+import { useState } from 'react';
 
 export function OfferPage() {
+  const dispatch = useDispatch();
   const allUsers = useSelector(selectAllUsers);
+  const currentUserId = useSelector(selectUserId);
   const { id } = useParams();
   const user = allUsers.find(u => u.id === id);
+  const [isPending, setIsPending] = useState(false);
+
+  // Вычисляем, лайкнул ли текущий пользователь этого пользователя
+  const isLiked = currentUserId ? user?.likedBy?.includes(currentUserId) || false : false;
+
+  const handleFavoriteClick = async () => {
+    if (!currentUserId || !user?.id || isPending) return;
+    
+    setIsPending(true);
+    try {
+      await dispatch(toggleLike({
+        currentUserId,
+        targetUserId: user.id,
+      })).unwrap();
+    } catch (error) {
+      console.error('Failed to toggle like:', error);
+    } finally {
+      setIsPending(false);
+    }
+  };
 
   const similarUsers = allUsers.filter(u =>
     u.id !== user?.id &&
     u.canTeach?.categoryId === user?.canTeach?.categoryId
   );
 
+  if (!user) {
+    return <div className={styles.notFound}>Пользователь не найден</div>;
+  }
+
   return (
     <div className={styles.offerPageContainer}>
-      {user && (
-        <main className={styles.offerSection}>
-          <div className={styles.offerCardWrapper}>
-            <CardUI user={user} styleType='profile' onCardClick={()=>{}}/>
-          </div>
-          <div className={styles.offerDetailsWrapper}>
-            <SocialButtonsUI
-              onFavoriteClick={() => console.log('favorite button clicked')}
-              onShareClick={() => console.log('share button clicked')}
-              onMoreClick={() => console.log('more button clicked')}
-              className={styles.socials}
-            />
-            <OfferDetailsUI user={user} variant='offerPage' />
-          </div>
-        </main>
-      )}
+      <main className={styles.offerSection}>
+        <div className={styles.offerCardWrapper}>
+          <CardUI user={user} styleType='profile' onCardClick={()=>{}}/>
+        </div>
+        <div className={styles.offerDetailsWrapper}>
+          <SocialButtonsUI
+            onFavoriteClick={handleFavoriteClick}
+            isLiked={isLiked}
+            onShareClick={() => console.log('share button clicked')}
+            onMoreClick={() => console.log('more button clicked')}
+            className={styles.socials}
+          />
+          <OfferDetailsUI user={user} variant='offerPage' />
+        </div>
+      </main>
 
       <section className={styles.offersSimilarSection}>
         <h2 className={`${styles.offerSimilarTitle} h-2`}>Похожие предложения</h2>
