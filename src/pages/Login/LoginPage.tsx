@@ -12,12 +12,14 @@ import { useNavigate } from 'react-router-dom';
 import styles from './LoginPage.module.css';
 // import { useEffect } from 'react';
 import { Loader } from '@/components/ui/Loader';
+import { selectUserIsLoading } from '@/services/slices/userSlice';
 
 
 export function LoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isAuthLoading = useSelector(selectIsAuthLoading);
+  const isLoading = useSelector(selectUserIsLoading)
   const error = useSelector(selectAuthError);
   // const user = useSelector(selectUserId);
 
@@ -38,7 +40,8 @@ export function LoginPage() {
     }) => {
       try {
         await dispatch(login(data)).unwrap();
-        navigate('/');
+        navigate('/profile');
+        console.log('login success')
       } catch (err) {
         console.error('Login failed:', err);
       }
@@ -47,12 +50,12 @@ export function LoginPage() {
 // ---------------------------------------------------------------
 
   const handleRegisterClick = () => {
-    navigate('/auth/register');
+    navigate('/register');
   };
 
 // ---------------------------------------------------------------
 
-  if(isAuthLoading) return <Loader />
+  if(isLoading) return <Loader />
 
 // ---------------------------------------------------------------
 
@@ -68,7 +71,7 @@ export function LoginPage() {
             onAppleClick={() => console.log('appleButton clicked')}
             onLoginClick={handleLogin}
             onRegisterClick={handleRegisterClick}
-            // isLoading={isAuthLoading}
+            isLoading={isAuthLoading}
             loginError={error}
           />
         </div>

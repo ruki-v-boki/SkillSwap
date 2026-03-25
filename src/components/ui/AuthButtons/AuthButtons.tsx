@@ -19,7 +19,8 @@ export function AuthButtonsUI({
       <Button
         type={isHeader ? "button" : "submit"}
         variant={isHeader ? "outline" : "prime"}
-        onClick={isHeader ? onLoginClick : undefined}
+        // onClick={isHeader ? onLoginClick : undefined}
+        onClick={onLoginClick}
         className={`${isHeader && styles.loginButtonHeader} h-body`}
       >
         Войти

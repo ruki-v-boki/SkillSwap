@@ -9,7 +9,7 @@ import lampIcon from '@/assets/icons/light-bulb.svg';
 import { Step1Form } from './steps/step1/Step1Form';
 import { Step2Form } from './steps/step2/Step2Form';
 import { Loader } from '@/components/ui/Loader';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import styles from './RegisterPage.module.css';
 import type { TGender } from '@/types/types';
 import { Step3Form } from './steps/step3';
@@ -29,7 +29,7 @@ import {
   nextStep,
   prevStep
 } from '@/services/slices/registerSlice';
-import { selectUserId } from '@/services/slices/authSlice';
+// import { selectUserId } from '@/services/slices/authSlice';
 
 // ---------------------------------------------------------------
 
@@ -63,8 +63,8 @@ export function RegisterPage() {
   const isLoading = useSelector(selectRegisterIsLoading);
   const error = useSelector(selectRegisterError);
   // const authUser = useSelector(selectCurrentUser);
-  const userId = useSelector(selectUserId);
-  const navigate = useNavigate();
+  // const userId = useSelector(selectUserId);
+  // const navigate = useNavigate();
 
 // ---------------------------------------------------------------
 
@@ -74,13 +74,13 @@ export function RegisterPage() {
 
 // ---------------------------------------------------------------
 
-  useEffect(() => {
-    if (!isLoading && !error && userId) {
-      navigate(`/offer/${userId}/modal`, {
-        state: { background: location.pathname }
-      });
-    }
-  }, [isLoading, error, userId, navigate]);
+  // useEffect(() => {
+  //   if (!isLoading && !error && userId) {
+  //     navigate(`/offer/${userId}/modal`, {
+  //       state: { background: location.pathname }
+  //     });
+  //   }
+  // }, [isLoading, error, userId, navigate]);
 
 // ---------------------------------------------------------------
 

@@ -8,7 +8,7 @@ export function AuthHeaderUI() {
   const navigate = useNavigate()
 
   const onCloseButtonClick = () => {
-    navigate(-1)
+    navigate('/')
   }
 
   return (

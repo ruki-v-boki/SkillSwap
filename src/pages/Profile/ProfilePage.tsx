@@ -18,13 +18,13 @@ import {
   validateAge,
 } from '@/utils/validators';
 import {
-  getCurrentUser,
+  // getCurrentUser,
   selectCurrentUser,
   updateCurrentUser,
   updateUserEmail
 } from '@/services/slices/userSlice';
-import { selectUserId } from '@/services/slices/authSlice';
-import { useNavigate } from 'react-router-dom';
+// import { selectUserId } from '@/services/slices/authSlice';
+// import { useNavigate } from 'react-router-dom';
 
 
 export function ProfilePage() {
@@ -34,23 +34,23 @@ export function ProfilePage() {
   const [isUpdatingEmail, setIsUpdatingEmail] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   // const user = useSelector(selectCurrentUser);
-  const userId = useSelector(selectUserId);
+  // const userId = useSelector(selectUserId);
   const user = useSelector(selectCurrentUser);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
 
 
 
-  useEffect(() => {
-    if (!userId) {
-      navigate('/auth/login');
-      return;
-    }
-    if (userId && !user) {
-      dispatch(getCurrentUser(userId));
-    }
-  }, [userId, user, dispatch, navigate]);
+  // useEffect(() => {
+  //   if (!userId) {
+  //     navigate('/login');
+  //     return;
+  //   }
+  //   if (userId && !user) {
+  //     dispatch(getCurrentUser(userId));
+  //   }
+  // }, [userId, user, dispatch, navigate]);
 
 
   const {

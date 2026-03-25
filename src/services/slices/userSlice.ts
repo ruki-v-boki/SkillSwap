@@ -38,6 +38,8 @@ export const getAllUsers = createAsyncThunk(
 export const getCurrentUser = createAsyncThunk(
   'user/getCurrentUser',
   async (userId: string, { rejectWithValue }) => {
+    console.log('🔍 getCurrentUser called with userId:', userId);
+    console.trace();  // ← покажет стек вызовов
     try {
       const user = await usersAPI.getUserById(userId);
       return user;
@@ -133,7 +135,9 @@ export const usersSlice = createSlice({
       state.currentUser = action.payload;
     },
     clearCurrentUser: (state) => {
+      console.log('🔍 clearCurrentUser called, old currentUser:', state.currentUser);
       state.currentUser = null;
+      console.log('🔍 clearCurrentUser finished, new currentUser:', state.currentUser);
     },
     clearAllUsers: (state) => {
       state.allUsers = [];
@@ -225,7 +229,6 @@ export const usersSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state) => {
         state.currentUser = null;
-        state.allUsers = [];
         state.isLoading = false;
         state.error = null;
       });

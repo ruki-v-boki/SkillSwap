@@ -259,8 +259,13 @@ export class SupabaseAuthAPI {
 // ---------------------------------------------------------------
 
   async logout(): Promise<void> {
+    console.log('🔍 authAPI.logout called');
     const { error } = await supabase.auth.signOut();
-    if (error) throw new Error(error.message);
+    if (error) {
+      console.error('❌ Logout error:', error);
+      throw new Error(error.message);
+    }
+    console.log('✅ Logout successful');
   }
 }
 

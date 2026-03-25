@@ -1,7 +1,7 @@
 import { logout, selectIsAuthLoading } from '@/services/slices/authSlice';
-import { selectCurrentUser } from '@/services/slices/userSlice';
+// import { selectCurrentUser } from '@/services/slices/userSlice';
 import { useDispatch, useSelector } from '@/services/store';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import type { ProfileMenuUIProps } from './type';
 import styles from './ProfileMenu.module.css';
 
@@ -11,9 +11,9 @@ export function ProfileMenuUI({
 }: ProfileMenuUIProps) {
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const isLoading = useSelector(selectIsAuthLoading);
-  const user = useSelector(selectCurrentUser)
+  // const user = useSelector(selectCurrentUser)
 
 // ---------------------------------------------------------------
 
@@ -21,7 +21,8 @@ export function ProfileMenuUI({
     try {
       await dispatch(logout()).unwrap();
       onLinkClick();
-      navigate('/');
+      // navigate('/');
+      console.log('logout success');
     } catch (error) {
       console.error('Logout failed:', error);
     }
@@ -32,7 +33,7 @@ export function ProfileMenuUI({
   return (
     <>
       <NavLink
-        to={`/profile/${user?.id}`}
+        to={'/profile'}
         className={styles.profileLink}
         onClick={() => onLinkClick()}
       >

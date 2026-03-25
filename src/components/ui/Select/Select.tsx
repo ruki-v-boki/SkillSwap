@@ -165,14 +165,15 @@ export function Select({
                     }
                   >
                     {type === 'multiple' && (
-                      <label className={`checkbox`}>
+                      // <label className={`checkbox`}>
                         <input
                           type="checkbox"
                           checked={selectedValues.includes(option.value)}
                           onChange={() => {}}
                           onClick={(e) => e.stopPropagation()}
+                          className={`checkbox`}
                         />
-                      </label>
+                      // </label>
                     )}
                     <span>{option.label}</span>
                   </li>

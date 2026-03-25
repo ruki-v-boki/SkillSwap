@@ -33,12 +33,15 @@ export const login = createAsyncThunk(
 // ---------------------------------------------------------------
 
 export const logout = createAsyncThunk('auth/logout', async (_, { dispatch }) => {
+  console.log('🔍 logout thunk started');
+
+  dispatch(setUserId(''));
   await authAPI.logout();
   
-  // ✅ Очищаем данные пользователя
+  console.log('🔍 Очищаем userId и currentUser');
   dispatch(usersSlice.actions.clearCurrentUser());
-  dispatch(usersSlice.actions.clearAllUsers());
-  
+
+  console.log('🔍 logout thunk finished');
   return null;
 });
 
@@ -47,9 +50,12 @@ export const logout = createAsyncThunk('auth/logout', async (_, { dispatch }) =>
 export const checkAuth = createAsyncThunk(
   'auth/checkAuth',
   async () => {
+    console.log('🔍 checkAuth called');
     try {
       const { data: { session } } = await supabase.auth.getSession();
+      console.log('🔍 session:', session);
       if (session?.user) {
+        console.log('🔍 session found, userId:', session.user.id);
         return session.user.id;
       }
     } catch (error) {
