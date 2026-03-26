@@ -21,6 +21,6 @@
   align-items: start;
   gap: 24px;
   width: 556px;
-  height: 616px; /* временная высота */
+  max-height: 616px;
   padding: 60px;
 }

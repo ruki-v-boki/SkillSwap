@@ -17,7 +17,7 @@ const baseInitialState = {
     gender: 'any' as TGender,
     location: '' as TCity,
     about: '',
-    avatar: null as AvatarInput | null,  // ← File для аватара
+    avatar: null as AvatarInput | null,
     wantToLearn: [] as Omit<WantToLearnSkill, 'id'>[],
   },
   step3: {
@@ -26,7 +26,7 @@ const baseInitialState = {
       subcategoryId: '',
       customName: '',
       description: '',
-      images: [] as File[],  // ← File[]
+      images: [] as File[],
     } as CanTeachSkillInput,
   },
   currentStep: 1,
@@ -45,17 +45,16 @@ interface RegisterState {
 
 export const registerUser = createAsyncThunk(
   'register/registerUser',
-  async (_, { getState, rejectWithValue, dispatch }) => {  // ← добавляем dispatch
+  async (_, { getState, rejectWithValue, dispatch }) => {
     const state = getState() as RootState;
     const registerData = selectRegisterData(state);
 
     try {
       const response = await authAPI.register(registerData);
       localStorage.removeItem('registerForm');
-      
-      // ✅ После успешной регистрации обновляем authSlice
+
       dispatch(authSlice.actions.setUserId(response.user.id));
-      
+
       return response;
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Ошибка регистрации');
@@ -138,6 +137,7 @@ export const registerSlice = createSlice({
       state.step3.canTeach = { ...state.step3.canTeach, ...action.payload };
       saveToLocalStorage(state);
     },
+    // ---------------------------------------------------------------
     setCurrentStep: (state, action: PayloadAction<number>) => {
       state.currentStep = action.payload;
       saveToLocalStorage(state);
@@ -150,6 +150,7 @@ export const registerSlice = createSlice({
       state.currentStep = Math.max(state.currentStep - 1, 1);
       saveToLocalStorage(state);
     },
+    // ---------------------------------------------------------------
     clearStep2: (state) => {
       state.step2 = baseInitialState.step2;
       saveToLocalStorage(state);
@@ -158,6 +159,10 @@ export const registerSlice = createSlice({
       state.step3 = baseInitialState.step3;
       saveToLocalStorage(state);
     },
+    clearError: (state) => {
+      state.error = null;
+    },
+    // ---------------------------------------------------------------
     resetRegister: (state) => {
       localStorage.removeItem('registerForm');
       state.step1 = baseInitialState.step1;
@@ -166,10 +171,7 @@ export const registerSlice = createSlice({
       state.currentStep = 1;
       state.isLoading = false;
       state.error = null;
-    },
-    clearError: (state) => {
-      state.error = null;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -216,8 +218,6 @@ export const selectRegisterStep3 = (state: RootState) => state.register.step3.ca
 export const selectCurrentStep = (state: RootState) => state.register.currentStep;
 export const selectRegisterIsLoading = (state: RootState) => state.register.isLoading;
 export const selectRegisterError = (state: RootState) => state.register.error;
-
-// ---------------------------------------------------------------
 
 export const selectRegisterData = (state: RootState): RegisterData => {
   const { step1, step2, step3 } = state.register;

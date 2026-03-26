@@ -1,6 +1,12 @@
 import { UserCardModal } from '@/components/ui/Modal/UserCardModal/UserCardModal';
+import { PersonalDataPage } from '@/pages/Profile/PersonalData/PersonalDataPage';
+import { useRealtimeNotifications } from '@/hooks/useRealtimeNotifications';
+import { UserSkillsPage } from '@/pages/Profile/UserSkills/UserSkillsPage';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { FavouritesPage } from '@/pages/Profile/Favourites/FavouritesPage';
+import { ExchangesPage } from '@/pages/Profile/Exchanges/ExchangesPage';
 import { checkAuth, selectUserId } from '@/services/slices/authSlice';
+import { RequestsPage } from '@/pages/Profile/Requests/RequestsPage';
 import { NotFoundPage, ServerErrorPage } from '@/pages/Error';
 import { useDispatch, useSelector } from '@/services/store';
 import { SkillsPage } from '@/pages/Skills/SkillsPage';
@@ -25,26 +31,22 @@ import {
   getAllUsers,
 } from '@/services/slices/userSlice';
 import { useEffect } from 'react';
-import { UserSkillsPage } from '@/pages/Profile/UserSkills/UserSkillsPage';
-import { PersonalDataPage } from '@/pages/Profile/PersonalData/PersonalDataPage';
-import { RequestsPage } from '@/pages/Profile/Requests/RequestsPage';
-import { FavouritesPage } from '@/pages/Profile/Favourites/FavouritesPage';
-import { ExchangesPage } from '@/pages/Profile/Exchanges/ExchangesPage';
 
 
 export function App() {
 
   const dispatch = useDispatch();
-  const location = useLocation();
   const navigate = useNavigate();
-  const closeModal = () => navigate(-1);
-  const userId = useSelector(selectUserId);
+  const location = useLocation();
   const background = location.state?.background;
-
+  const userId = useSelector(selectUserId);
   const currentUser = useSelector(selectCurrentUser);
   const isLoading = useSelector(selectUserIsLoading);
+  const closeModal = () => navigate(-1);
 
 // ---------------------------------------------------------------
+
+  useRealtimeNotifications(userId);
 
   useEffect(() => {
     dispatch(checkAuth());

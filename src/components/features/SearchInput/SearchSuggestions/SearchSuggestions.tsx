@@ -1,14 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
+import type { SearchSuggestionsProps } from './type';
 import styles from './SearchSuggestions.module.css';
 
-interface SearchSuggestionsProps {
-  query: string;
-  results: Array<{ id: string; name: string; categoryId: string }>;
-  onSelect: (skillId: string, skillName: string) => void;
-  selectedSkills: string[];
-  selectedIndex: number;
-  onClose: () => void;
-}
 
 export function SearchSuggestions({
   query,

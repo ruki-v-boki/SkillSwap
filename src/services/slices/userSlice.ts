@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk, type PayloadAction, createSelector } from '@reduxjs/toolkit';
-import type { IUser } from '@/types/types';
+import { supabase } from '@/services/supabase/client';
 import type { RootState } from '@/services/store';
+import type { IUser } from '@/types/types';
 import { usersAPI } from '@/services/api';
 import { logout } from './authSlice';
-import { supabase } from '@/services/supabase/client';
 
 interface IUserState {
   allUsers: IUser[];
@@ -38,8 +38,6 @@ export const getAllUsers = createAsyncThunk(
 export const getCurrentUser = createAsyncThunk(
   'user/getCurrentUser',
   async (userId: string, { rejectWithValue }) => {
-    console.log('🔍 getCurrentUser called with userId:', userId);
-    console.trace();  // ← покажет стек вызовов
     try {
       const user = await usersAPI.getUserById(userId);
       return user;
@@ -109,7 +107,6 @@ export const uploadAvatar = createAsyncThunk(
 
 // ---------------------------------------------------------------
 
-// usersSlice.ts
 export const toggleLike = createAsyncThunk(
   'user/toggleLike',
   async ({ currentUserId, targetUserId }: { currentUserId: string; targetUserId: string }, { rejectWithValue }) => {
@@ -134,10 +131,9 @@ export const usersSlice = createSlice({
     setCurrentUser: (state, action: PayloadAction<IUser | null>) => {
       state.currentUser = action.payload;
     },
+    // ---------------------------------------------------------------
     clearCurrentUser: (state) => {
-      console.log('🔍 clearCurrentUser called, old currentUser:', state.currentUser);
       state.currentUser = null;
-      console.log('🔍 clearCurrentUser finished, new currentUser:', state.currentUser);
     },
     clearAllUsers: (state) => {
       state.allUsers = [];
@@ -160,6 +156,7 @@ export const usersSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string || 'Ошибка загрузки всех пользователей';
       })
+      // ---------------------------------------------------------------
       .addCase(getCurrentUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -172,24 +169,28 @@ export const usersSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string || 'Ошибка загрузки профиля';
       })
+      // ---------------------------------------------------------------
       .addCase(updateCurrentUser.fulfilled, (state, action: PayloadAction<IUser>) => {
         state.isLoading = false;
         state.currentUser = action.payload;
         const index = state.allUsers.findIndex(u => u.id === action.payload.id);
         if (index !== -1) state.allUsers[index] = action.payload;
       })
+      // ---------------------------------------------------------------
       .addCase(updateUserEmail.fulfilled, (state, action: PayloadAction<IUser>) => {
         state.isLoading = false;
         state.currentUser = action.payload;
         const index = state.allUsers.findIndex(u => u.id === action.payload.id);
         if (index !== -1) state.allUsers[index] = action.payload;
       })
+      // ---------------------------------------------------------------
       .addCase(uploadAvatar.fulfilled, (state, action: PayloadAction<IUser>) => {
         state.isLoading = false;
         state.currentUser = action.payload;
         const index = state.allUsers.findIndex(u => u.id === action.payload.id);
         if (index !== -1) state.allUsers[index] = action.payload;
       })
+      // ---------------------------------------------------------------
       .addCase(toggleLike.pending, (state) => {
         state.error = null;
       })
@@ -208,7 +209,6 @@ export const usersSlice = createSlice({
           } else {
             user.likedBy = currentLikes.filter(id => id !== currentUserId);
           }
-
           state.allUsers[userIndex] = user;
         }
 
@@ -227,6 +227,7 @@ export const usersSlice = createSlice({
       .addCase(toggleLike.rejected, (state, action) => {
         state.error = action.payload as string || 'Ошибка при изменении лайка';
       })
+      // ---------------------------------------------------------------
       .addCase(logout.fulfilled, (state) => {
         state.currentUser = null;
         state.isLoading = false;
@@ -236,11 +237,11 @@ export const usersSlice = createSlice({
 });
 
 // ---------------------------------------------------------------
-
+// Actions
 export const { setAllUsers, setCurrentUser, clearCurrentUser, clearUserError, clearAllUsers } = usersSlice.actions;
 
 // ---------------------------------------------------------------
-
+// Selectors
 export const selectAllUsers = (state: RootState) => state.users.allUsers;
 export const selectCurrentUser = (state: RootState) => state.users.currentUser;
 export const selectUserIsLoading = (state: RootState) => state.users.isLoading;

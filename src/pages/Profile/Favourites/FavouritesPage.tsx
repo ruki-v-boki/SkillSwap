@@ -1,12 +1,13 @@
-import { useDispatch, useSelector } from '@/services/store';
-import styles from './FavouritesPage.module.css';
 import { selectFavouriteUsers, toggleLike } from '@/services/slices/userSlice';
-import { OfferDetailsUI } from '@/components/ui/OfferDetails';
-import { getAgeWord } from '@/utils/helpers';
 import { SocialButtonsUI } from '@/components/ui/SocialButtons';
+import { OfferDetailsUI } from '@/components/ui/OfferDetails';
+import { useDispatch, useSelector } from '@/services/store';
 import { selectUserId } from '@/services/slices/authSlice';
+import styles from './FavouritesPage.module.css';
+import { Button } from '@/components/ui/Button';
+import { useNavigate } from 'react-router-dom';
+import { getAgeWord } from '@/utils/helpers';
 import { useState } from 'react';
-import { CatalogSectionUI } from '@/components/ui/CatalogSection';
 
 
 export function FavouritesPage() {
@@ -14,7 +15,10 @@ export function FavouritesPage() {
   const currentUserId = useSelector(selectUserId);
   const [pendingLikeId, setPendingLikeId] = useState<string | null>(null);
   const dispatch = useDispatch();
-  const title = 'Избранное (более подробное)';
+  const navigate = useNavigate();
+  const title = 'Избранное';
+
+// ---------------------------------------------------------------
 
   const handleLikeClick = async (targetUserId: string) => {
     if (!currentUserId || pendingLikeId === targetUserId) return;
@@ -32,24 +36,32 @@ export function FavouritesPage() {
     }
   };
 
+// ---------------------------------------------------------------
+
   if (favouriteUsers.length === 0) {
     return (
       <div className={styles.emptyState}>
-        <h2>У вас пока нет избранных пользователей</h2>
-        <p>Добавляйте пользователей в избранное, чтобы не потерять их!</p>
+        <div className={styles.emptyStateContent}>
+          <h2 className='h-2'>У вас пока нет избранных пользователей</h2>
+          <p className='h-body'>Добавляйте пользователей в избранное, чтобы не потерять их</p>
+        </div>
+        <Button
+          type='button'
+          variant='prime'
+          onClick={() => navigate('/')}
+          className={styles.emptyStateButton}
+        >
+          Перейти в каталог
+          </Button>
       </div>
     );
   }
 
+// ---------------------------------------------------------------
+
   return (
     <main className={styles.favouritesPage}>
-      {/* Вариант: 1 */}
-      <CatalogSectionUI
-        title='Избранное (вариант отображения)'
-        users={favouriteUsers}
-        visibleCardsValue={3}
-      />
-      {/* Вариант: 2 */}
+
       <h2 className='h-1'>{title}</h2>
 
       <div className={styles.favouritesGrid}>

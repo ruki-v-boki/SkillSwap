@@ -1,7 +1,7 @@
 import { selectFilteredUsers, selectHasActiveFilters } from '@/services/slices/filterSlice';
 import { containerVariants, noResultsVariants, sectionVariants } from './framerMotion';
+import { selectAllUsers, selectCurrentUser } from '@/services/slices/userSlice';
 import { resetFilters } from '@/services/slices/filterSlice';
-import { selectAllUsers } from '@/services/slices/userSlice';
 import { CatalogSectionUI } from '../../ui/CatalogSection';
 import noResultsIcon from '@/assets/icons/noResults.svg';
 import { getUserRating } from '@/utils/helpers';
@@ -18,6 +18,7 @@ export function Catalog() {
   const allUsers = useSelector(selectAllUsers);
   const filteredUsers = useSelector(selectFilteredUsers);
   const hasFilters = useSelector(selectHasActiveFilters);
+  const currentUser = useSelector(selectCurrentUser);
 
 // ---------------------------------------------------------------
 
@@ -34,6 +35,23 @@ export function Catalog() {
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
   }, [allUsers]);
+
+// ---------------------------------------------------------------
+
+  const recommendedUsers = useMemo(() => {
+    if (!currentUser?.wantToLearn?.length) return allUsers;
+
+    const targetSkillIds = new Set(currentUser.wantToLearn.map(skill => skill.subcategoryId));
+
+    return allUsers.filter(user => {
+      if (user.id === currentUser.id) return false;
+
+      const userTeachSkillId = user.canTeach?.subcategoryId;
+      if (!userTeachSkillId) return false;
+
+      return targetSkillIds.has(userTeachSkillId);
+    });
+  }, [allUsers, currentUser]);
 
 // ---------------------------------------------------------------
 
@@ -80,7 +98,7 @@ export function Catalog() {
           >
             но мы верим что они появятся в будущем :) а пока, измените параметры поиска...
           </motion.p>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -142,7 +160,7 @@ export function Catalog() {
           containerVariants={containerVariants}
         />
       </motion.div>
-      
+
       <motion.div variants={sectionVariants}>
         <CatalogSectionUI
           title="Новое"
@@ -151,11 +169,11 @@ export function Catalog() {
           containerVariants={containerVariants}
         />
       </motion.div>
-      
+
       <motion.div variants={sectionVariants}>
         <CatalogSectionUI
           title="Рекомендуемое"
-          users={allUsers}
+          users={recommendedUsers}
           visibleCardsValue={3}
           containerVariants={containerVariants}
         />

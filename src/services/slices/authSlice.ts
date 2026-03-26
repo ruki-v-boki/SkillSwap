@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { supabase } from '@/services/supabase/client';
-import type { RootState } from '@/services/store';
 import type { LoginCredentials } from '@/types/auth';
+import type { RootState } from '@/services/store';
 import { authAPI } from '@/services/api';
 import { usersSlice } from './userSlice';
 
@@ -32,17 +32,13 @@ export const login = createAsyncThunk(
 
 // ---------------------------------------------------------------
 
-export const logout = createAsyncThunk('auth/logout', async (_, { dispatch }) => {
-  console.log('🔍 logout thunk started');
-
-  dispatch(setUserId(''));
-  await authAPI.logout();
-  
-  console.log('🔍 Очищаем userId и currentUser');
-  dispatch(usersSlice.actions.clearCurrentUser());
-
-  console.log('🔍 logout thunk finished');
-  return null;
+export const logout = createAsyncThunk(
+  'auth/logout',
+  async (_, { dispatch }) => {
+    dispatch(setUserId(''));
+    await authAPI.logout();
+    dispatch(usersSlice.actions.clearCurrentUser());
+    return null;
 });
 
 // ---------------------------------------------------------------
@@ -50,14 +46,9 @@ export const logout = createAsyncThunk('auth/logout', async (_, { dispatch }) =>
 export const checkAuth = createAsyncThunk(
   'auth/checkAuth',
   async () => {
-    console.log('🔍 checkAuth called');
     try {
       const { data: { session } } = await supabase.auth.getSession();
-      console.log('🔍 session:', session);
-      if (session?.user) {
-        console.log('🔍 session found, userId:', session.user.id);
-        return session.user.id;
-      }
+      if (session?.user) return session.user.id;
     } catch (error) {
       console.error('Check auth error:', error);
     }
@@ -97,6 +88,7 @@ export const authSlice = createSlice({
         state.isAuthChecked = true;
         state.error = action.error.message || 'Ошибка проверки авторизации';
       })
+// ---------------------------------------------------------------
       .addCase(login.pending, (state) => {
         state.error = null;
         state.isLoading = true;
@@ -109,12 +101,12 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message || 'Ошибка входа';
       })
+// ---------------------------------------------------------------
       .addCase(logout.pending, (state) => {
         state.error = null;
         state.isLoading = true;
       })
       .addCase(logout.fulfilled, (state) => {
-        console.log('🔍 logout.fulfilled - очищаем userId');
         state.isLoading = false;
         state.userId = null;
       })
@@ -126,11 +118,11 @@ export const authSlice = createSlice({
 });
 
 // ---------------------------------------------------------------
-
+// Actions
 export const { setAuthChecked, clearAuthError, setUserId } = authSlice.actions;
 
 // ---------------------------------------------------------------
-
+// Selectors
 export const selectUserId = (state: RootState) => state.auth.userId;
 export const selectIsAuthChecked = (state: RootState) => state.auth.isAuthChecked;
 export const selectIsAuthLoading = (state: RootState) => state.auth.isLoading;

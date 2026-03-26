@@ -31,14 +31,16 @@
   height: 36px;
   border: none;
   border-radius: 50%;
+  opacity: 0.4;
   color: var(--color-caption);
   background: var(--color-disabled);
-  transition: background 0.2s;
+  transition: background 0.3s ease;
   cursor: pointer;
 }
 
 .prev:hover,
 .next:hover {
+  opacity: 0.8;
   color: var(--color-input);
   background: var(--color-accent);
 }
@@ -70,10 +72,10 @@
   border: none;
   border-radius: var(--radius-button);
   padding: 0;
+  box-shadow: var(--box-shadow);
   overflow: hidden;
   background: none;
   cursor: pointer;
-  box-shadow: var(--box-shadow);
 }
 
 .thumb:hover {

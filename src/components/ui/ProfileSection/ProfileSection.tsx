@@ -1,22 +1,30 @@
+import { selectUnreadCount } from "@/services/slices/notificationsSlice";
 import { NotificationsButtonUI } from "../NotificationsButton";
 import { ProfileItemUI } from "./ProfileItem/ProfileItem";
 import type { ProfileSectionUIProps } from "./type";
 import styles from './ProfileSection.module.css';
-// import { AuthButtonsUI } from "../AuthButtons";
 import { ThemeToggler } from "../ThemeToggler";
+import { useSelector } from "@/services/store";
 import { NavLink } from "react-router-dom";
 
 
 export function ProfileSectionUI({
   user
 }:ProfileSectionUIProps) {
+
+  const unreadCount = useSelector(selectUnreadCount);
+
+// ---------------------------------------------------------------
+
   return (
     <div className={styles.container}>
       {user && (
         <div className={styles.profileSection}>
           <div className={styles.iconsBox}>
             <ThemeToggler />
-            <NotificationsButtonUI />
+            <NotificationsButtonUI
+              unreadCount={unreadCount}
+            />
             <NavLink to="/profile/favourites" className={styles.favouritesButton}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -32,14 +40,6 @@ export function ProfileSectionUI({
 
           <ProfileItemUI user={user} />
         </div>
-      // ) : (
-        // <div className={styles.authBox}>
-        //   <div className={styles.iconsBox}>
-        //     <ThemeToggler />
-        //   </div>
-
-        //   <AuthButtonsUI variant="header" />
-        // </div>
       )}
     </div>
   );

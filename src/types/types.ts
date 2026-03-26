@@ -4,6 +4,7 @@ import type { CITIES } from "@/constants/cities";
 
 export type TGender = 'male' | 'female' | 'any'
 export type TCity = typeof CITIES[number];
+export type TNotifications = 'offer' | 'acceptOffer';
 
 export type IUser = {
   id: string;
@@ -34,7 +35,7 @@ export type Subcategory = {
 
 export type CategoryId = keyof typeof CATEGORY_CONFIG;
 
-// // ------------ НАВЫКИ ------------
+// ------------ НАВЫКИ ------------
 export type WantToLearnSkill = {
   id: string;
   categoryId: string;

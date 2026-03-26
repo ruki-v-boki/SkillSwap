@@ -1,8 +1,8 @@
-import { createSelector } from '@reduxjs/toolkit';
 import { usersFilter } from '@/components/features/Filter/filters/usersFilter';
 import type { FiltersState } from '@/components/features/Filter/filters/type';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/services/store';
+import { createSelector } from '@reduxjs/toolkit';
 
 const initialFilters: FiltersState = {
   mode: 'all',
@@ -20,6 +20,8 @@ const initialState: FilterState = {
   filters: initialFilters
 };
 
+// ---------------------------------------------------------------
+
 export const filterSlice = createSlice({
   name: 'filter',
   initialState,
@@ -30,6 +32,16 @@ export const filterSlice = createSlice({
         ...action.payload
       };
     },
+    setMode: (state, action: PayloadAction<FilterState['filters']['mode']>) => {
+      state.filters.mode = action.payload;
+    },
+    setGender: (state, action: PayloadAction<FilterState['filters']['authorGender']>) => {
+      state.filters.authorGender = action.payload;
+    },
+    setCities: (state, action: PayloadAction<string[]>) => {
+      state.filters.selectedCities = action.payload;
+    },
+    // ---------------------------------------------------------------
     addSkill: (state, action: PayloadAction<string>) => {
       const skillId = action.payload;
       if (!state.filters.selectedSkills.includes(skillId)) {
@@ -50,6 +62,7 @@ export const filterSlice = createSlice({
     removeSkill: (state, action: PayloadAction<string>) => {
       state.filters.selectedSkills = state.filters.selectedSkills.filter(id => id !== action.payload);
     },
+    // ---------------------------------------------------------------
     resetFilters: (state) => {
       state.filters = initialFilters;
     },
@@ -62,18 +75,11 @@ export const filterSlice = createSlice({
     clearCityFilters: (state) => {
       state.filters.selectedCities = [];
     },
-    setMode: (state, action: PayloadAction<FilterState['filters']['mode']>) => {
-      state.filters.mode = action.payload;
-    },
-    setGender: (state, action: PayloadAction<FilterState['filters']['authorGender']>) => {
-      state.filters.authorGender = action.payload;
-    },
-    setCities: (state, action: PayloadAction<string[]>) => {
-      state.filters.selectedCities = action.payload;
-    }
   }
 });
 
+// ---------------------------------------------------------------
+// Actions
 export const {
   setFilters,
   addSkill,
@@ -88,6 +94,8 @@ export const {
   setCities
 } = filterSlice.actions;
 
+// ---------------------------------------------------------------
+// Selectors
 export const selectFilters = (state: RootState) => state.filter.filters;
 export const selectSelectedSkills = (state: RootState) => state.filter.filters.selectedSkills;
 export const selectSelectedCategories = (state: RootState) => state.filter.filters.selectedCategories;
@@ -132,5 +140,3 @@ export const selectActiveFiltersCount = createSelector(
     return count;
   }
 );
-
-export default filterSlice.reducer;
