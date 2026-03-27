@@ -1,5 +1,7 @@
 import type { ReactNode, RefObject } from "react";
 
+// ---------------------------------------------------------------
+
 export type BannerUIProps = {
   isOpen: boolean;
   onClose: () => void;

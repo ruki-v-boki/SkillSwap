@@ -1,5 +1,7 @@
-import type { IUser } from "@/types/types"
 import type { Variants } from "framer-motion";
+import type { IUser } from "@/types/types";
+
+// ---------------------------------------------------------------
 
 export type CatalogSectionUIProps = {
   users: IUser[];

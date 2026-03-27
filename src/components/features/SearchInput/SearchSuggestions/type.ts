@@ -5,4 +5,4 @@ export type SearchSuggestionsProps = {
   selectedSkills: string[];
   selectedIndex: number;
   onClose: () => void;
-}
+};

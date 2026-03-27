@@ -1,7 +1,7 @@
 import type { Category, Subcategory } from "@/types/types";
 
+// ---------------------------------------------------------------
 
-// КАТЕГОРИИ
 export const APP_CATEGORIES: Category[] = [
   { 
     id: 'business', 
@@ -29,7 +29,8 @@ export const APP_CATEGORIES: Category[] = [
   }
 ];
 
-// ПОДКАТЕГОРИИ
+// ---------------------------------------------------------------
+
 export const APP_SUBCATEGORIES: Subcategory[] = [
   // ---------- Бизнес и карьера ----------
   { 

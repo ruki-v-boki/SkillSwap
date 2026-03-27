@@ -3,6 +3,7 @@ import type { GalleryUIProps } from './type';
 import styles from './Gallery.module.css';
 import { useState } from 'react';
 
+// ---------------------------------------------------------------
 
 export function GalleryUI({
   images
@@ -10,8 +11,10 @@ export function GalleryUI({
 
   const [activeIndex, setActiveIndex] = useState(0);
   const imageUrls = useImageUrls(images);
-
-  if (!imageUrls.length) return null;
+  const MAX_VISIBLE_THUMBS = 3;
+  const visibleThumbnails = imageUrls.slice(0, MAX_VISIBLE_THUMBS);
+  const remainingCount = imageUrls.length - MAX_VISIBLE_THUMBS;
+  const showMoreOverlay = remainingCount > 0;
 
 // ---------------------------------------------------------------
 
@@ -25,10 +28,7 @@ export function GalleryUI({
 
 // ---------------------------------------------------------------
 
-  const MAX_VISIBLE_THUMBS = 3;
-  const visibleThumbnails = imageUrls.slice(0, MAX_VISIBLE_THUMBS);
-  const remainingCount = imageUrls.length - MAX_VISIBLE_THUMBS;
-  const showMoreOverlay = remainingCount > 0;
+  if (!imageUrls.length) return null;
 
 // ---------------------------------------------------------------
 

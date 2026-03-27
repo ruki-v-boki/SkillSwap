@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
 
+// ---------------------------------------------------------------
+
 export function useImageUrls(images: File[] | string[]) {
+
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+
+// ---------------------------------------------------------------
 
   useEffect(() => {
     if (!images?.length) {
@@ -23,6 +28,8 @@ export function useImageUrls(images: File[] | string[]) {
       urls.forEach(url => URL.revokeObjectURL(url));
     };
   }, [images]);
+
+// ---------------------------------------------------------------
 
   return imageUrls;
 }

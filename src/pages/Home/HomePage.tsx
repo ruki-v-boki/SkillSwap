@@ -3,6 +3,7 @@ import { Catalog } from '@/components/features/Catalog';
 import { Filter } from '@/components/features/Filter';
 import styles from './HomePage.module.css';
 
+// ---------------------------------------------------------------
 
 export function HomePage() {
   return (

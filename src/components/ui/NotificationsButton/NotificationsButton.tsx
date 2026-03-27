@@ -4,6 +4,7 @@ import styles from './NotificationsButton.module.css';
 import { useRef, useState } from 'react';
 import { BannerUI } from '../Banner';
 
+// ---------------------------------------------------------------
 
 export function NotificationsButtonUI({
   unreadCount = 0,

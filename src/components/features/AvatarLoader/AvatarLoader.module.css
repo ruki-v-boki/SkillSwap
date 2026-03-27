@@ -9,11 +9,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 50%;
+  box-shadow: var(--box-shadow);
   color: var(--color-text);
   cursor: pointer;
-  box-shadow: var(--box-shadow);
   aspect-ratio: 1 / 1;
-  border-radius: 50%;
 }
 
 .avatarPreview {
@@ -63,12 +63,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--color-text);
-  box-shadow: var(--box-shadow-smooth);
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
   max-width: 244px;
   max-height: 244px;
+  border-radius: 50%;
+  box-shadow: var(--box-shadow-smooth);
+  color: var(--color-text);
+  aspect-ratio: 1 / 1;
 }
 
 .avatarPreviewProfile {
@@ -85,9 +85,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0;
   width: 56px;
   height: 56px;
+  margin: 0;
   border: none;
   border-radius: 50%;
   padding: 0;
@@ -97,7 +97,7 @@
 }
 
 .editButton:hover {
+  box-shadow: var(--box-shadow-smooth);
   color: var(--color-input);
   background-color: var(--color-accent);
-  box-shadow: var(--box-shadow-smooth);
 }

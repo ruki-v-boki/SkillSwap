@@ -2,6 +2,7 @@ import { APP_CATEGORIES, APP_SUBCATEGORIES } from "@/constants/skills";
 import { CATEGORY_CONFIG } from "@/constants/category";
 import type { CategoryId, IUser } from "@/types/types";
 
+// ---------------------------------------------------------------
 
 export const getAgeWord = (age: number): string => {
   const lastDigit = age % 10;
@@ -56,7 +57,6 @@ export const getCategoryConfig = (categoryId: string) => {
   if (Object.hasOwn(CATEGORY_CONFIG, categoryId)) {
     return CATEGORY_CONFIG[categoryId as keyof typeof CATEGORY_CONFIG];
   }
-
   return {
     colorClass: 'default',
     icon: '',
@@ -79,4 +79,22 @@ export const getSubcategoryOptions = (categoryId: string) => {
       value: sub.id,
       label: sub.name,
     }));
+};
+
+export const getSubcategoryOptionsForMultiple = (categoryIds: string[]) => {
+  if (categoryIds.length === 0) return [];
+
+  const subcategories = APP_SUBCATEGORIES.filter(sub => 
+    categoryIds.includes(sub.categoryId)
+  );
+
+  // Убираем дубликаты по id
+  const uniqueSubcategories = subcategories.filter((sub, index, self) => 
+    index === self.findIndex(s => s.id === sub.id)
+  );
+
+  return uniqueSubcategories.map(sub => ({
+    value: sub.id,
+    label: sub.name,
+  }));
 };

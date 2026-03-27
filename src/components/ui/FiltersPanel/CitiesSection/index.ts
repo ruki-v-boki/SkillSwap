@@ -1,1 +1,1 @@
-export { CitiesSectionUI } from './CitiesSection'
+export { CitiesSectionUI } from './CitiesSection';

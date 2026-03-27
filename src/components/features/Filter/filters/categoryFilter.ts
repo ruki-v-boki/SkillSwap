@@ -1,6 +1,7 @@
 import type { IUser } from "@/types/types";
 import type { FiltersState } from "./type";
 
+// ---------------------------------------------------------------
 
 const getUserCategoriesByMode = (user: IUser, mode: FiltersState['mode']): string[] => {
   switch (mode) {
@@ -19,6 +20,7 @@ const getUserCategoriesByMode = (user: IUser, mode: FiltersState['mode']): strin
   }
 };
 
+// ---------------------------------------------------------------
 
 export const categoryFilter = (user: IUser, filters: FiltersState): boolean => {
   const userCategories = getUserCategoriesByMode(user, filters.mode);
@@ -35,5 +37,3 @@ export const categoryFilter = (user: IUser, filters: FiltersState): boolean => {
     filters.selectedCategories.includes(categoryId)
   );
 };
-
-

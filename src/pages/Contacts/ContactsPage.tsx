@@ -1,4 +1,4 @@
-import styles from './ContactsPage.module.css'
+import styles from './ContactsPage.module.css';
 
 
 export function ContactsPage() {

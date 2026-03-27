@@ -1,12 +1,14 @@
-import styles from './FormHint.module.css';
 import type { FormHintUIProps } from './type';
+import styles from './FormHint.module.css';
 
+// ---------------------------------------------------------------
 
 export function FormHintUI ({
   image,
   title,
   text
-}:FormHintUIProps) {
+}: FormHintUIProps) {
+
   return (
     <div className={styles.hint}>
       <div>

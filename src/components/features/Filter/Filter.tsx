@@ -1,25 +1,28 @@
-import { useCallback } from 'react';
-import { FiltersPanelUI } from '@/components/ui/FiltersPanel';
-import { useDispatch, useSelector } from '@/services/store';
-import {
-  resetFilters,
-  selectFilters,
-  selectHasActiveFilters,
-  setFilters,
-  selectAvailableCities,
-  selectActiveFiltersCount,
-} from '@/services/slices/filterSlice';
 import { clearSearch, selectSearchQuery } from '@/services/slices/searchSlice';
 import { APP_CATEGORIES, APP_SUBCATEGORIES } from '@/constants/skills';
+import { FiltersPanelUI } from '@/components/ui/FiltersPanel';
+import { useDispatch, useSelector } from '@/services/store';
+import { useCallback } from 'react';
+import {
+  selectActiveFiltersCount,
+  selectHasActiveFilters,
+  selectAvailableCities,
+  resetFilters,
+  selectFilters,
+  setFilters
+} from '@/services/slices/filterSlice';
 
+// ---------------------------------------------------------------
 
 export function Filter() {
+
   const dispatch = useDispatch();
   const filters = useSelector(selectFilters);
   const hasActiveFilters = useSelector(selectHasActiveFilters);
   const activeFiltersCount = useSelector(selectActiveFiltersCount);
   const searchQuery = useSelector(selectSearchQuery);
   const availableCities = useSelector(selectAvailableCities);
+  const showResetButton = hasActiveFilters;
 
   // ---------------------------------------------------------------
 
@@ -44,10 +47,6 @@ export function Filter() {
       dispatch(clearSearch());
     }
   }, [dispatch, searchQuery]);
-
-  // ---------------------------------------------------------------
-
-  const showResetButton = hasActiveFilters;
 
   // ---------------------------------------------------------------
 

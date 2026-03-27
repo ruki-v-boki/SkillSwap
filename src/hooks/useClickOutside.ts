@@ -1,7 +1,9 @@
 import { useEffect, type RefObject } from 'react';
 
+// ---------------------------------------------------------------
 
 export function useClickOutside(
+
   ref: RefObject<HTMLElement | null>,
   handler: () => void,
   excludeRef?: RefObject<HTMLElement | null>
@@ -24,7 +26,7 @@ export function useClickOutside(
       }
     };
 
-// ---------------------------------------------------------------
+    // ---------------------------------------------------------------
 
     const handleEscapeKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -32,12 +34,20 @@ export function useClickOutside(
       }
     };
 
+    // ---------------------------------------------------------------
+
     document.addEventListener('mousedown', handleClickOutside);
     document.addEventListener('keydown', handleEscapeKey);
+
+    // ---------------------------------------------------------------
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleEscapeKey);
     };
-  }, [ref, handler, excludeRef]);
-}
+  }, [
+    ref,
+    handler,
+    excludeRef
+  ]);
+};

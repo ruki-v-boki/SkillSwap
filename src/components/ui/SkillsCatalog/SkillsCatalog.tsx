@@ -1,9 +1,11 @@
 import { APP_CATEGORIES, APP_SUBCATEGORIES } from "@/constants/skills";
-import { SkillsMenuUI } from "../SkillsMenu";
 import styles from './SkillsCatalog.module.css';
+import { SkillsMenuUI } from "../SkillsMenu";
 
+// ---------------------------------------------------------------
 
 export function SkillsCatalogUI() {
+
   return (
     <div className={styles.skillsCatalogContainer}>
       {APP_CATEGORIES.map(category => (

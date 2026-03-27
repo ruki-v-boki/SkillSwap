@@ -4,11 +4,13 @@ import { useEffect, useRef } from 'react';
 import styles from './Modal.module.css';
 import ReactDOM from 'react-dom';
 
+// ---------------------------------------------------------------
 
 export function ModalUI({
   onClose,
   children
-}:ModalUIProps) {
+}: ModalUIProps) {
+
   const modalRoot = document.getElementById('modals');
   const modalRef = useRef<HTMLDivElement>(null);
 

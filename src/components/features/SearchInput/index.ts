@@ -1,2 +1,2 @@
-export { SearchInput } from './SearchInput'
-export { SearchSuggestions } from './SearchSuggestions/SearchSuggestions'
+export { SearchSuggestions } from './SearchSuggestions/SearchSuggestions';
+export { SearchInput } from './SearchInput';

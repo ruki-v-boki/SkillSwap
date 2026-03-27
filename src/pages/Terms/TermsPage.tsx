@@ -1,4 +1,4 @@
-import styles from './TermsPage.module.css'
+import styles from './TermsPage.module.css';
 
 
 export function TermsPage() {

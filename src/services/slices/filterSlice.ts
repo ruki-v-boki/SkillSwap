@@ -4,6 +4,8 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/services/store';
 import { createSelector } from '@reduxjs/toolkit';
 
+// ---------------------------------------------------------------
+
 const initialFilters: FiltersState = {
   mode: 'all',
   selectedCategories: [],
@@ -12,13 +14,13 @@ const initialFilters: FiltersState = {
   selectedCities: []
 };
 
-interface FilterState {
-  filters: FiltersState;
-}
-
 const initialState: FilterState = {
   filters: initialFilters
 };
+
+interface FilterState {
+  filters: FiltersState;
+}
 
 // ---------------------------------------------------------------
 
@@ -101,6 +103,7 @@ export const selectSelectedSkills = (state: RootState) => state.filter.filters.s
 export const selectSelectedCategories = (state: RootState) => state.filter.filters.selectedCategories;
 const selectAllUsersFromUserSlice = (state: RootState) => state.users.allUsers;
 
+
 export const selectFilteredUsers = createSelector(
   [selectAllUsersFromUserSlice, selectFilters],
   (users, filters) => {
@@ -108,12 +111,14 @@ export const selectFilteredUsers = createSelector(
   }
 );
 
+
 export const selectAvailableCities = createSelector(
   [selectAllUsersFromUserSlice],
   (users) => {
     return [...new Set(users.map(user => user.location))];
   }
 );
+
 
 export const selectHasActiveFilters = createSelector(
   [selectFilters],
@@ -127,6 +132,7 @@ export const selectHasActiveFilters = createSelector(
     );
   }
 );
+
 
 export const selectActiveFiltersCount = createSelector(
   [selectFilters],

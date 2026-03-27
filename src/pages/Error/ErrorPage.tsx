@@ -1,17 +1,21 @@
-import { Button } from '@/components/ui/Button';
-import styles from './ErrorPage.module.css';
 import error404 from '@/assets/icons/error404.svg';
 import error500 from '@/assets/icons/error500.svg';
+import { Button } from '@/components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import type { ErrorPageProps } from './type';
+import styles from './ErrorPage.module.css';
 
+// ---------------------------------------------------------------
 
 export function ErrorPageUI({
   type = '404',
   title,
   message
 }:ErrorPageProps) {
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
+
+// ---------------------------------------------------------------
 
   const config = {
     '404': {
@@ -31,7 +35,11 @@ export function ErrorPageUI({
     }
   };
 
+// ---------------------------------------------------------------
+
   const currentConfig = config[type] || config.error;
+
+// ---------------------------------------------------------------
 
   return (
     <div className={styles.container}>

@@ -5,30 +5,32 @@ import { AuthButtonsUI } from '@/components/ui/AuthButtons';
 import styles from './ProfileSection.module.css';
 import { useSelector } from '@/services/store';
 import { useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
 
+// ---------------------------------------------------------------
 
 export function ProfileSection() {
+
   const navigate = useNavigate();
   const currentUser = useSelector(selectCurrentUser);
 
-  if (currentUser) {
-    return <ProfileSectionUI user={currentUser} />;
-  }
+// ---------------------------------------------------------------
 
-// --------------------------------------------------
+  const handleLoginClick = useCallback(() => navigate('/login'), [navigate]);
+  const handleRegisterClick = useCallback(() => navigate('/register'), [navigate]);
 
-  if (!currentUser) {
-    return (
-      <div className={styles.profileSectionHeaderBox}>
-        <ThemeToggler />
-        <AuthButtonsUI
-          variant="header"
-          onLoginClick={() => navigate('/login')}
-          onRegisterClick={() => navigate('/register')}
-        />
-      </div>
-    );
-  }
+// ---------------------------------------------------------------
 
-  return null;
-}
+  return currentUser ? (
+    <ProfileSectionUI user={currentUser} />
+  ) : (
+    <div className={styles.profileSectionHeaderBox}>
+      <ThemeToggler />
+      <AuthButtonsUI
+        variant="header"
+        onLoginClick={handleLoginClick}
+        onRegisterClick={handleRegisterClick}
+      />
+    </div>
+  );
+};

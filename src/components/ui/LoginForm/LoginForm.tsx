@@ -1,6 +1,6 @@
-import googleIcon from '@/assets/icons/Google.svg';
+import googleIcon from '@/assets/icons/google.svg';
 import { PasswordToggle } from './PasswordToggle';
-import appleIcon from '@/assets/icons/Apple.svg';
+import appleIcon from '@/assets/icons/apple.svg';
 import { AuthButtonsUI } from '../AuthButtons';
 import type { LoginFormProps } from './type';
 import styles from './LoginForm.module.css';
@@ -15,6 +15,7 @@ import {
   isEmailValid,
 } from '@/utils/validators';
 
+// ---------------------------------------------------------------
 
 export function LoginForm({
   variant = 'loginPage',
@@ -31,11 +32,12 @@ export function LoginForm({
   const formRef = useRef<HTMLFormElement>(null);
   const [showPassword, setShowPassword] = useState(false);
 
+// ---------------------------------------------------------------
+
   const {
       values,
       getError,
       handleChange,
-      handleBlur,
       handleSubmit,
     } = useForm({
       initialValues: {
@@ -50,6 +52,8 @@ export function LoginForm({
         onLoginClick(data);
       },
     });
+
+// ---------------------------------------------------------------
 
   const isEmailFieldValid = values.email !== '' && isEmailValid(values.email);
   const isPasswordFieldValid = values.password !== '' && isPasswordValid(values.password);
@@ -117,7 +121,6 @@ export function LoginForm({
           placeholder="Введите email"
           value={values.email}
           onChange={(e) => handleChange('email', e.target.value.trim().toLowerCase())}
-          onBlur={() => handleBlur('email')}
           error={getError('email')}
           isValid={isEmailFieldValid}
           required
@@ -132,7 +135,6 @@ export function LoginForm({
           placeholder={variant === 'loginPage' ? "Введите ваш пароль" : "Придумайте надёжный пароль"}
           value={values.password}
           onChange={(e) => handleChange('password', e.target.value)}
-          onBlur={() => handleBlur('password')}
           error={getError('password')}
           isValid={isPasswordFieldValid}
           required
@@ -140,7 +142,7 @@ export function LoginForm({
           rightIcon={<PasswordToggle onToggle={setShowPassword} />}
         />
 
-        {loginError && <div className={styles.errorFormMessage}>Ошибка: {loginError}</div>}
+        {loginError && <div className={styles.errorFormMessage}>Ошибка входа: {loginError}</div>}
 
         {variant === 'loginPage' ? (
           <AuthButtonsUI

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import type { SearchSuggestionsProps } from './type';
 import styles from './SearchSuggestions.module.css';
 
+// ---------------------------------------------------------------
 
 export function SearchSuggestions({
   query,
@@ -97,4 +98,4 @@ export function SearchSuggestions({
       </div>
     </div>
   );
-}
+};

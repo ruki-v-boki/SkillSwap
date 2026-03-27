@@ -3,6 +3,7 @@ import type { IUsersAPI } from '../api/types';
 import type { IUser } from '@/types/types';
 import { supabase } from './client';
 
+// ---------------------------------------------------------------
 
 export class SupabaseUsersAPI implements IUsersAPI {
 
@@ -70,7 +71,6 @@ export class SupabaseUsersAPI implements IUsersAPI {
       .from('users')
       .select('id, email, name, location, age, about, gender, avatar_url, liked_by, created_at')
       .eq('id', id)
-      // .single();
       .maybeSingle()
 
     if (userError) throw new Error(userError.message);
@@ -124,33 +124,32 @@ export class SupabaseUsersAPI implements IUsersAPI {
     return this.getUserById(id);
   }
 
-  // Добавляем метод для переключения лайка
+// ---------------------------------------------------------------
+
     async toggleLike(currentUserId: string, targetUserId: string): Promise<boolean> {
+      const { data: targetUser, error: fetchError } = await supabase
+        .from('users')
+        .select('liked_by')
+        .eq('id', targetUserId)
+        .single();
 
-    const { data: targetUser, error: fetchError } = await supabase
-      .from('users')
-      .select('liked_by')
-      .eq('id', targetUserId)
-      .single();
+      if (fetchError) throw new Error(fetchError.message);
 
-    if (fetchError) throw new Error(fetchError.message);
+      const currentLikes: string[] = targetUser.liked_by || [];
+      const wasLiked = currentLikes.includes(currentUserId);
 
-    const currentLikes: string[] = targetUser.liked_by || [];
-    const wasLiked = currentLikes.includes(currentUserId);
+      const newLikes = wasLiked
+        ? currentLikes.filter((id: string) => id !== currentUserId)
+        : [...currentLikes, currentUserId];
 
-    const newLikes = wasLiked
-      ? currentLikes.filter((id: string) => id !== currentUserId)
-      : [...currentLikes, currentUserId];
+      const { error: updateError } = await supabase
+        .from('users')
+        .update({ liked_by: newLikes })
+        .eq('id', targetUserId);
 
-    const { error: updateError } = await supabase
-      .from('users')
-      .update({ liked_by: newLikes })
-      .eq('id', targetUserId);
+      if (updateError) throw new Error(updateError.message);
 
-    if (updateError) throw new Error(updateError.message);
-
-    const newState = !wasLiked;
-
-    return newState;
+      const newState = !wasLiked;
+      return newState;
   }
 }

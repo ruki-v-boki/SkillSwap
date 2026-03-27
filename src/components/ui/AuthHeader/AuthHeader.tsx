@@ -1,15 +1,21 @@
-import { useNavigate } from 'react-router-dom';
-import styles from './AuthHeader.module.css';
-import { LogoUI } from '@/components/ui/Logo';
 import { Button } from '@/components/ui/Button';
+import { useNavigate } from 'react-router-dom';
+import { LogoUI } from '@/components/ui/Logo';
+import styles from './AuthHeader.module.css';
 
+// ---------------------------------------------------------------
 
 export function AuthHeaderUI() {
+
   const navigate = useNavigate()
+
+// ---------------------------------------------------------------
 
   const onCloseButtonClick = () => {
     navigate('/')
   }
+
+// ---------------------------------------------------------------
 
   return (
       <header className={styles.header}>

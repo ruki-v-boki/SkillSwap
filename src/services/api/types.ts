@@ -1,5 +1,7 @@
-import type { IUser } from '@/types/types';
 import type { LoginCredentials, RegisterData, AuthResponse } from '@/types/auth';
+import type { IUser } from '@/types/types';
+
+// ---------------------------------------------------------------
 
 export interface IAuthAPI {
   login(credentials: LoginCredentials): Promise<AuthResponse>;
@@ -9,6 +11,8 @@ export interface IAuthAPI {
   refreshToken(refreshToken: string): Promise<{ accessToken: string }>;
   logout(): Promise<void>;
 }
+
+// ---------------------------------------------------------------
 
 export interface IUsersAPI {
   getAllUsers(): Promise<IUser[]>;

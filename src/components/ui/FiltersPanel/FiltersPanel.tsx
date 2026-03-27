@@ -11,6 +11,7 @@ import {
   type FilterMode,
 } from './type';
 
+// ---------------------------------------------------------------
 
 export const FiltersPanelUI = memo(function FiltersPanelUI({
   value,
@@ -20,7 +21,6 @@ export const FiltersPanelUI = memo(function FiltersPanelUI({
   onChange,
   onReset,
   activeFiltersCount = 0,
-  'data-testid': dataTestId
 }: FiltersPanelUIProps) {
 
   const handleModeChange = useCallback((mode: string) => {
@@ -55,7 +55,7 @@ export const FiltersPanelUI = memo(function FiltersPanelUI({
 // ---------------------------------------------------------------
 
   return (
-    <div className={styles.filtersPanelContainer} data-testid={dataTestId}>
+    <div className={styles.filtersPanelContainer}>
       <header className={styles.header}>
         <h2 className={`${styles.title} h-2`}>
           Фильтры
@@ -64,7 +64,7 @@ export const FiltersPanelUI = memo(function FiltersPanelUI({
           )}
         </h2>
 
-{/* // --------------------------------------------------------------- */}
+        {/* --------------------------------------------------------------- */}
 
         {onReset && (
           <Button
@@ -82,7 +82,7 @@ export const FiltersPanelUI = memo(function FiltersPanelUI({
         )}
       </header>
 
-{/* // --------------------------------------------------------------- */}
+      {/* --------------------------------------------------------------- */}
 
       <section className={styles.section}>
         <RadioGroupUI

@@ -39,8 +39,8 @@
   align-items: center;
   width: 32px;
   height: 32px;
-  border-radius: 50%;
   border: none;
+  border-radius: 50%;
   box-shadow: var(--box-shadow-light);
   color: var(--color-caption);
   background-color: var(--color-disabled);

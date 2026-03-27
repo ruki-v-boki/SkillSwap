@@ -24,14 +24,15 @@ import { AboutPage } from '@/pages/About';
 import { OfferPage } from '@/pages/Offer';
 import { ProtectedRoute } from '@/routes';
 import { BlogPage } from '@/pages/Blog';
+import { useEffect } from 'react';
 import {
   selectUserIsLoading,
   selectCurrentUser,
   getCurrentUser,
   getAllUsers,
 } from '@/services/slices/userSlice';
-import { useEffect } from 'react';
 
+// ---------------------------------------------------------------
 
 export function App() {
 
@@ -52,7 +53,6 @@ export function App() {
     dispatch(checkAuth());
     dispatch(getAllUsers());
   }, [dispatch]);
-
 
   useEffect(() => {
     if (userId && !currentUser && !isLoading) {

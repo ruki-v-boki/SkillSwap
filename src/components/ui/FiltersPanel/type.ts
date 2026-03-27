@@ -1,7 +1,11 @@
 import type { Category, Subcategory } from '@/types/types'
 
+// ---------------------------------------------------------------
+
 export type FilterMode = 'all' | 'learn' | 'teach';
 export type AuthorGender = 'any' | 'male' | 'female';
+
+// ---------------------------------------------------------------
 
 export interface FiltersPanelUIState {
   mode: FilterMode;
@@ -10,6 +14,8 @@ export interface FiltersPanelUIState {
   authorGender: AuthorGender;
   selectedCities: string[];
 }
+
+// ---------------------------------------------------------------
 
 export interface FiltersPanelUIProps {
   value: FiltersPanelUIState;

@@ -6,6 +6,8 @@ import type { RootState } from '@/services/store';
 import { authAPI } from '@/services/api';
 import { usersSlice } from './userSlice';
 
+// ---------------------------------------------------------------
+
 type TAuthState = {
   userId: string | null;
   isAuthChecked: boolean;
@@ -19,6 +21,21 @@ export const initialState: TAuthState = {
   isLoading: false,
   error: null
 };
+
+// ---------------------------------------------------------------
+
+export const checkAuth = createAsyncThunk(
+  'auth/checkAuth',
+  async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) return session.user.id;
+    } catch (error) {
+      console.error('Check auth error:', error);
+    }
+    return null;
+  }
+);
 
 // ---------------------------------------------------------------
 
@@ -41,20 +58,6 @@ export const logout = createAsyncThunk(
     return null;
 });
 
-// ---------------------------------------------------------------
-
-export const checkAuth = createAsyncThunk(
-  'auth/checkAuth',
-  async () => {
-    try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session?.user) return session.user.id;
-    } catch (error) {
-      console.error('Check auth error:', error);
-    }
-    return null;
-  }
-);
 
 // ---------------------------------------------------------------
 
@@ -62,14 +65,14 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    setUserId: (state, action: PayloadAction<string>) => {
+      state.userId = action.payload;
+    },
     setAuthChecked: (state) => {
       state.isAuthChecked = true;
     },
     clearAuthError: (state) => {
       state.error = initialState.error;
-    },
-    setUserId: (state, action: PayloadAction<string>) => {
-      state.userId = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -119,7 +122,11 @@ export const authSlice = createSlice({
 
 // ---------------------------------------------------------------
 // Actions
-export const { setAuthChecked, clearAuthError, setUserId } = authSlice.actions;
+export const {
+  setUserId,
+  setAuthChecked,
+  clearAuthError
+} = authSlice.actions;
 
 // ---------------------------------------------------------------
 // Selectors

@@ -1,23 +1,24 @@
-import { useForm } from "@/hooks/useForm";
 import { selectCurrentUser, updateCurrentUser, updateUserEmail } from "@/services/slices/userSlice";
-import { useDispatch, useSelector } from "@/services/store";
-import { supabase } from "@/services/supabase";
-import type { IUser, TCity, TGender } from "@/types/types";
-import {
-  validateAbout,
-  validateAge,
-  validateEmail,
-  validateLocation,
-  validateName
-} from "@/utils/validators";
-import { useEffect, useRef, useState } from "react";
-import styles from './PersonalDataPage.module.css';
-import { Input } from "@/components/ui/Input";
-import { Button } from "@/components/ui/Button";
-import { Select } from "@/components/ui/Select";
 import { CITY_OPTIONS, GENDER_OPTIONS } from "@/constants/options";
 import { AvatarLoader } from "@/components/features/AvatarLoader";
+import { useDispatch, useSelector } from "@/services/store";
+import type { IUser, TCity, TGender } from "@/types/types";
+import { useEffect, useRef, useState } from "react";
+import styles from './PersonalDataPage.module.css';
+import { Button } from "@/components/ui/Button";
+import { Select } from "@/components/ui/Select";
+import { supabase } from "@/services/supabase";
+import { Input } from "@/components/ui/Input";
+import { useForm } from "@/hooks/useForm";
+import {
+  validateLocation,
+  validateAbout,
+  validateEmail,
+  validateAge,
+  validateName
+} from "@/utils/validators";
 
+// ---------------------------------------------------------------
 
 export function PersonalDataPage() {
 
@@ -28,6 +29,8 @@ export function PersonalDataPage() {
   const user = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
 
+// ---------------------------------------------------------------
+
   const {
     values: formData,
     getError,
@@ -35,7 +38,6 @@ export function PersonalDataPage() {
     isChanged,
     attemptedSubmit,
     handleChange,
-    handleBlur,
     handleSubmit,
     setValues,
   } = useForm({
@@ -145,13 +147,12 @@ export function PersonalDataPage() {
           className={styles.profileForm}
           noValidate
         >
-
+          {/* ---------- Почта ---------- */}
           <Input
             label="Почта"
             placeholder="Здесь вы можете изменить свой email"
             value={formData.email}
             onChange={(e) => handleChange('email', e.target.value)}
-            onBlur={() => handleBlur('email')}
             error={getError('email')}
             isValid={isValid('email')}
             type="email"
@@ -163,6 +164,7 @@ export function PersonalDataPage() {
               </svg>
             }
           />
+          {/* ---------- Пароль ---------- */}
           <Button
             type="button"
             variant="link"
@@ -171,13 +173,12 @@ export function PersonalDataPage() {
             Изменить пароль
           </Button>
 
-
+          {/* ---------- Имя ---------- */}
           <Input
             label="Имя"
             placeholder="Здесь вы можете изменить своё имя"
             value={formData.name}
             onChange={(e) => handleChange('name', e.target.value)}
-            onBlur={() => handleBlur('name')}
             error={getError('name')}
             isValid={isValid('name')}
             required
@@ -189,7 +190,7 @@ export function PersonalDataPage() {
             }
           />
 
-
+          {/* ---------- Дата рождения / Пол ---------- */}
           <div className={styles.rowContainer}>
             <Input
               type="number"
@@ -197,7 +198,6 @@ export function PersonalDataPage() {
               placeholder="Укажите дату вашего рождения"
               value={formData.age === 0 ? '' : String(formData.age)}
               onChange={(e) => handleChange('age', e.target.value ? Number(e.target.value) : 0)}
-              onBlur={() => handleBlur('age')}
               error={getError('age')}
               isValid={isValid('age')}
               required
@@ -209,17 +209,17 @@ export function PersonalDataPage() {
               value={formData.gender}
               onChange={(v) => handleChange('gender', v)}
               options={GENDER_OPTIONS}
+              isValid
             />
           </div>
 
-
+          {/* ---------- Город ---------- */}
           <Select
             type="single"
             label="Город"
             placeholder="Не указан"
             value={formData.location}
             onChange={(v) => handleChange('location', v)}
-            onBlur={() => handleBlur('location')}
             options={CITY_OPTIONS}
             error={getError('location')}
             isValid={isValid('location')}
@@ -227,7 +227,7 @@ export function PersonalDataPage() {
             attemptedSubmit={attemptedSubmit}
           />
 
-
+          {/* ---------- О себе ---------- */}
           <div className={styles.textareaBox}>
             <label className="h-body">О себе</label>
             <textarea
@@ -235,7 +235,6 @@ export function PersonalDataPage() {
               placeholder="Добавьте информацию о себе"
               value={formData.about}
               onChange={(e) => handleChange('about', e.target.value)}
-              onBlur={() => handleBlur('about')}
             />
             <svg className={styles.textareaIcon} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
               <path fill="currentColor" d="M6 19q-.8 0-1.4-.6-.7-.7-.6-1.9l.3-3q.1-1 .8-1.8l7.7-8.1q3-3 6-.2 3 3 .2 6l-7.7 8.1q-.8.6-1.7 1l-3 .4zm9.8-15.6q-1 0-2 1.1l-7.7 8.2q-.3.3-.4 1l-.3 3q0 .4.2.7t.7.1l3-.5q.5-.1 1-.5l7.6-8.1c1.2-1.2 1.6-2.4 0-4q-1.2-1-2-1"/>
@@ -244,7 +243,7 @@ export function PersonalDataPage() {
             {getError('about') && <span className={styles.error}>{getError('about')}</span>}
           </div>
 
-
+          {/* ---------- Кнопки ---------- */}
           <div className={styles.buttonsBox}>
             <Button
               variant="prime"
@@ -257,11 +256,10 @@ export function PersonalDataPage() {
           </div>
         </form>
 
-
+        {/* ---------- Аватар ---------- */}
         <AvatarLoader
           ref={fileInputRef}
           variant="profileForm"
-          // previewUrl={avatarPreview || user.avatar}
           previewUrl={avatarPreview || user?.avatar}
           onChange={handleAvatarChange}
           isLoading={isUploadingAvatar}

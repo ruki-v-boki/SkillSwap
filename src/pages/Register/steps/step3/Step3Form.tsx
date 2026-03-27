@@ -1,6 +1,6 @@
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { getSubcategoryOptions } from '@/utils/helpers';
 import { CATEGORY_OPTIONS } from '@/constants/options';
-import { useState, useRef, useCallback } from 'react';
 import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -14,6 +14,7 @@ import {
   validateSkillName,
 } from '@/utils/validators';
 
+// ---------------------------------------------------------------
 
 export function Step3Form({
   initialData,
@@ -22,9 +23,36 @@ export function Step3Form({
 }: Step3FormProps) {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-
   const [isDragging, setIsDragging] = useState(false);
+  const [images, setImages] = useState<File[]>(initialData?.images || []);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+
+// ---------------------------------------------------------------
+
+  useEffect(() => {
+    if (initialData?.images && initialData.images.length > 0) {
+      imagePreviews.forEach(url => URL.revokeObjectURL(url));
+
+      const newPreviews = initialData.images.map(file => URL.createObjectURL(file));
+
+      setImagePreviews(newPreviews);
+      setImages(initialData.images);
+    } else if (!initialData?.images || initialData.images.length === 0) {
+      imagePreviews.forEach(url => URL.revokeObjectURL(url));
+      setImagePreviews([]);
+      setImages([]);
+    }
+  }, [initialData?.images]);
+
+// ---------------------------------------------------------------
+
+  useEffect(() => {
+    return () => {
+      imagePreviews.forEach(url => URL.revokeObjectURL(url));
+    };
+  }, [imagePreviews]);
+
+// ---------------------------------------------------------------
 
   const {
     values: formData,
@@ -32,7 +60,6 @@ export function Step3Form({
     isValid,
     attemptedSubmit,
     handleChange,
-    handleBlur,
     handleSubmit,
   } = useForm({
     initialValues: {
@@ -54,17 +81,19 @@ export function Step3Form({
         categoryId: data.categoryId,
         subcategoryId: data.subcategoryId,
         description: data.description,
-        images: data.images,
+        images: images,
       });
     },
   });
 
-  const isFormValid = isValid('customName') && isValid('categoryId') && 
-                      isValid('subcategoryId') && isValid('description');
-
 // ---------------------------------------------------------------
 
   const subcategoryOptions = getSubcategoryOptions(formData.categoryId);
+
+// ---------------------------------------------------------------
+
+  const isFormValid = isValid('customName') && isValid('categoryId') && 
+                      isValid('subcategoryId') && isValid('description');
 
 // ---------------------------------------------------------------
 
@@ -82,9 +111,9 @@ export function Step3Form({
       }
     });
 
-    handleChange('images', [...formData.images, ...validFiles]);
+    setImages(prev => [...prev, ...validFiles]);
     setImagePreviews(prev => [...prev, ...validPreviews]);
-  }, [formData.images, handleChange]);
+  }, []);
 
 // ---------------------------------------------------------------
 
@@ -127,8 +156,7 @@ export function Step3Form({
   const removeImage = (index: number) => {
     URL.revokeObjectURL(imagePreviews[index]);
     setImagePreviews(prev => prev.filter((_, i) => i !== index));
-    const newImages = formData.images.filter((_, i) => i !== index);
-    handleChange('images', newImages);
+    setImages(prev => prev.filter((_, i) => i !== index));
   };
 
 // ---------------------------------------------------------------
@@ -139,24 +167,24 @@ export function Step3Form({
       className={styles.formContainer}
       noValidate
     >
+      {/* ---------- Назание ---------- */}
       <Input
         label="Название навыка"
         placeholder="Введите название вашего навыка"
         value={formData.customName}
         onChange={(e) => handleChange('customName', e.target.value)}
-        onBlur={() => handleBlur('customName')}
         error={getError('customName')}
         isValid={isValid('customName')}
         required
       />
 
+      {/* ---------- Категория ---------- */}
       <Select
         type="single"
         label="Категория навыка"
         placeholder="Выберите категорию"
         value={formData.categoryId}
         onChange={(v) => handleChange('categoryId', v)}
-        onBlur={() => handleBlur('categoryId')}
         options={CATEGORY_OPTIONS}
         error={getError('categoryId')}
         isValid={isValid('categoryId')}
@@ -164,13 +192,13 @@ export function Step3Form({
         attemptedSubmit={attemptedSubmit}
       />
 
+      {/* ---------- Подкатегория ---------- */}
       <Select
         type="single"
         label="Подкатегория навыка"
         placeholder={formData.categoryId ? "Выберите подкатегорию" : "Сначала выберите категорию"}
         value={formData.subcategoryId}
         onChange={(v) => handleChange('subcategoryId', v)}
-        onBlur={() => handleBlur('subcategoryId')}
         options={subcategoryOptions}
         disabled={!formData.categoryId}
         error={getError('subcategoryId')}
@@ -179,6 +207,7 @@ export function Step3Form({
         attemptedSubmit={attemptedSubmit}
       />
 
+      {/* ---------- Описания ---------- */}
       <div className={styles.textareaBox}>
         <label htmlFor="description" className="h-body">
           Описание
@@ -189,13 +218,13 @@ export function Step3Form({
           placeholder="Коротко опишите, чему можете научить"
           value={formData.description}
           onChange={(e) => handleChange('description', e.target.value)}
-          onBlur={() => handleBlur('description')}
         />
         {getError('description') && (
           <span className={styles.errorMessage}>{getError('description')}</span>
         )}
       </div>
 
+      {/* ---------- Изображения ---------- */}
       <div className={styles.imagesBox}>
         <div
           className={`${styles.imageUpload} ${isDragging ? styles.dragging : ''}`}
@@ -226,14 +255,13 @@ export function Step3Form({
           />
         </div>
 
-
         {imagePreviews.length > 0 && (
           <div className={styles.previewContainer}>
             {imagePreviews.map((preview, index) => (
               <div key={index} className={styles.previewItem}>
-                <img 
-                  src={preview} 
-                  alt={`Preview ${index + 1}`} 
+                <img
+                  src={preview}
+                  alt={`Preview ${index + 1}`}
                   className={styles.previewImage}
                 />
                 <button
@@ -252,7 +280,7 @@ export function Step3Form({
         )}
       </div>
 
-
+      {/* ---------- Кнопки ---------- */}
       <div className={styles.buttonsBox}>
         <Button
           variant="outline"

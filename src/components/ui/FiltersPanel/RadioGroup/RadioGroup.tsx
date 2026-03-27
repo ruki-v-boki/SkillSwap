@@ -1,7 +1,8 @@
-import { useState, useId } from 'react';
 import type { RadioGroupOption, RadioGroupUIProps } from './type';
 import styles from './RadioGroup.module.css';
+import { useState, useId } from 'react';
 
+// ---------------------------------------------------------------
 
 export function RadioGroupUI({
   name,

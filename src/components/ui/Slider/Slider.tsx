@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { SliderUIProps } from './type';
 import styles from './Slider.module.css';
 
+// ---------------------------------------------------------------
 
 export function SliderUI({
   children
@@ -10,6 +11,15 @@ export function SliderUI({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
+  const hasChildren = Array.isArray(children) ? children.length > 0 : !!children;
+
+// ---------------------------------------------------------------
+
+  useEffect(() => {
+    checkScrollButtons();
+    window.addEventListener('resize', checkScrollButtons);
+    return () => window.removeEventListener('resize', checkScrollButtons);
+  }, [children]);
 
 // ---------------------------------------------------------------
 
@@ -23,15 +33,7 @@ export function SliderUI({
     }
   };
 
-// ---------------------------------------------------------------
-
-  useEffect(() => {
-    checkScrollButtons();
-    window.addEventListener('resize', checkScrollButtons);
-    return () => window.removeEventListener('resize', checkScrollButtons);
-  }, [children]);
-
-// ---------------------------------------------------------------
+  // ---------------------------------------------------------------
 
   const scroll = (direction: 'left' | 'right') => {
     const container = scrollContainerRef.current;
@@ -46,8 +48,6 @@ export function SliderUI({
   };
 
 // ---------------------------------------------------------------
-
-  const hasChildren = Array.isArray(children) ? children.length > 0 : !!children;
 
   if (!hasChildren) {
     return null;

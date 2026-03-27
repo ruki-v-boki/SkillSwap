@@ -1,15 +1,16 @@
-import { useState } from 'react';
-import styles from './CitiesSection.module.css';
 import type { CitiesSectionProps } from './type';
-import { Button } from '../../Button';
 import { ChevronIcon } from '../../ChevronIcon';
+import styles from './CitiesSection.module.css';
+import { Button } from '../../Button';
+import { useState } from 'react';
 
+// ---------------------------------------------------------------
 
 export function CitiesSectionUI({
   cities,
   value,
   onChange
-}: CitiesSectionProps ) {
+}: CitiesSectionProps) {
 
   const [showAll, setShowAll] = useState(false);
   const displayedCities = showAll ? cities : cities.slice(0, 5);
@@ -44,6 +45,7 @@ export function CitiesSectionUI({
           </div>
         ))}
       </div>
+
       {hasMoreCities && (
         <Button
           variant="link"

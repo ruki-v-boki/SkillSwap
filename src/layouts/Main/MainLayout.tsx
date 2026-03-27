@@ -1,8 +1,9 @@
-import { Outlet } from 'react-router-dom';
 import { HeaderUI } from '@/components/ui/Header/Header';
-import styles from './MainLayout.module.css';
 import { FooterUI } from '@/components/ui/Footer';
+import styles from './MainLayout.module.css';
+import { Outlet } from 'react-router-dom';
 
+// ---------------------------------------------------------------
 
 export function MainLayout() {
   return (
@@ -16,4 +17,4 @@ export function MainLayout() {
       <FooterUI />
     </div>
   );
-}
+};

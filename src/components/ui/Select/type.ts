@@ -3,6 +3,8 @@ type Option = {
   label: string;
 }
 
+// ---------------------------------------------------------------
+
 export type SelectProps = {
   type?: 'single' | 'multiple';
   value: string | string[];

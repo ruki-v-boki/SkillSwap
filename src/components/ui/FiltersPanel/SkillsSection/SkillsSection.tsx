@@ -6,6 +6,7 @@ import styles from './SkillsSection.module.css';
 import { ChevronIcon } from '../../ChevronIcon';
 import { Button } from '../../Button';
 
+// ---------------------------------------------------------------
 
 export function SkillsSectionUI({
   categories,
@@ -44,6 +45,13 @@ export function SkillsSectionUI({
         : [...prev, categoryId]
     );
   }, []);
+
+// ---------------------------------------------------------------
+
+  const handleCategoryLabelClick = useCallback((e: React.MouseEvent, categoryId: string) => {
+    e.preventDefault();
+    handleCategoryClick(categoryId);
+  }, [handleCategoryClick]);
 
 // ---------------------------------------------------------------
 
@@ -97,8 +105,6 @@ export function SkillsSectionUI({
     return selectedCategories.includes(categoryId);
   };
 
-// ---------------------------------------------------------------
-
   const isSubcategorySelected = (subcategoryId: string) => {
     return selectedSkills.includes(subcategoryId);
   };
@@ -116,13 +122,6 @@ export function SkillsSectionUI({
 
     return selectedInCategory.length > 0 && selectedInCategory.length < categorySubs.length;
   };
-
-// ---------------------------------------------------------------
-
-  const handleCategoryLabelClick = useCallback((e: React.MouseEvent, categoryId: string) => {
-    e.preventDefault();
-    handleCategoryClick(categoryId);
-  }, [handleCategoryClick]);
 
 // ---------------------------------------------------------------
 

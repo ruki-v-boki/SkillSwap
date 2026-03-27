@@ -12,8 +12,10 @@ import { Button } from '../../ui/Button';
 import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 
+// ---------------------------------------------------------------
 
 export function Catalog() {
+
   const dispatch = useDispatch();
   const allUsers = useSelector(selectAllUsers);
   const filteredUsers = useSelector(selectFilteredUsers);
@@ -116,7 +118,7 @@ export function Catalog() {
       );
     }
 
-  // ---------------------------------------------------------------
+    // ---------------------------------------------------------------
 
     return (
       <motion.div

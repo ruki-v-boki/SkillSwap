@@ -1,5 +1,7 @@
 import { type Variants } from 'framer-motion';
 
+// ---------------------------------------------------------------
+
 export const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
@@ -10,6 +12,8 @@ export const containerVariants: Variants = {
     }
   }
 };
+
+// ---------------------------------------------------------------
 
 export const sectionVariants: Variants = {
   hidden: {
@@ -24,6 +28,8 @@ export const sectionVariants: Variants = {
     }
   }
 };
+
+// ---------------------------------------------------------------
 
 export const noResultsVariants: Variants = {
   hidden: {

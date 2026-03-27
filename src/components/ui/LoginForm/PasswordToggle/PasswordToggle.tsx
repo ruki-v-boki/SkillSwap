@@ -2,10 +2,12 @@ import type { PasswordToggleProps } from './type';
 import styles from './PasswordToggle.module.css';
 import { useState } from 'react';
 
+// ---------------------------------------------------------------
 
 export function PasswordToggle({
   onToggle
 }: PasswordToggleProps) {
+
   const [show, setShow] = useState(false);
 
 // ---------------------------------------------------------------

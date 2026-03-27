@@ -1,8 +1,8 @@
 .offerDetailsContainer {
   display: flex;
+  justify-content: space-between;
   gap: 77px;
   width: 100%;
-  justify-content: space-between;
 }
 
 .offerDetailsContainerModal {

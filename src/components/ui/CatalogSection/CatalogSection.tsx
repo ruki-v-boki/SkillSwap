@@ -1,13 +1,14 @@
 import { selectHasActiveFilters } from '@/services/slices/filterSlice';
 import type { CatalogSectionUIProps } from './type';
 import styles from './CatalogSection.module.css';
-import { ChevronIcon } from '../ChevronIcon';
 import { useSelector } from '@/services/store';
+import { ChevronIcon } from '../ChevronIcon';
 import { motion } from 'framer-motion';
 import { Button } from '../Button';
 import { CardUI } from '../Card';
 import { useState } from 'react';
 
+// ---------------------------------------------------------------
 
 export function CatalogSectionUI({
   users,

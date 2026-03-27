@@ -1,7 +1,9 @@
-import type { RegisterData } from "@/types/auth";
+import type { RegistrationPreview } from "@/types/auth";
+
+// ---------------------------------------------------------------
 
 export type UserOfferModalProps = {
-  previewData: RegisterData;
+  previewData: RegistrationPreview;
   onConfirm: () => void;
   onEdit: () => void;
 }

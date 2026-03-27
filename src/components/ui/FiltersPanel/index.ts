@@ -1,1 +1,1 @@
-export { FiltersPanelUI } from './FiltersPanel'
+export { FiltersPanelUI } from './FiltersPanel';

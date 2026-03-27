@@ -1,13 +1,13 @@
 .container {
   display: flex;
-  background-color: beige;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 50vh;
+  color: var(--color-bg);
+  background-color: beige;
   background-image: url('https://play-lh.googleusercontent.com/tSGcBZimR2OEyXmlDDsnpynthf3jyEQpPvjZVr8j4QcguwJj_dP6i0gG1Sj_obhzZmM=w1024-h500');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-bg);
 }

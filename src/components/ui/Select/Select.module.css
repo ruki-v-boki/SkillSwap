@@ -140,7 +140,3 @@
   border-radius: 4px;
   background: var(--color-accent);
 }
-
-.dropdown::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent-dark, #6a9c2e);
-}

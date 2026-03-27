@@ -5,6 +5,8 @@ import type { IUser } from '@/types/types';
 import { usersAPI } from '@/services/api';
 import { logout } from './authSlice';
 
+// ---------------------------------------------------------------
+
 interface IUserState {
   allUsers: IUser[];
   currentUser: IUser | null;
@@ -238,7 +240,13 @@ export const usersSlice = createSlice({
 
 // ---------------------------------------------------------------
 // Actions
-export const { setAllUsers, setCurrentUser, clearCurrentUser, clearUserError, clearAllUsers } = usersSlice.actions;
+export const {
+  setAllUsers,
+  setCurrentUser,
+  clearCurrentUser,
+  clearUserError,
+  clearAllUsers
+} = usersSlice.actions;
 
 // ---------------------------------------------------------------
 // Selectors
@@ -246,6 +254,7 @@ export const selectAllUsers = (state: RootState) => state.users.allUsers;
 export const selectCurrentUser = (state: RootState) => state.users.currentUser;
 export const selectUserIsLoading = (state: RootState) => state.users.isLoading;
 export const selectUserError = (state: RootState) => state.users.error;
+
 
 export const selectFavouriteUsers = createSelector(
   [selectAllUsers, selectCurrentUser],

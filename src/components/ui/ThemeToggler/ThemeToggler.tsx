@@ -1,13 +1,19 @@
 import styles from './ThemeToggler.module.css';
 import { useState } from 'react';
 
+// ---------------------------------------------------------------
 
 export function ThemeToggler() {
+
   const [isDarkTheme, setIsDarkTheme] = useState(false)
+
+// ---------------------------------------------------------------
 
   const handleThemeToggle = () => {
     setIsDarkTheme(!isDarkTheme)
   }
+
+// ---------------------------------------------------------------
 
   return (
     <button

@@ -9,8 +9,10 @@ import { useNavigate } from 'react-router-dom';
 import { getAgeWord } from '@/utils/helpers';
 import { useState } from 'react';
 
+// ---------------------------------------------------------------
 
 export function FavouritesPage() {
+
   const favouriteUsers = useSelector(selectFavouriteUsers);
   const currentUserId = useSelector(selectUserId);
   const [pendingLikeId, setPendingLikeId] = useState<string | null>(null);
@@ -61,7 +63,6 @@ export function FavouritesPage() {
 
   return (
     <main className={styles.favouritesPage}>
-
       <h2 className='h-1'>{title}</h2>
 
       <div className={styles.favouritesGrid}>

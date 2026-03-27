@@ -16,6 +16,8 @@ export const subcategoriesVariants = {
     }
   };
 
+// ---------------------------------------------------------------
+
 export const itemVariants = {
     hidden: {
       x: -20,

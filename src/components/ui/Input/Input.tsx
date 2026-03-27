@@ -1,7 +1,8 @@
+import { forwardRef, useState } from 'react';
 import type { InputProps } from './type';
 import styles from './Input.module.css';
-import { forwardRef, useState } from 'react';
 
+// ---------------------------------------------------------------
 
 export const Input = forwardRef<HTMLInputElement, InputProps> (({
   type = 'search',

@@ -13,11 +13,3 @@
 .togglerButton:hover {
   color: var(--color-text-link);
 }
-
-/* .togglerButton:hover {
-  transform: var(--scale-up);
-} */
-
-/* .togglerButton:active {
-  transform: var(--scale-down);
-} */

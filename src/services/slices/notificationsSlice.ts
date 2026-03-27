@@ -3,6 +3,8 @@ import { supabase } from '@/services/supabase/client';
 import type { TNotifications } from '@/types/types';
 import type { RootState } from '@/services/store';
 
+// ---------------------------------------------------------------
+
 export interface Notification {
   id: string;
   userId: string;        // кому адресовано
@@ -124,6 +126,7 @@ export const notificationsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string;
       })
+      // ---------------------------------------------------------------
       .addCase(markAsRead.fulfilled, (state, action) => {
         const notification = state.items.find(n => n.id === action.payload);
         if (notification && !notification.isRead) {
@@ -140,7 +143,11 @@ export const notificationsSlice = createSlice({
 
 // ---------------------------------------------------------------
 // Actions
-export const { addNotification, clearNotifications, clearError } = notificationsSlice.actions;
+export const {
+  addNotification,
+  clearNotifications,
+  clearError
+} = notificationsSlice.actions;
 
 // ---------------------------------------------------------------
 // Selectors

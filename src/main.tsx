@@ -7,9 +7,12 @@ import { App } from './App/App';
 import React from 'react';
 import './index.css';
 
+// ---------------------------------------------------------------
 
 const container = document.getElementById('root') as HTMLElement;
 const root = ReactDOMClient.createRoot(container!);
+
+// ---------------------------------------------------------------
 
 root.render(
   <Provider store={store}>

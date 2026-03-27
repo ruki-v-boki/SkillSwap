@@ -1,7 +1,8 @@
-import { Button } from '../Button';
-import styles from './AuthButtons.module.css';
 import type { AuthButtonsUIProps } from './type';
+import styles from './AuthButtons.module.css';
+import { Button } from '../Button';
 
+// ---------------------------------------------------------------
 
 export function AuthButtonsUI({
   variant,
@@ -14,12 +15,13 @@ export function AuthButtonsUI({
     ? styles.authButtonsBoxHeader
     : styles.authButtonsBoxForm;
 
+// ---------------------------------------------------------------
+
   return (
     <div className={containerClass}>
       <Button
         type={isHeader ? "button" : "submit"}
         variant={isHeader ? "outline" : "prime"}
-        // onClick={isHeader ? onLoginClick : undefined}
         onClick={onLoginClick}
         className={`${isHeader && styles.loginButtonHeader} h-body`}
       >

@@ -1,16 +1,11 @@
+import { Component, type ErrorInfo } from "react";
 import { ServerErrorPage } from "@/pages/Error";
-import { Component, type ErrorInfo, type ReactNode } from "react";
+import type { Props, State } from "./type";
 
-
-interface Props {
-  children: ReactNode;
-}
-
-interface State {
-  hasError: boolean;
-}
+// ---------------------------------------------------------------
 
 export class ErrorBoundary extends Component<Props, State> {
+
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };

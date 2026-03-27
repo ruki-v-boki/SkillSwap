@@ -1,10 +1,12 @@
-import BusinessIcon from '@/assets/icons/categories/business.svg';
 import CreativityIcon from '@/assets/icons/categories/creativity.svg';
 import LanguagesIcon from '@/assets/icons/categories/languages.svg';
 import EducationIcon from '@/assets/icons/categories/education.svg';
-import HomeIcon from '@/assets/icons/categories/home.svg';
+import BusinessIcon from '@/assets/icons/categories/business.svg';
 import HealthIcon from '@/assets/icons/categories/health.svg';
+import HomeIcon from '@/assets/icons/categories/home.svg';
 import type { CategoryId } from '@/types/types';
+
+// ---------------------------------------------------------------
 
 export const CATEGORY_CONFIG = {
   business: {
@@ -50,6 +52,8 @@ export const CATEGORY_CONFIG = {
     id: 'plus'
   }
 } as const;
+
+// ---------------------------------------------------------------
 
 export const CATEGORIES_FROM_CONFIG = Object.values(CATEGORY_CONFIG)
   .filter(cat => cat.id !== 'plus')

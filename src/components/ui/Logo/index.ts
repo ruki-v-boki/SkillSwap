@@ -1,1 +1,1 @@
-export { LogoUI } from './Logo'
+export { LogoUI } from './Logo';

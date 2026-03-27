@@ -1,7 +1,8 @@
-import { Outlet } from 'react-router-dom';
-import styles from './AuthLayout.module.css';
 import { AuthHeaderUI } from '@/components/ui/AuthHeader';
+import styles from './AuthLayout.module.css';
+import { Outlet } from 'react-router-dom';
 
+// ---------------------------------------------------------------
 
 export function AuthLayout() {
   return (
@@ -14,4 +15,4 @@ export function AuthLayout() {
 
     </div>
   );
-}
+};

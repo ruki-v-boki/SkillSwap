@@ -1,4 +1,13 @@
-import type { IUser, WantToLearnSkill, TGender, AvatarInput, CanTeachSkillInput } from "./types";
+import type {
+  IUser,
+  WantToLearnSkill,
+  CanTeachSkillInput,
+  TCity,
+  TGender,
+  AvatarInput,
+} from "./types";
+
+// ---------------------------------------------------------------
 
 export type LoginCredentials = {
   email: string;
@@ -8,16 +17,26 @@ export type LoginCredentials = {
 // ---------------------------------------------------------------
 
 export type RegisterData = {
+  // step 1
   email: string;
   password: string;
-  name: string;
-  location: string;
-  age: number;
-  about: string;
-  gender: TGender;
+
+  // step 2
   avatar?: AvatarInput | null;        // ← File для загрузки
-  canTeach: CanTeachSkillInput;       // ← File[] для загрузки
+  name: string;
+  age: number;
+  gender: TGender;
+  location: TCity;
   wantToLearn: Omit<WantToLearnSkill, 'id'>[];
+
+  // step 3
+  canTeach: CanTeachSkillInput;       // ← File[] для загрузки
+}
+
+// ---------------------------------------------------------------
+
+export type RegistrationPreview = {
+  canTeach: CanTeachSkillInput;
 }
 
 // ---------------------------------------------------------------

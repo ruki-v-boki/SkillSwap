@@ -1,4 +1,4 @@
-import styles from './PolicyPage.module.css'
+import styles from './PolicyPage.module.css';
 
 
 export function PolicyPage() {

@@ -3,6 +3,7 @@ import type { AvatarLoaderProps } from './type';
 import styles from './AvatarLoader.module.css';
 import { forwardRef } from 'react';
 
+// ---------------------------------------------------------------
 
 export const AvatarLoader = forwardRef<HTMLInputElement, AvatarLoaderProps>(({
   variant,
@@ -10,6 +11,8 @@ export const AvatarLoader = forwardRef<HTMLInputElement, AvatarLoaderProps>(({
   previewUrl,
   isLoading = false,
 }, ref) => {
+
+// ---------------------------------------------------------------
 
   const handleClick = () => {
     if (ref && typeof ref !== 'function' && ref.current) {
@@ -52,6 +55,8 @@ export const AvatarLoader = forwardRef<HTMLInputElement, AvatarLoaderProps>(({
                 />
               </svg>
             )}
+
+            {/* ---------------------------------------------------- */}
 
             <button
               type="button"
@@ -97,6 +102,9 @@ export const AvatarLoader = forwardRef<HTMLInputElement, AvatarLoaderProps>(({
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M45.7 48a22.5 22.5 0 0 0-35.9 0m35.9 0a27 27 0 1 0-35.9 0m35.9 0a27 27 0 0 1-35.9 0m27-27a9 9 0 1 1-18 0 9 9 0 0 1 18 0"/>
             </svg>
           )}
+
+          {/* ---------------------------------------------------- */}
+
           <button
             type="button"
             className={styles.editButton}

@@ -1,21 +1,23 @@
 import { getAgeWord, getCategoryById, getSubcategoryById, getUserRating } from '@/utils/helpers';
-import styles from './Card.module.css'
-import type { CardUIProps } from './type'
-import { Button } from '../Button';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { LikeButtonUI } from '../LikeButtonUI';
-import { useState } from 'react';
-import { SkillsListUI } from './SkillsList';
 import { useDispatch, useSelector } from '@/services/store';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { selectUserId } from '@/services/slices/authSlice';
 import { toggleLike } from '@/services/slices/userSlice';
+import { LikeButtonUI } from '../LikeButtonUI';
+import { SkillsListUI } from './SkillsList';
+import type { CardUIProps } from './type';
+import styles from './Card.module.css';
+import { Button } from '../Button';
+import { useState } from 'react';
 
+// ---------------------------------------------------------------
 
 export function CardUI({
   user,
   styleType,
   onCardClick
 }: CardUIProps) {
+
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -27,22 +29,7 @@ export function CardUI({
   const rating = getUserRating(user);
   const [isPending, setIsPending] = useState(false);
 
-  const handleLikeClick = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!currentUserId || isPending) return;
-    
-    setIsPending(true);
-    try {
-      await dispatch(toggleLike({
-        currentUserId,
-        targetUserId: user.id
-      })).unwrap();
-    } catch (error) {
-      console.error('Failed to toggle like:', error);
-    } finally {
-      setIsPending(false);
-    }
-  };
+// ---------------------------------------------------------------
 
   const teachTags = [{
     id: user.canTeach.id,
@@ -52,6 +39,8 @@ export function CardUI({
       name: user.canTeach.categoryId
     }
   }];
+
+// ---------------------------------------------------------------
 
   const learnTags = user.wantToLearn.map(skill => {
     const subcategory = getSubcategoryById(skill.subcategoryId);
@@ -67,6 +56,8 @@ export function CardUI({
     };
   });
 
+// ---------------------------------------------------------------
+
   const handleCardClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (styleType === 'modal') {
@@ -80,6 +71,26 @@ export function CardUI({
     });
   };
 
+// ---------------------------------------------------------------
+
+  const handleLikeClick = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!currentUserId || isPending) return;
+
+    setIsPending(true);
+    try {
+      await dispatch(toggleLike({
+        currentUserId,
+        targetUserId: user.id
+      })).unwrap();
+    } catch (error) {
+      console.error('Failed to toggle like:', error);
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+// ---------------------------------------------------------------
 
   return (
     <div

@@ -1,8 +1,10 @@
 import { supabase } from '@/services/supabase/client';
 import type { TNotifications } from '@/types/types';
 
+// ---------------------------------------------------------------
 
 export function useNotification() {
+
   const sendNotification = async (data: {
     userId: string;
     fromUserId: string;
@@ -30,5 +32,7 @@ export function useNotification() {
     }
   };
 
+// ---------------------------------------------------------------
+
   return { sendNotification };
-}
+};

@@ -1,28 +1,38 @@
-import { useDispatch, useSelector } from '@/services/store';
 import { selectFilters, setFilters } from '@/services/slices/filterSlice';
-import styles from './ActiveFilters.module.css';
 import { ActiveFilterTagUI } from '@/components/ui/ActiveFilterTag';
+import { useDispatch, useSelector } from '@/services/store';
+import styles from './ActiveFilters.module.css';
 import {
-  getCategoryName,
-  getSubcategoryName,
   getSubcategoriesByCategoryId,
-  getSubcategoryById
+  getSubcategoryName,
+  getSubcategoryById,
+  getCategoryName,
 } from '@/utils/helpers';
 
+// ---------------------------------------------------------------
 
 export function ActiveFilters() {
+
   const dispatch = useDispatch();
   const filters = useSelector(selectFilters);
 
 // ---------------------------------------------------------------
 
-  if (filters.mode === 'all' &&
-      !filters.selectedCategories.length &&
-      !filters.selectedSkills.length &&
-      filters.authorGender === 'any' &&
-      !filters.selectedCities.length) {
-    return null;
-  }
+  const modeLabels = {
+    learn: 'Хочу научиться',
+    teach: 'Могу научить'
+  };
+
+  const genderLabels = {
+    male: 'Мужской',
+    female: 'Женский'
+  };
+
+// ---------------------------------------------------------------
+
+  const handleRemoveMode = () => {
+    dispatch(setFilters({ mode: 'all' }));
+  };
 
 // ---------------------------------------------------------------
 
@@ -44,34 +54,16 @@ export function ActiveFilters() {
 
 // ---------------------------------------------------------------
 
-  const handleRemoveCity = (city: string) => {
-    dispatch(setFilters({
-      selectedCities: filters.selectedCities.filter(c => c !== city)
-    }));
-  };
-
-// ---------------------------------------------------------------
-
-  const handleRemoveMode = () => {
-    dispatch(setFilters({ mode: 'all' }));
-  };
-
-// ---------------------------------------------------------------
-
   const handleRemoveGender = () => {
     dispatch(setFilters({ authorGender: 'any' }));
   };
 
 // ---------------------------------------------------------------
 
-  const modeLabels = {
-    learn: 'Хочу научиться',
-    teach: 'Могу научить'
-  };
-
-  const genderLabels = {
-    male: 'Мужской',
-    female: 'Женский'
+  const handleRemoveCity = (city: string) => {
+    dispatch(setFilters({
+      selectedCities: filters.selectedCities.filter(c => c !== city)
+    }));
   };
 
 // ---------------------------------------------------------------
@@ -120,6 +112,16 @@ export function ActiveFilters() {
       onRemove: () => handleRemoveCity(city)
     })),
   ];
+
+// ---------------------------------------------------------------
+
+  if (filters.mode === 'all' &&
+      !filters.selectedCategories.length &&
+      !filters.selectedSkills.length &&
+      filters.authorGender === 'any' &&
+      !filters.selectedCities.length) {
+    return null;
+  }
 
   if (activeFilters.length === 0) return null;
 

@@ -1,8 +1,15 @@
 import type { ChevronIconProps } from './type';
 
+// ---------------------------------------------------------------
 
-export function ChevronIcon({ open, rotate = 0 }: ChevronIconProps) {
+export function ChevronIcon({
+  open,
+  rotate = 0
+}: ChevronIconProps) {
+
   const rotation = open ? rotate + 180 : rotate;
+
+// ---------------------------------------------------------------
 
   return (
     <svg

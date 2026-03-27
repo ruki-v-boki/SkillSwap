@@ -2,10 +2,17 @@ import { NavLink } from 'react-router-dom';
 import type { LogoUIProps } from './type';
 import styles from './LogoUI.module.css';
 
+// ---------------------------------------------------------------
 
-export function LogoUI({ to = '/home' }: LogoUIProps) {
+export function LogoUI({
+  to = '/home'
+}: LogoUIProps) {
+
   return (
-    <NavLink className={styles.link} to={to}>
+    <NavLink
+      to={to}
+      className={styles.link}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="40"

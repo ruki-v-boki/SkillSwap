@@ -6,6 +6,7 @@ import { combineSlices } from '@reduxjs/toolkit';
 import { usersSlice } from './slices/userSlice';
 import { authSlice } from './slices/authSlice';
 
+// ---------------------------------------------------------------
 
 const rootReducer = combineSlices({
   notifications: notificationsSlice.reducer,

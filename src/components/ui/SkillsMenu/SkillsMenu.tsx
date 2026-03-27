@@ -1,18 +1,21 @@
+import defaultIcon from '@/assets/icons/user-circle.svg';
 import { getCategoryConfig } from '@/utils/helpers';
-import styles from './SkillsMenu.module.css';
 import type { SkillsMenuUIProps } from './type';
-import defaultIcon from '@/assets/icons/user-circle.svg'
+import styles from './SkillsMenu.module.css';
+
+// ---------------------------------------------------------------
 
 export function SkillsMenuUI({
   category,
   subcategories
 }: SkillsMenuUIProps) {
 
+  const config = getCategoryConfig(category.id);
   const categorySubcategories = subcategories.filter(
     sub => sub.categoryId === category.id
   );
 
-  const config = getCategoryConfig(category.id);
+// ---------------------------------------------------------------
 
   return (
     <div className={styles.catalogItem}>
@@ -23,6 +26,7 @@ export function SkillsMenuUI({
           <img src={defaultIcon} alt="изображение не найдено" />
         )}
       </div>
+
       <div className={styles.content}>
         <h2 className="h-2">
           {category.name}

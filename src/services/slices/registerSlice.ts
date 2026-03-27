@@ -1,10 +1,11 @@
+import type { WantToLearnSkill, TGender, AvatarInput, CanTeachSkillInput, TCity } from '@/types/types';
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/services/store';
 import type { RegisterData } from '@/types/auth';
-import type { WantToLearnSkill, TGender, AvatarInput, CanTeachSkillInput, TCity } from '@/types/types';
 import { authAPI } from '@/services/api';
 import { authSlice } from './authSlice';
 
+// ---------------------------------------------------------------
 
 const baseInitialState = {
   step1: {
@@ -12,12 +13,12 @@ const baseInitialState = {
     password: '',
   },
   step2: {
+    avatar: null as AvatarInput | null,
     name: '',
     age: 0,
     gender: 'any' as TGender,
     location: '' as TCity,
-    about: '',
-    avatar: null as AvatarInput | null,
+    selectedCategories: [] as string[],
     wantToLearn: [] as Omit<WantToLearnSkill, 'id'>[],
   },
   step3: {
@@ -219,17 +220,28 @@ export const selectCurrentStep = (state: RootState) => state.register.currentSte
 export const selectRegisterIsLoading = (state: RootState) => state.register.isLoading;
 export const selectRegisterError = (state: RootState) => state.register.error;
 
+
 export const selectRegisterData = (state: RootState): RegisterData => {
-  const { step1, step2, step3 } = state.register;
+  const {
+    step1,
+    step2,
+    step3
+  } = state.register;
+
   return {
+    // step 1
     email: step1.email,
     password: step1.password,
-    name: step2.name,
-    location: step2.location,
-    age: step2.age,
-    about: step2.about,
-    gender: step2.gender,
+
+    // step 2
     avatar: step2.avatar,
+    name: step2.name,
+    age: step2.age,
+    gender: step2.gender,
+    location: step2.location,
+    wantToLearn: step2.wantToLearn,
+
+    // step 3
     canTeach: {
       categoryId: step3.canTeach.categoryId,
       subcategoryId: step3.canTeach.subcategoryId,
@@ -237,6 +249,5 @@ export const selectRegisterData = (state: RootState): RegisterData => {
       description: step3.canTeach.description,
       images: step3.canTeach.images,
     },
-    wantToLearn: step2.wantToLearn,
   };
 };

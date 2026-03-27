@@ -1,8 +1,10 @@
-import type { RegisterData } from "@/types/auth";
+import type { RegistrationPreview } from "@/types/auth";
 import type { IUser } from "@/types/types";
 
+// ---------------------------------------------------------------
+
 export type OfferDetailsUIProps = {
-  previewData?: RegisterData;
+  previewData?: RegistrationPreview;
   user?: IUser;
   variant: 'offerPage' | 'modal';
   onEdit?: () => void;

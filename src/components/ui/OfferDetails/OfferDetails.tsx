@@ -1,11 +1,10 @@
 import { getCategoryName, getSubcategoryName } from '@/utils/helpers';
+import type { OfferDetailsUIProps } from './type';
 import styles from './OfferDetails.module.css';
 import { GalleryUI } from '../Gallery';
 import { Button } from '../Button';
-import type { OfferDetailsUIProps } from './type';
 
-
-
+// ---------------------------------------------------------------
 
 export function OfferDetailsUI({
   previewData,
@@ -14,20 +13,25 @@ export function OfferDetailsUI({
   onEdit,
   onConfirm
 }: OfferDetailsUIProps) {
-  // Используем previewData или user
+
   const isPreview = !!previewData;
   const data = previewData || user;
-  
-  if (!data) return null;
+
+// ---------------------------------------------------------------
 
   const categoryId = isPreview 
-    ? previewData.canTeach.categoryId 
+    ? previewData.canTeach.categoryId
     : user!.canTeach.categoryId;
-    
+
   const subcategoryId = isPreview
     ? previewData.canTeach.subcategoryId
     : user!.canTeach.subcategoryId;
-    
+
+  const categoryName = getCategoryName(categoryId);
+  const subcategoryName = getSubcategoryName(subcategoryId);
+
+// ---------------------------------------------------------------
+
   const customName = isPreview
     ? previewData.canTeach.customName
     : user!.canTeach.customName;
@@ -37,11 +41,14 @@ export function OfferDetailsUI({
     : user!.canTeach.description || '';
     
   const images = isPreview
-    ? previewData.canTeach.images.map(file => URL.createObjectURL(file))  // File[] → URL для предпросмотра
+    ? previewData.canTeach.images?.map(file => URL.createObjectURL(file))  // File[] → URL для предпросмотра
     : user!.canTeach.images || [];
 
-  const categoryName = getCategoryName(categoryId);
-  const subcategoryName = getSubcategoryName(subcategoryId);
+// ---------------------------------------------------------------
+
+  if (!data) return null;
+
+// ---------------------------------------------------------------
 
   return (
     <div className={variant === 'offerPage'

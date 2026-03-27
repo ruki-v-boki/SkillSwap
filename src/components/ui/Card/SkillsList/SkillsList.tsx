@@ -1,14 +1,16 @@
 import { SkillTagUI } from '../SkillTag/SkillTag';
-import styles from './SkillsList.module.css';
 import type { TSkillsListUIProps } from './type';
+import styles from './SkillsList.module.css';
 
+// ---------------------------------------------------------------
 
 export function SkillsListUI({
   tags,
   variant,
   maxVisible = 2,
   styleType
-}:TSkillsListUIProps) {
+}: TSkillsListUIProps) {
+
   const visibleTags = tags.slice(0, maxVisible);
   const remainingCount = tags.length - maxVisible;
   const PLUS_CATEGORY = { id: 'plus', name: 'Плюс' };
@@ -17,6 +19,8 @@ export function SkillsListUI({
   const containerClass = isCatalog
     ? styles.container
     : `${styles.container} ${styles.containerProfile}`;
+
+// ---------------------------------------------------------------
 
   return (
     <div className={containerClass}>

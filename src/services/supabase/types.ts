@@ -1,5 +1,12 @@
-import type { IUser, CanTeachSkill, WantToLearnSkill, TGender, TCity } from '@/types/types';
+import type {
+  IUser,
+  CanTeachSkill,
+  WantToLearnSkill,
+  TGender,
+  TCity
+} from '@/types/types';
 
+// ---------------------------------------------------------------
 
 export type SupabaseProfile = {
   id: string;

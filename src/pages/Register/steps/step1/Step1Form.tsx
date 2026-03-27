@@ -2,6 +2,7 @@ import { LoginForm } from '@/components/ui/LoginForm';
 import type { Step1FormProps } from './type';
 import styles from './Step1Form.module.css';
 
+// ---------------------------------------------------------------
 
 export function Step1Form({
   initialData,

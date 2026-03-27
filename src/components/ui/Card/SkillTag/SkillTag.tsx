@@ -1,9 +1,18 @@
+import { getCategoryConfig } from '@/utils/helpers';
 import type { TSkillTagUIProps } from './type';
 import styles from './SkillTag.module.css';
-import { getCategoryConfig } from '@/utils/helpers';
 
-export function SkillTagUI({ name, category, count }: Readonly<TSkillTagUIProps>) {
+// ---------------------------------------------------------------
+
+export function SkillTagUI({
+  name,
+  category,
+  count
+}: TSkillTagUIProps) {
+
   const config = getCategoryConfig(category.id);
+
+// ---------------------------------------------------------------
 
   if (category.id === 'plus' && count !== undefined) {
     return (

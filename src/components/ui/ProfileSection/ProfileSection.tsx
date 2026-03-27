@@ -7,10 +7,11 @@ import { ThemeToggler } from "../ThemeToggler";
 import { useSelector } from "@/services/store";
 import { NavLink } from "react-router-dom";
 
+// ---------------------------------------------------------------
 
 export function ProfileSectionUI({
   user
-}:ProfileSectionUIProps) {
+}: ProfileSectionUIProps) {
 
   const unreadCount = useSelector(selectUnreadCount);
 

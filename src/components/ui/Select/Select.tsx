@@ -4,6 +4,7 @@ import type { SelectProps } from './type';
 import styles from './Select.module.css';
 import { useState, useRef } from 'react';
 
+// ---------------------------------------------------------------
 
 export function Select({
   type = 'single',
@@ -23,14 +24,40 @@ export function Select({
 }: SelectProps) {
 
   const [isOpen, setIsOpen] = useState(false);
-  const [touched, setTouched] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const selectId = id || name;
 
-  useClickOutside(containerRef, () => setIsOpen(false));
-
-// Single mode
 // ---------------------------------------------------------------
+
+  useClickOutside(containerRef, () => {
+    if (isOpen) {
+      setIsOpen(false);
+      onBlur?.();
+    }
+  }, buttonRef);
+
+// ---------------------------------------------------------------
+
+  const getDisplayText = () => {
+    if (type === 'single') {
+      return selectedOption?.label || placeholder;
+    } else {
+      if (selectedValues.length === 0) return placeholder;
+      if (selectedValues.length <= 2) {
+        const selectedLabels = selectedValues
+          .map(val => options.find(opt => opt.value === val)?.label)
+          .filter(Boolean)
+          .join(', ');
+        return `Выбрано: ${selectedLabels}`;
+      }
+      return `Выбрано (${selectedValues.length})`;
+    }
+  };
+
+// ---------------------------------------------------------------
+
+  // Single mode
   const selectedValue = type === 'single' ? (value as string) : '';
   const selectedOption = type === 'single'
     ? options.find(opt => opt.value === selectedValue)
@@ -40,14 +67,15 @@ export function Select({
     if (!disabled) {
       onChange(selectedValue);
       setIsOpen(false);
-      setTouched(true);
       onBlur?.();
     }
   };
 
-// Multiple mode
 // ---------------------------------------------------------------
+
+  // Multiple mode
   const selectedValues = type === 'multiple' ? (value as string[]) : [];
+
   const handleMultipleToggle = (optionValue: string) => {
     if (disabled) return;
 
@@ -56,11 +84,16 @@ export function Select({
       : [...selectedValues, optionValue];
 
     onChange(newValues);
-    setTouched(true);
     onBlur?.();
   };
 
 // ---------------------------------------------------------------
+
+  const handleTriggerClick = () => {
+    if (!disabled) {
+      setIsOpen(!isOpen);
+    }
+  };
 
   const hasSelection = type === 'single'
     ? !!selectedOption 
@@ -68,37 +101,8 @@ export function Select({
 
 // ---------------------------------------------------------------
 
-  const getDisplayText = () => {
-    if (type === 'single') {
-      return selectedOption?.label || placeholder;
-    } else {
-      if (selectedValues.length === 0) return placeholder;
-
-      if (selectedValues.length <= 2) {
-        const selectedLabels = selectedValues
-          .map(val => options.find(opt => opt.value === val)?.label)
-          .filter(Boolean)
-          .join(', ');
-        return `Выбрано: ${selectedLabels}`;
-      }
-
-      return `Выбрано (${selectedValues.length})`;
-    }
-  };
-
-// ---------------------------------------------------------------
-
-  const showError = error && (touched || attemptedSubmit);
-  const showRequiredError = required && !hasSelection && (touched || attemptedSubmit);
-
-// ---------------------------------------------------------------
-
-  const handleTriggerClick = () => {
-    if (!disabled) {
-      setIsOpen(!isOpen);
-      setTouched(true);
-    }
-  };
+  const showError = error && attemptedSubmit;
+  const showRequiredError = required && !hasSelection && attemptedSubmit;
 
 // ---------------------------------------------------------------
 
@@ -112,6 +116,7 @@ export function Select({
 
       <div className={styles.selectContainer}>
         <button
+          ref={buttonRef}
           type="button"
           id={selectId}
           name={name}
@@ -133,8 +138,6 @@ export function Select({
           </span>
           <ChevronIcon open={isOpen} />
         </button>
-
-        {/* --------------------------------------------------------------- */}
 
         {isOpen && (
           <div className={styles.dropdownBox}>
@@ -165,15 +168,13 @@ export function Select({
                     }
                   >
                     {type === 'multiple' && (
-                      // <label className={`checkbox`}>
-                        <input
-                          type="checkbox"
-                          checked={selectedValues.includes(option.value)}
-                          onChange={() => {}}
-                          onClick={(e) => e.stopPropagation()}
-                          className={`checkbox`}
-                        />
-                      // </label>
+                      <input
+                        type="checkbox"
+                        checked={selectedValues.includes(option.value)}
+                        onChange={() => {}}
+                        onClick={(e) => e.stopPropagation()}
+                        className="checkbox"
+                      />
                     )}
                     <span>{option.label}</span>
                   </li>

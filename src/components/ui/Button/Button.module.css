@@ -1,3 +1,7 @@
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 .button {
   display: flex;
   justify-content: center;
@@ -19,6 +23,15 @@
   background-color: var(--color-accent);
 }
 
+.button:disabled {
+  border-color: var(--color-disabled-text);
+  opacity: 0.6;
+  color: var(--color-disabled-text);
+  background-color: var(--color-disabled);
+  cursor: not-allowed;
+}
+
+/* --------------------------------------------- */
 .base {
   box-shadow: var(--box-shadow-light);
   color: var(--color-text);
@@ -29,6 +42,7 @@
   background-color: var(--color-input);
 }
 
+/* --------------------------------------------- */
 .prime {
   box-shadow: var(--box-shadow);
   background-color: var(--color-accent);
@@ -38,6 +52,7 @@
   outline: 0.5px solid var(--color-text-link);
 }
 
+/* --------------------------------------------- */
 .outline {
   box-shadow: var(--box-shadow);
   outline: 1px solid var(--color-accent);
@@ -48,6 +63,7 @@
   outline: -webkit-focus-ring-color auto 1px;
 }
 
+/* --------------------------------------------- */
 .link {
   gap: 4px;
   margin: 0;
@@ -67,6 +83,7 @@
   outline-offset: 5px;
 }
 
+/* --------------------------------------------- */
 .custom {
   display: inline-flex;
   justify-content: center;
@@ -77,6 +94,7 @@
   box-shadow: var(--box-shadow-inset);
 }
 
+/* --------------------------------------------- */
 .fullWidth {
   width: 100%;
 }
@@ -95,16 +113,4 @@
   border-radius: 50%;
   border-top-color: transparent;
   animation: spin 0.8s linear infinite;
-}
-
-.button:disabled {
-  border-color: var(--color-disabled-text);
-  opacity: 0.6;
-  color: var(--color-disabled-text);
-  background-color: var(--color-disabled);
-  cursor: not-allowed;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
 }

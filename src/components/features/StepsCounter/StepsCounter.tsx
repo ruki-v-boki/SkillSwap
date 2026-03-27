@@ -1,12 +1,16 @@
 import styles from './StepsCounter.module.css';
 import type { StepsCounterProps } from './type';
 
+// ---------------------------------------------------------------
 
 export function StepsCounter({
   currentStep,
   allSteps
 }: StepsCounterProps) {
+
   const steps = Array.from({ length: allSteps }, (_, index) => index + 1);
+
+// ---------------------------------------------------------------
 
   return (
     <div className={styles.counterBox}>
@@ -24,4 +28,4 @@ export function StepsCounter({
       </div>
     </div>
   );
-}
+};

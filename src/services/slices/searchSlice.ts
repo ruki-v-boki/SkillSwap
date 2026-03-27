@@ -3,6 +3,7 @@ import { APP_SUBCATEGORIES } from "@/constants/skills";
 import { addSkillWithCategory } from "./filterSlice";
 import type { RootState } from "@/services/store";
 
+// ---------------------------------------------------------------
 
 export interface SearchResult {
   id: string;
@@ -49,7 +50,7 @@ export const selectSkillFromSearch = createAsyncThunk(
 
     dispatch(clearSearch());
     dispatch(setIsOpen(false));
-    
+
     return skillId;
   }
 );
@@ -79,6 +80,7 @@ export const searchSlice = createSlice({
     setIsOpen: (state, action: PayloadAction<boolean>) => {
       state.isOpen = action.payload;
     },
+    // ---------------------------------------------------------------
     clearSearch: (state) => {
       state.query = '';
       state.results = initialResults;
@@ -88,6 +90,7 @@ export const searchSlice = createSlice({
   }
 });
 
+// ---------------------------------------------------------------
 // Actions
 export const {
   setQuery,
@@ -97,10 +100,9 @@ export const {
   resetSearch
 } = searchSlice.actions;
 
+// ---------------------------------------------------------------
 // Selectors
 export const selectSearchQuery = (state: RootState) => state.search.query;
 export const selectSearchResults = (state: RootState) => state.search.results;
 export const selectSelectedIndex = (state: RootState) => state.search.selectedIndex;
 export const selectIsSearchOpen = (state: RootState) => state.search.isOpen;
-
-export default searchSlice.reducer;

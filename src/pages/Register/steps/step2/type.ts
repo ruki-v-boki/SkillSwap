@@ -1,5 +1,6 @@
 import type { TCity, TGender, WantToLearnSkill } from "@/types/types";
 
+// ---------------------------------------------------------------
 
 export type Step2FormProps = {
   initialData?: {
@@ -8,7 +9,7 @@ export type Step2FormProps = {
       age?: number;
       gender?: TGender;
       location?: TCity;
-      about?: string;
+      selectedCategories?: string[];
       wantToLearn?: Omit<WantToLearnSkill, 'id'>[];
     };
   onSubmit: (data: {
@@ -17,7 +18,7 @@ export type Step2FormProps = {
       age: number;
       gender: TGender;
       location: TCity;
-      about: string;
+      selectedCategories: string[];
       wantToLearn: Omit<WantToLearnSkill, 'id'>[];
     }) => void;
   onBack: () => void;

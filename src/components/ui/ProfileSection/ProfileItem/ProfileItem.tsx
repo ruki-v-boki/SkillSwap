@@ -4,12 +4,16 @@ import styles from './ProfileItem.module.css';
 import { useRef, useState } from 'react';
 import { BannerUI } from '../../Banner';
 
+// ---------------------------------------------------------------
 
 export function ProfileItemUI ({
   user
-}:ProfileItemUIProps) {
+}: ProfileItemUIProps) {
+
   const [isProfileItemOpen, setIsProfileItemOpen] = useState(false);
   const profileItemButtonRef = useRef<HTMLButtonElement>(null);
+
+// ---------------------------------------------------------------
 
   return (
     <>

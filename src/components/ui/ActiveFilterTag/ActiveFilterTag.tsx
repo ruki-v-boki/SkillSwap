@@ -1,8 +1,9 @@
-import styles from './ActiveFilterTag.module.css';
-import closeIcon from '@/assets/icons/cross.svg';
 import type { ActiveFilterTagUIProps } from './type';
 import { getCategoryConfig } from '@/utils/helpers';
+import styles from './ActiveFilterTag.module.css';
+import closeIcon from '@/assets/icons/cross.svg';
 
+// ---------------------------------------------------------------
 
 export function ActiveFilterTagUI({
   label,
@@ -11,6 +12,8 @@ export function ActiveFilterTagUI({
 }: ActiveFilterTagUIProps) {
 
   const config = getCategoryConfig(categoryId || '');
+
+// ---------------------------------------------------------------
 
   return (
     <button

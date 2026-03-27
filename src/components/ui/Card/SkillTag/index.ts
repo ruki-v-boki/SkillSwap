@@ -1,1 +1,1 @@
-export { SkillTagUI } from './SkillTag'
+export { SkillTagUI } from './SkillTag';

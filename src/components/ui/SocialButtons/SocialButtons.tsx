@@ -2,6 +2,7 @@ import type { SocialButtonsUIProps } from './type';
 import styles from './SocialButtons.module.css';
 import { LikeButtonUI } from '../LikeButtonUI';
 
+// ---------------------------------------------------------------
 
 export function SocialButtonsUI({
   className,
@@ -10,6 +11,7 @@ export function SocialButtonsUI({
   onShareClick,
   onMoreClick
 }: SocialButtonsUIProps) {
+
   return (
     <div className={className}>
       <LikeButtonUI

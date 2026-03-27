@@ -1,11 +1,15 @@
-import { useEffect } from 'react';
-import { useDispatch } from '@/services/store';
-import { supabase } from '@/services/supabase/client';
 import { addNotification } from '@/services/slices/notificationsSlice';
+import { supabase } from '@/services/supabase/client';
+import { useDispatch } from '@/services/store';
+import { useEffect } from 'react';
 
+// ---------------------------------------------------------------
 
 export function useRealtimeNotifications(userId: string | null) {
+
   const dispatch = useDispatch();
+
+// ---------------------------------------------------------------
 
   useEffect(() => {
     if (!userId) return;
@@ -30,4 +34,4 @@ export function useRealtimeNotifications(userId: string | null) {
       supabase.removeChannel(channel);
     };
   }, [userId, dispatch]);
-}
+};

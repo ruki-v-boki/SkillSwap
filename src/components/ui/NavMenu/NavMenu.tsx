@@ -6,10 +6,14 @@ import { useRef, useState } from 'react';
 import { BannerUI } from '../Banner';
 import { Button } from '../Button';
 
+// ---------------------------------------------------------------
 
 export function NavMenu () {
+
   const [isNavOpen, setIsNavOpen] = useState(false)
   const navButtonRef = useRef<HTMLButtonElement>(null);
+
+// ---------------------------------------------------------------
 
   return (
     <nav className={styles.navContainer}>

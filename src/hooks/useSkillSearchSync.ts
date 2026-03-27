@@ -4,8 +4,10 @@ import { APP_SUBCATEGORIES } from '@/constants/skills';
 import { useDebounce } from './useDebounce';
 import { useEffect } from 'react';
 
+// ---------------------------------------------------------------
 
 export function useSkillSearchSync() {
+
   const dispatch = useDispatch();
   const searchQuery = useSelector(selectSearchQuery);
   const debouncedQuery = useDebounce(searchQuery, 500);
@@ -24,4 +26,4 @@ export function useSkillSearchSync() {
       }
     }
   }, [debouncedQuery, dispatch]);
-}
+};

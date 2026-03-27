@@ -1,9 +1,11 @@
-import { NavLink } from 'react-router-dom'
-import { LogoUI } from '../Logo'
-import styles from './Footer.module.css'
+import { NavLink } from 'react-router-dom';
+import styles from './Footer.module.css';
+import { LogoUI } from '../Logo';
 
+// ---------------------------------------------------------------
 
 export function FooterUI() {
+
   return (
     <footer className={styles.footerContainer}>
       <div className={styles.header}>

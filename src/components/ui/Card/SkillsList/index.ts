@@ -1,1 +1,1 @@
-export { SkillsListUI } from './SkillsList'
+export { SkillsListUI } from './SkillsList';

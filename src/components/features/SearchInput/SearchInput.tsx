@@ -19,6 +19,7 @@ import {
   selectSkillFromSearch,
 } from '@/services/slices/searchSlice';
 
+// ---------------------------------------------------------------
 
 export function SearchInput() {
 
@@ -104,55 +105,60 @@ export function SearchInput() {
 // ---------------------------------------------------------------
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-  if (!isOpen && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
-    e.preventDefault();
-    dispatch(setIsOpen(true));
-    return;
-  }
-
-  switch (e.key) {
-    case 'ArrowDown': {
+    if (!isOpen && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
       e.preventDefault();
-      const next = selectedIndex + 1;
-      if (next < searchResults.length) {
-        dispatch(setSelectedIndex(next));
-      } else if (selectedIndex === -1 && searchResults.length > 0) {
-        dispatch(setSelectedIndex(0));
-      }
-      break;
-    }
+      dispatch(setIsOpen(true));
+      return;
+    };
 
-    case 'ArrowUp': {
-      e.preventDefault();
-      const prev = selectedIndex - 1;
-      if (prev >= -1) {
-        dispatch(setSelectedIndex(prev));
-      }
-      break;
-    }
-
-    case 'Enter': {
-      e.preventDefault();
-      if (selectedIndex >= 0 && searchResults[selectedIndex]) {
-        const item = searchResults[selectedIndex];
-        if (!selectedSkills.includes(item.id)) {
-          handleSelectSuggestion(item.id, item.name);
+    switch (e.key) {
+      case 'ArrowDown': {
+        e.preventDefault();
+        const next = selectedIndex + 1;
+        if (next < searchResults.length) {
+          dispatch(setSelectedIndex(next));
+        } else if (selectedIndex === -1 && searchResults.length > 0) {
+          dispatch(setSelectedIndex(0));
         }
+        break;
+      };
+
+      case 'ArrowUp': {
+        e.preventDefault();
+        const prev = selectedIndex - 1;
+        if (prev >= -1) {
+          dispatch(setSelectedIndex(prev));
+        }
+        break;
+      };
+
+      case 'Enter': {
+        e.preventDefault();
+        if (selectedIndex >= 0 && searchResults[selectedIndex]) {
+          const item = searchResults[selectedIndex];
+          if (!selectedSkills.includes(item.id)) {
+            handleSelectSuggestion(item.id, item.name);
+          }
+          dispatch(setIsOpen(false));
+          dispatch(setSelectedIndex(-1));
+        }
+        break;
+      };
+
+      case 'Escape':
+        e.preventDefault();
         dispatch(setIsOpen(false));
         dispatch(setSelectedIndex(-1));
-      }
-      break;
+        break;
     }
-
-    case 'Escape':
-      e.preventDefault();
-      dispatch(setIsOpen(false));
-      dispatch(setSelectedIndex(-1));
-      break;
-  }
-}, [
-     isOpen, selectedIndex, searchResults, inputValue,
-     selectedSkills, dispatch, handleSelectSuggestion
+  }, [
+     isOpen,
+     selectedIndex,
+     searchResults,
+     inputValue,
+     selectedSkills,
+     dispatch,
+     handleSelectSuggestion
   ]);
 
 // ---------------------------------------------------------------
@@ -176,8 +182,6 @@ export function SearchInput() {
         hideLeftIconOnFocus={true}
       />
 
-{/* // --------------------------------------------------------------- */}
-
       {isOpen && (
           <SearchSuggestions
             query={inputValue}
@@ -194,4 +198,4 @@ export function SearchInput() {
       }
     </div>
   );
-}
+};

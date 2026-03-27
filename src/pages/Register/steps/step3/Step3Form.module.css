@@ -14,14 +14,14 @@
 }
 
 .textarea {
-  min-height: 96px;
   display: flex;
   align-items: start;
+  min-height: 96px;
   border: none;
   border-radius: var(--radius-button);
   padding: 12px 20px;
-  outline: 1px solid var(--color-caption);
   box-shadow: var(--box-shadow);
+  outline: 1px solid var(--color-caption);
   resize: none;
 }
 
@@ -35,11 +35,11 @@
 
 .imagesBox {
   border: none;
-  outline: 1px dotted var(--color-caption);
   border-radius: var(--radius-button);
+  outline: 1px dotted var(--color-caption);
   overflow: hidden;
-  transition: all 0.2s ease;
   background: var(--color-bg);
+  transition: all 0.2s ease;
 
 }
 
@@ -50,24 +50,22 @@
 .imageUpload {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   gap: 12px;
-  padding: 24px;
   min-height: 96px;
-  cursor: pointer;
-  color: var(--color-text-link);
-  transition: all 0.2s ease;
-  /* background: var(--color-bg); */
   border-radius: var(--radius-button);
   border-bottom: 1px dotted var(--color-caption);
-
+  padding: 24px;
+  color: var(--color-text-link);
+  transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .dndCaptionBox {
   display: flex;
-  gap: 4px;
   align-items: center;
+  gap: 4px;
 }
 
 .dndCaptionBox:hover {
@@ -75,9 +73,9 @@
 }
 
 .imageUpload.dragging {
-  background: var(--color-bg);
   outline: 2px solid var(--color-primary);
   outline-offset: -1px;
+  background: var(--color-bg);
 }
 
 .uploadHint {
@@ -90,15 +88,12 @@
   display: none;
 }
 
-/* Стили для превью изображений */
 .previewContainer {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  padding: 16px;
-  /* border-top: 1px dotted var(--color-caption); */
   border-radius: var(--radius-button);
-  /* background: var(--color-bg); */
+  padding: 16px;
 }
 
 .previewItem {
@@ -106,8 +101,8 @@
   width: 80px;
   height: 80px;
   border-radius: var(--radius-button);
-  overflow: hidden;
   box-shadow: var(--box-shadow);
+  overflow: hidden;
 }
 
 .previewImage {
@@ -120,18 +115,18 @@
   position: absolute;
   top: 4px;
   right: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 20px;
   height: 20px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
   border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 50%;
+  color: white;
   font-size: 12px;
+  background: rgba(0, 0, 0, 0.6);
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .removeButton:hover {

@@ -3,6 +3,8 @@ export type RadioGroupOption = {
   label: string;
 }
 
+// ---------------------------------------------------------------
+
 export type RadioGroupUIProps = {
   name: string;
   options: readonly RadioGroupOption[];
