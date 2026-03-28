@@ -30,7 +30,7 @@ export const getAllUsers = createAsyncThunk(
       const users = await usersAPI.getAllUsers();
       return users;
     } catch (error) {
-      return rejectWithValue('Ошибка загрузки всех пользователей');
+      return rejectWithValue(error instanceof Error ? error.message : 'Ошибка загрузки всех пользователей');
     }
   }
 );
@@ -44,7 +44,7 @@ export const getCurrentUser = createAsyncThunk(
       const user = await usersAPI.getUserById(userId);
       return user;
     } catch (error) {
-      return rejectWithValue('Ошибка загрузки профиля');
+      return rejectWithValue(error instanceof Error ? error.message : 'Ошибка загрузки профиля');
     }
   }
 );
@@ -58,7 +58,7 @@ export const updateCurrentUser = createAsyncThunk(
       const updatedUser = await usersAPI.updateUser(userId, data);
       return updatedUser;
     } catch (error) {
-      return rejectWithValue('Ошибка обновления профиля');
+      return rejectWithValue(error instanceof Error ? error.message : 'Ошибка обновления профиля');
     }
   }
 );
@@ -202,7 +202,7 @@ export const usersSlice = createSlice({
         const userIndex = state.allUsers.findIndex(u => u.id === targetUserId);
         if (userIndex !== -1) {
           const user = state.allUsers[userIndex];
-          let currentLikes = user.likedBy || [];
+          const currentLikes = user.likedBy || [];
 
           if (isLiked) {
             if (!currentLikes.includes(currentUserId)) {
@@ -216,7 +216,7 @@ export const usersSlice = createSlice({
 
         // Обновляем currentUser, если это он
         if (state.currentUser?.id === targetUserId) {
-          let currentLikes = state.currentUser.likedBy || [];
+          const currentLikes = state.currentUser.likedBy || [];
           if (isLiked) {
             if (!currentLikes.includes(currentUserId)) {
               state.currentUser.likedBy = [...currentLikes, currentUserId];

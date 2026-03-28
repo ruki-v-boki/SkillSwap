@@ -14,15 +14,6 @@ export function SliderUI({
   const hasChildren = Array.isArray(children) ? children.length > 0 : !!children;
 
 // ---------------------------------------------------------------
-
-  useEffect(() => {
-    checkScrollButtons();
-    window.addEventListener('resize', checkScrollButtons);
-    return () => window.removeEventListener('resize', checkScrollButtons);
-  }, [children]);
-
-// ---------------------------------------------------------------
-
   const checkScrollButtons = () => {
     const container = scrollContainerRef.current;
     if (container) {
@@ -32,6 +23,14 @@ export function SliderUI({
       );
     }
   };
+
+// ---------------------------------------------------------------
+
+  useEffect(() => {
+    checkScrollButtons();
+    window.addEventListener('resize', checkScrollButtons);
+    return () => window.removeEventListener('resize', checkScrollButtons);
+  }, [children]);
 
   // ---------------------------------------------------------------
 

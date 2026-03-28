@@ -100,7 +100,7 @@ export function SearchInput() {
     setTimeout(() => {
       isSelectingRef.current = false;
     }, 100);
-  }, [dispatch]);
+  }, [dispatch, navigate]);
 
 // ---------------------------------------------------------------
 
@@ -155,7 +155,7 @@ export function SearchInput() {
      isOpen,
      selectedIndex,
      searchResults,
-     inputValue,
+    //  inputValue,
      selectedSkills,
      dispatch,
      handleSelectSuggestion

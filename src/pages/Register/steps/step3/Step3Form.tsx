@@ -42,7 +42,7 @@ export function Step3Form({
       setImagePreviews([]);
       setImages([]);
     }
-  }, [initialData?.images]);
+  }, [initialData?.images, imagePreviews]);
 
 // ---------------------------------------------------------------
 

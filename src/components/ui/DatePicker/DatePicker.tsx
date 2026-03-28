@@ -48,7 +48,10 @@ export const DatePicker = forwardRef<DatePickerRef, DatePickerProps>(({
         setCurrentMonth(date.getMonth());
       }
     }
-  }, [externalValue]);
+  }, [
+    externalValue,
+    selectedDate
+  ]);
 
 // ---------------------------------------------------------------
 
@@ -127,11 +130,23 @@ export const DatePicker = forwardRef<DatePickerRef, DatePickerProps>(({
 
 // ---------------------------------------------------------------
 
+  const isDateDisabled = useCallback((date: Date): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return isAfter(date, today);
+  }, []);
+
+// ---------------------------------------------------------------
+
   const handleDateSelect = useCallback((day: number) => {
     const newDate = new Date(currentYear, currentMonth, day);
     if (isDateDisabled(newDate)) return;
     setTempSelectedDate(newDate);
-  }, [currentYear, currentMonth]);
+  }, [
+    currentYear,
+    currentMonth,
+    isDateDisabled
+  ]);
 
   const handleMonthChange = useCallback((monthIndex: number) => {
     setCurrentMonth(monthIndex);
@@ -169,14 +184,6 @@ export const DatePicker = forwardRef<DatePickerRef, DatePickerProps>(({
       }
     }
   }, [disabled, isOpen, selectedDate]);
-
-// ---------------------------------------------------------------
-
-  const isDateDisabled = useCallback((date: Date): boolean => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return isAfter(date, today);
-  }, []);
 
 // ---------------------------------------------------------------
 

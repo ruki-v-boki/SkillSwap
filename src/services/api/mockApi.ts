@@ -11,7 +11,7 @@ const generateMockToken = () => 'mock-jwt-token-' + Date.now();
 
 export class MockAuthAPI implements IAuthAPI {
 
-  async refreshToken(_refreshToken: string): Promise<{ accessToken: string }> {
+  async refreshToken(): Promise<{ accessToken: string }> {
     await new Promise(resolve => setTimeout(resolve, 300));
     return { accessToken: generateMockToken() };
   }
