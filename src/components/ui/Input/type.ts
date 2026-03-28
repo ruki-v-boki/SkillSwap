@@ -3,7 +3,7 @@ import type { ChangeEvent, FocusEvent, KeyboardEvent } from 'react';
 // ---------------------------------------------------------------
 
 export type InputProps = {
-  type?: 'text' | 'email' | 'password' | 'number' | 'search' | 'tel' | 'url';
+  type?: 'text' | 'email' | 'password' | 'number' | 'search' | 'tel' | 'url' | 'date';
   value?: string;
   placeholder?: string;
   name?: string;

@@ -1,7 +1,8 @@
 import { CITY_OPTIONS, CATEGORY_OPTIONS, GENDER_OPTIONS } from '@/constants/options';
-import { validateName, validateAge, validateLocation } from '@/utils/validators';
+import { validateName, validateLocation, validateBirthDate } from '@/utils/validators';
 import { AvatarLoader } from '@/components/features/AvatarLoader/AvatarLoader';
 import { getSubcategoryOptionsForMultiple } from '@/utils/helpers';
+import { DatePicker } from '@/components/ui/DatePicker';
 import { APP_SUBCATEGORIES } from '@/constants/skills';
 import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
@@ -38,6 +39,7 @@ export function Step2Form({
     initialValues: {
       name: initialData?.name || '',
       age: initialData?.age || 0,
+      birthDate: initialData?.birthDate || null,
       gender: initialData?.gender || 'any',
       location: initialData?.location || '',
       selectedCategories: initialData?.selectedCategories || [],
@@ -45,7 +47,7 @@ export function Step2Form({
     },
     validators: {
       name: validateName,
-      age: validateAge,
+      birthDate: validateBirthDate,
       location: validateLocation,
     },
     onSubmit: (data) => {
@@ -53,6 +55,7 @@ export function Step2Form({
         avatar: (avatarFile && avatarPreview) ? { file: avatarFile, preview: avatarPreview } : null,
         name: data.name,
         age: data.age,
+        birthDate: data.birthDate,
         gender: data.gender,
         location: data.location as TCity,
         selectedCategories: data.selectedCategories,
@@ -71,6 +74,7 @@ export function Step2Form({
 
   const isFormValid = isValid('name')
                     && isValid('age')
+                    && isValid('birthDate')
                     && isValid('location')
                     && selectedCategories.length > 0
                     && selectedSkills.length > 0;
@@ -146,13 +150,20 @@ export function Step2Form({
 
       {/* ---------- Дата рождения / Пол ---------- */}
       <div className={styles.rowContainer}>
-        <Input
-          type="number"
-          label="Возраст"
-          value={formData.age === 0 ? '' : String(formData.age)}
-          onChange={(e) => handleChange('age', e.target.value ? Number(e.target.value) : 0)}
-          error={getError('age')}
-          isValid={isValid('age')}
+        <DatePicker
+          name="birthDate"
+          placeholder="дд.мм.гггг"
+          startYear={1950}
+          endYear={new Date().getFullYear()}
+          value={formData.birthDate ? new Date(formData.birthDate) : null}
+          error={getError('birthDate')}
+          onChange={(result) => {
+            if (result.date !== null) {
+              handleChange('birthDate', result.date);
+            } else {
+              handleChange('birthDate', null);
+            }
+          }}
         />
         <Select
           type="single"
@@ -180,7 +191,7 @@ export function Step2Form({
       {/* ---------- Категория ---------- */}
       <Select
         type="multiple"
-        label="Категория навыка"
+        label="Категория навыка, которому хотите научиться"
         value={selectedCategories}
         onChange={handleCategoriesChange}
         options={CATEGORY_OPTIONS}
@@ -192,7 +203,7 @@ export function Step2Form({
       {/* ---------- Навык ---------- */}
       <Select
         type="multiple"
-        label="Навык"
+        label="Подкатегория навыка, которому хотите научиться"
         value={selectedSkills}
         onChange={handleSkillsChange}
         options={availableSubcategories}

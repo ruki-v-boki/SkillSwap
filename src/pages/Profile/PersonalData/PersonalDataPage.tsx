@@ -3,6 +3,8 @@ import { CITY_OPTIONS, GENDER_OPTIONS } from "@/constants/options";
 import { AvatarLoader } from "@/components/features/AvatarLoader";
 import { useDispatch, useSelector } from "@/services/store";
 import type { IUser, TCity, TGender } from "@/types/types";
+import { DatePicker } from "@/components/ui/DatePicker";
+import { calculateAgeFromDate } from "@/utils/helpers";
 import { useEffect, useRef, useState } from "react";
 import styles from './PersonalDataPage.module.css';
 import { Button } from "@/components/ui/Button";
@@ -11,11 +13,11 @@ import { supabase } from "@/services/supabase";
 import { Input } from "@/components/ui/Input";
 import { useForm } from "@/hooks/useForm";
 import {
+  validateBirthDate,
   validateLocation,
   validateAbout,
   validateEmail,
-  validateAge,
-  validateName
+  validateName,
 } from "@/utils/validators";
 
 // ---------------------------------------------------------------
@@ -44,7 +46,7 @@ export function PersonalDataPage() {
     initialValues: {
       email: '',
       name: '',
-      age: 0,
+      birthDate: null as string | null,
       gender: 'any' as TGender,
       location: '' as TCity,
       about: '',
@@ -52,19 +54,25 @@ export function PersonalDataPage() {
     validators: {
       email: validateEmail,
       name: validateName,
-      age: validateAge,
+      birthDate: validateBirthDate,
       location: validateLocation,
       about: validateAbout,
     },
     onSubmit: async (data) => {
       if (!user) return;
 
+      // Вычисляем возраст из даты для отправки на бекенд
+      const age = calculateAgeFromDate(data.birthDate);
+
       if (data.email !== user.email) {
         setIsUpdatingEmail(true);
         try {
-          await dispatch(updateUserEmail({ userId: user.id, newEmail: data.email })).unwrap();
+          await dispatch(updateUserEmail({
+            userId: user.id,
+            newEmail: data.email
+          })).unwrap();
         } catch (error) {
-          console.error('Email update failed:', error);
+          console.error('Не удалось обновить email:', error);
           setIsUpdatingEmail(false);
           return;
         }
@@ -73,13 +81,17 @@ export function PersonalDataPage() {
 
       const profileUpdates: Partial<IUser> = {};
       if (data.name !== user.name) profileUpdates.name = data.name;
-      if (data.age !== user.age) profileUpdates.age = data.age;
+      if (age !== user.age) profileUpdates.age = age;  // ← отправляем возраст
+      if (data.birthDate !== user.birthDate) profileUpdates.birthDate = data.birthDate;
       if (data.gender !== user.gender) profileUpdates.gender = data.gender;
       if (data.location !== user.location) profileUpdates.location = data.location;
       if (data.about !== user.about) profileUpdates.about = data.about;
 
       if (Object.keys(profileUpdates).length > 0) {
-        await dispatch(updateCurrentUser({ userId: user.id, data: profileUpdates })).unwrap();
+        await dispatch(updateCurrentUser({
+          userId: user.id,
+          data: profileUpdates
+        })).unwrap();
       }
     },
   });
@@ -91,7 +103,7 @@ export function PersonalDataPage() {
       setValues({
         email: user.email || '',
         name: user.name || '',
-        age: user.age || 0,
+        birthDate: user.birthDate || null,
         gender: user.gender || 'any',
         location: (user.location as TCity) || '' as TCity,
         about: user.about || '',
@@ -127,10 +139,13 @@ export function PersonalDataPage() {
 
     try {
       const avatarUrl = await uploadAvatar(user.id, file);
-      await dispatch(updateCurrentUser({ userId: user.id, data: { avatar: avatarUrl } })).unwrap();
+      await dispatch(updateCurrentUser({
+        userId: user.id,
+        data: { avatar: avatarUrl }
+      })).unwrap();
       URL.revokeObjectURL(preview);
     } catch (error) {
-      console.error('Avatar upload failed:', error);
+      console.error('Не удалось загрузить аватар:', error);
       setAvatarPreview(user.avatar || null);
       alert('Не удалось загрузить аватар. Попробуйте позже.');
     } finally {
@@ -164,6 +179,7 @@ export function PersonalDataPage() {
               </svg>
             }
           />
+
           {/* ---------- Пароль ---------- */}
           <Button
             type="button"
@@ -192,15 +208,20 @@ export function PersonalDataPage() {
 
           {/* ---------- Дата рождения / Пол ---------- */}
           <div className={styles.rowContainer}>
-            <Input
-              type="number"
-              label="Дата рождения"
-              placeholder="Укажите дату вашего рождения"
-              value={formData.age === 0 ? '' : String(formData.age)}
-              onChange={(e) => handleChange('age', e.target.value ? Number(e.target.value) : 0)}
-              error={getError('age')}
-              isValid={isValid('age')}
-              required
+            <DatePicker
+              name="birthDate"
+              placeholder="дд.мм.гггг"
+              startYear={1950}
+              endYear={2026}
+              value={formData.birthDate ? new Date(formData.birthDate) : null}
+              error={getError('birthDate')}
+              onChange={(result) => {
+                if (result.date !== null) {
+                  handleChange('birthDate', result.date);
+                } else {
+                  handleChange('birthDate', null);
+                }
+              }}
             />
             <Select
               type="single"

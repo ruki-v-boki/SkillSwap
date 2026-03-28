@@ -42,6 +42,7 @@ export class MockAuthAPI implements IAuthAPI {
       location: '' as TCity,
       age: 0,
       about: '',
+      birthDate: data.birthDate,
       gender: 'male',
       createdAt: new Date().toISOString(),
       canTeach: {

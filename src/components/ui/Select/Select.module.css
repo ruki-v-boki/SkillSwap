@@ -13,6 +13,7 @@
 .selectContainer {
   position: relative;
   width: 100%;
+  min-width: 160px;
 }
 
 .triggerButton {

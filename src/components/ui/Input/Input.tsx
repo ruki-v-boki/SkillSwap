@@ -5,7 +5,7 @@ import styles from './Input.module.css';
 // ---------------------------------------------------------------
 
 export const Input = forwardRef<HTMLInputElement, InputProps> (({
-  type = 'search',
+  type,
   value,
   placeholder,
   name,

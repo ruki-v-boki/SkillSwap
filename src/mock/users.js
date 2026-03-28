@@ -5,8 +5,10 @@ export const MOCK_USERS = [
     name: 'Алексей',
     location: 'Москва',
     age: 35,
+    birthDate: '1989-03-15',
     about: 'Бизнес-тренер и предприниматель. Помогаю запускать стартапы с нуля.',
     avatar: 'https://i.pinimg.com/736x/bf/00/bd/bf00bd9059e7878787893fa3e174bffd.jpg',
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-03-15T10:30:00Z',
     canTeach: {
@@ -28,8 +30,10 @@ export const MOCK_USERS = [
     name: 'Екатерина',
     location: 'Санкт-Петербург',
     age: 32,
+    birthDate: '1992-05-22',
     about: 'Project Manager в IT. Обучаю проектному управлению и Agile.',
     avatar: 'https://i.pinimg.com/videos/thumbnails/originals/a0/a0/a9/a0a0a92d972e0891c1662fe3cc97ddac.0000000.jpg',
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-05-22T14:45:00Z',
     canTeach: {
@@ -53,8 +57,10 @@ export const MOCK_USERS = [
     name: 'Дмитрий',
     location: 'Новосибирск',
     age: 29,
+    birthDate: '1995-07-10',
     about: 'Эксперт по тайм-менеджменту и личной эффективности.',
     avatar: 'https://img.freepik.com/free-photo/adorable-cat-lifestyle_23-2151593350.jpg?semt=ais_hybrid&w=740',
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-07-10T09:15:00Z',
     canTeach: {
@@ -74,8 +80,10 @@ export const MOCK_USERS = [
     name: 'Наталья',
     location: 'Казань',
     age: 31,
+    birthDate: '1993-09-05',
     about: 'HR-специалист. Помогаю с резюме и подготовкой к собеседованиям.',
     avatar: 'https://i.ytimg.com/vi/BDT3cHRyvCU/oardefault.jpg?sqp=-oaymwEkCJUDENAFSFqQAgHyq4qpAxMIARUAAAAAJQAAyEI9AICiQ3gB&amp;rs=AOn4CLAnDwX5phD_QwN4FM0Yq0fL-6abAg',
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-09-05T16:20:00Z',
     canTeach: {
@@ -96,8 +104,10 @@ export const MOCK_USERS = [
     name: 'Максим',
     location: 'Краснодар',
     age: 28,
+    birthDate: '1996-11-18',
     about: 'Специалист по личному бренду и SMM.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-11-18T11:30:00Z',
     canTeach: {
@@ -117,8 +127,10 @@ export const MOCK_USERS = [
     name: 'Ирина',
     location: 'Екатеринбург',
     age: 34,
+    birthDate: '1990-01-12',
     about: 'Эксперт по продажам и переговорам. Тренирую навыки убеждения.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-01-12T13:40:00Z',
     canTeach: {
@@ -138,8 +150,10 @@ export const MOCK_USERS = [
     name: 'Павел',
     location: 'Ростов-на-Дону',
     age: 37,
+    birthDate: '1987-03-28',
     about: 'Директор по маркетингу. Обучаю стратегиям продвижения.',
     avatar: 'https://i.pinimg.com/736x/bf/00/bd/bf00bd9059e7878787893fa3e174bffd.jpg',
+    likedBy: [],
     gender: 'male',
     createdAt: '2025-03-28T08:50:00Z',
     canTeach: {
@@ -161,8 +175,10 @@ export const MOCK_USERS = [
     name: 'Анна',
     location: 'Нижний Новгород',
     age: 33,
+    birthDate: '1991-06-14',
     about: 'Team Lead с опытом управления распределенными командами.',
     avatar: 'https://i.pinimg.com/videos/thumbnails/originals/a0/a0/a9/a0a0a92d972e0891c1662fe3cc97ddac.0000000.jpg',
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-06-14T17:25:00Z',
     canTeach: {
@@ -183,8 +199,10 @@ export const MOCK_USERS = [
     name: 'Виктория',
     location: 'Москва',
     age: 27,
+    birthDate: '1997-04-02',
     about: 'Художник-иллюстратор. Работаю в digital и традиционных техниках.',
     avatar: 'https://img.freepik.com/free-photo/adorable-cat-lifestyle_23-2151593350.jpg?semt=ais_hybrid&w=740',
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-04-02T12:10:00Z',
     canTeach: {
@@ -205,8 +223,10 @@ export const MOCK_USERS = [
     name: 'Сергей',
     location: 'Санкт-Петербург',
     age: 31,
+    birthDate: '1993-06-19',
     about: 'Профессиональный фотограф. Специализация - портрет и предметка.',
     avatar: 'https://i.ytimg.com/vi/BDT3cHRyvCU/oardefault.jpg?sqp=-oaymwEkCJUDENAFSFqQAgHyq4qpAxMIARUAAAAAJQAAyEI9AICiQ3gB&amp;rs=AOn4CLAnDwX5phD_QwN4FM0Yq0fL-6abAg',
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-06-19T15:05:00Z',
     canTeach: {
@@ -227,8 +247,10 @@ export const MOCK_USERS = [
     name: 'Кирилл',
     location: 'Казань',
     age: 26,
+    birthDate: '1998-08-24',
     about: 'Видеомонтажер. Работаю в Adobe Premiere Pro и DaVinci Resolve.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-08-24T10:35:00Z',
     canTeach: {
@@ -248,8 +270,10 @@ export const MOCK_USERS = [
     name: 'Алина',
     location: 'Новосибирск',
     age: 24,
+    birthDate: '2000-11-07',
     about: 'Музыкант и вокалистка. Обучаю игре на гитаре и вокалу.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-11-07T19:50:00Z',
     canTeach: {
@@ -271,8 +295,10 @@ export const MOCK_USERS = [
     name: 'Дарья',
     location: 'Екатеринбург',
     age: 29,
+    birthDate: '1995-01-30',
     about: 'Актриса театра и кино. Преподаю актерское мастерство и сценическую речь.',
     avatar: 'https://i.pinimg.com/736x/bf/00/bd/bf00bd9059e7878787893fa3e174bffd.jpg',
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-01-30T14:15:00Z',
     canTeach: {
@@ -292,8 +318,10 @@ export const MOCK_USERS = [
     name: 'Егор',
     location: 'Красноярск',
     age: 30,
+    birthDate: '1994-04-12',
     about: 'Писатель и копирайтер. Обучаю креативному письму и сторителлингу.',
     avatar: 'https://i.pinimg.com/videos/thumbnails/originals/a0/a0/a9/a0a0a92d972e0891c1662fe3cc97ddac.0000000.jpg',
+    likedBy: [],
     gender: 'male',
     createdAt: '2025-04-12T09:40:00Z',
     canTeach: {
@@ -313,8 +341,10 @@ export const MOCK_USERS = [
     name: 'Ольга',
     location: 'Воронеж',
     age: 35,
+    birthDate: '1989-06-25',
     about: 'Арт-терапевт. Помогаю через творчество справляться со стрессом.',
     avatar: 'https://img.freepik.com/free-photo/adorable-cat-lifestyle_23-2151593350.jpg?semt=ais_hybrid&w=740',
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-06-25T18:20:00Z',
     canTeach: {
@@ -334,8 +364,10 @@ export const MOCK_USERS = [
     name: 'Татьяна',
     location: 'Самара',
     age: 28,
+    birthDate: '1996-09-08',
     about: 'Мастер hand-made. Создаю декор и учу DIY.',
     avatar: 'https://i.ytimg.com/vi/BDT3cHRyvCU/oardefault.jpg?sqp=-oaymwEkCJUDENAFSFqQAgHyq4qpAxMIARUAAAAAJQAAyEI9AICiQ3gB&amp;rs=AOn4CLAnDwX5phD_QwN4FM0Yq0fL-6abAg',
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-09-08T11:55:00Z',
     canTeach: {
@@ -357,8 +389,10 @@ export const MOCK_USERS = [
     name: 'Елена',
     location: 'Москва',
     age: 29,
+    birthDate: '1995-02-14',
     about: 'Преподаватель английского с опытом 7 лет. Готовлю к IELTS.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-02-14T08:30:00Z',
     canTeach: {
@@ -378,8 +412,10 @@ export const MOCK_USERS = [
     name: 'Марина',
     location: 'Санкт-Петербург',
     age: 32,
+    birthDate: '1992-04-27',
     about: 'Переводчик и преподаватель французского. Жила во Франции.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-04-27T13:20:00Z',
     canTeach: {
@@ -400,8 +436,10 @@ export const MOCK_USERS = [
     name: 'Карлос',
     location: 'Казань',
     age: 34,
+    birthDate: '1990-07-03',
     about: 'Носитель испанского языка. Преподаю испанский и латиноамериканскую культуру.',
     avatar: 'https://i.pinimg.com/736x/bf/00/bd/bf00bd9059e7878787893fa3e174bffd.jpg',
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-07-03T10:45:00Z',
     canTeach: {
@@ -422,8 +460,10 @@ export const MOCK_USERS = [
     name: 'Анна',
     location: 'Новосибирск',
     age: 27,
+    birthDate: '1997-09-15',
     about: 'Преподаватель немецкого языка. Готовлю к Goethe-Zertifikat.',
     avatar: 'https://i.pinimg.com/videos/thumbnails/originals/a0/a0/a9/a0a0a92d972e0891c1662fe3cc97ddac.0000000.jpg',
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-09-15T16:35:00Z',
     canTeach: {
@@ -442,8 +482,10 @@ export const MOCK_USERS = [
     name: 'Иван',
     location: 'Владивосток',
     age: 30,
+    birthDate: '1994-12-01',
     about: 'Китаист. Жил в Пекине 3 года. Обучаю разговорному китайскому.',
     avatar: 'https://img.freepik.com/free-photo/adorable-cat-lifestyle_23-2151593350.jpg?semt=ais_hybrid&w=740',
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-12-01T12:15:00Z',
     canTeach: {
@@ -465,8 +507,10 @@ export const MOCK_USERS = [
     name: 'Юлия',
     location: 'Екатеринбург',
     age: 26,
+    birthDate: '1998-02-18',
     about: 'Японист. Преподаю японский язык и готовлю к JLPT.',
     avatar: 'https://i.ytimg.com/vi/BDT3cHRyvCU/oardefault.jpg?sqp=-oaymwEkCJUDENAFSFqQAgHyq4qpAxMIARUAAAAAJQAAyEI9AICiQ3gB&amp;rs=AOn4CLAnDwX5phD_QwN4FM0Yq0fL-6abAg',
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-02-18T19:10:00Z',
     canTeach: {
@@ -487,8 +531,10 @@ export const MOCK_USERS = [
     name: 'Майкл',
     location: 'Москва',
     age: 38,
+    birthDate: '1986-05-09',
     about: 'Носитель английского. Эксперт по подготовке к TOEFL и IELTS.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
+    likedBy: [],
     gender: 'male',
     createdAt: '2025-05-09T14:50:00Z',
     canTeach: {
@@ -513,8 +559,10 @@ export const MOCK_USERS = [
     name: 'Светлана',
     location: 'Москва',
     age: 36,
+    birthDate: '1988-03-08',
     about: 'Коуч и психолог. Помогаю в личностном развитии и самореализации.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-03-08T11:25:00Z',
     canTeach: {
@@ -534,8 +582,10 @@ export const MOCK_USERS = [
     name: 'Николай',
     location: 'Санкт-Петербург',
     age: 29,
+    birthDate: '1995-05-30',
     about: 'Специалист по эффективному обучению. Помогаю учиться быстрее.',
     avatar: 'https://i.pinimg.com/736x/bf/00/bd/bf00bd9059e7878787893fa3e174bffd.jpg',
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-05-30T17:45:00Z',
     canTeach: {
@@ -556,8 +606,10 @@ export const MOCK_USERS = [
     name: 'Евгения',
     location: 'Казань',
     age: 33,
+    birthDate: '1991-08-11',
     about: 'Нейропсихолог. Обучаю когнитивным техникам и мнемотехнике.',
     avatar: 'https://i.pinimg.com/videos/thumbnails/originals/a0/a0/a9/a0a0a92d972e0891c1662fe3cc97ddac.0000000.jpg',
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-08-11T09:55:00Z',
     canTeach: {
@@ -576,8 +628,10 @@ export const MOCK_USERS = [
     name: 'Артем',
     location: 'Новосибирск',
     age: 31,
+    birthDate: '1993-10-22',
     about: 'Тренер по скорочтению и развитию памяти.',
     avatar: 'https://img.freepik.com/free-photo/adorable-cat-lifestyle_23-2151593350.jpg?semt=ais_hybrid&w=740',
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-10-22T14:30:00Z',
     canTeach: {
@@ -598,8 +652,10 @@ export const MOCK_USERS = [
     name: 'Тамара',
     location: 'Екатеринбург',
     age: 45,
+    birthDate: '1979-01-05',
     about: 'Педагог с 20-летним стажем. Обучаю методикам преподавания.',
     avatar: 'https://i.ytimg.com/vi/BDT3cHRyvCU/oardefault.jpg?sqp=-oaymwEkCJUDENAFSFqQAgHyq4qpAxMIARUAAAAAJQAAyEI9AICiQ3gB&amp;rs=AOn4CLAnDwX5phD_QwN4FM0Yq0fL-6abAg',
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-01-05T12:40:00Z',
     canTeach: {
@@ -619,8 +675,10 @@ export const MOCK_USERS = [
     name: 'Роман',
     location: 'Краснодар',
     age: 39,
+    birthDate: '1985-03-19',
     about: 'Профессиональный коуч (ICF). Помогаю в достижении целей.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
+    likedBy: [],
     gender: 'male',
     createdAt: '2025-03-19T16:15:00Z',
     canTeach: {
@@ -642,8 +700,10 @@ export const MOCK_USERS = [
     name: 'Надежда',
     location: 'Москва',
     age: 42,
+    birthDate: '1982-04-09',
     about: 'Эксперт по организации пространства. Помогаю с уборкой и систематизацией.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-04-09T10:20:00Z',
     canTeach: {
@@ -664,8 +724,10 @@ export const MOCK_USERS = [
     name: 'Виктор',
     location: 'Санкт-Петербург',
     age: 38,
+    birthDate: '1986-06-25',
     about: 'Финансовый консультант. Обучаю управлению личными финансами.',
     avatar: 'https://i.pinimg.com/736x/bf/00/bd/bf00bd9059e7878787893fa3e174bffd.jpg',
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-06-25T15:50:00Z',
     canTeach: {
@@ -684,8 +746,10 @@ export const MOCK_USERS = [
     name: 'Мария',
     location: 'Казань',
     age: 31,
+    birthDate: '1993-09-13',
     about: 'Шеф-повар. Обучаю приготовлению блюд разных кухонь мира.',
     avatar: 'https://i.pinimg.com/videos/thumbnails/originals/a0/a0/a9/a0a0a92d972e0891c1662fe3cc97ddac.0000000.jpg',
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-09-13T18:05:00Z',
     canTeach: {
@@ -707,8 +771,10 @@ export const MOCK_USERS = [
     name: 'Елена',
     location: 'Новосибирск',
     age: 29,
+    birthDate: '1995-11-28',
     about: 'Ботаник и коллекционер редких растений.',
     avatar: 'https://img.freepik.com/free-photo/adorable-cat-lifestyle_23-2151593350.jpg?semt=ais_hybrid&w=740',
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-11-28T13:30:00Z',
     canTeach: {
@@ -728,8 +794,10 @@ export const MOCK_USERS = [
     name: 'Григорий',
     location: 'Екатеринбург',
     age: 45,
+    birthDate: '1979-02-10',
     about: 'Мастер на все руки. Помогаю с ремонтом и строительством.',
     avatar: 'https://i.ytimg.com/vi/BDT3cHRyvCU/oardefault.jpg?sqp=-oaymwEkCJUDENAFSFqQAgHyq4qpAxMIARUAAAAAJQAAyEI9AICiQ3gB&amp;rs=AOn4CLAnDwX5phD_QwN4FM0Yq0fL-6abAg',
+    likedBy: [],
     gender: 'male',
     createdAt: '2025-02-10T11:40:00Z',
     canTeach: {
@@ -748,8 +816,10 @@ export const MOCK_USERS = [
     name: 'Алиса',
     location: 'Краснодар',
     age: 27,
+    birthDate: '1997-04-18',
     about: 'Организатор пространства. Помогаю с хранением вещей и зонированием.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-04-18T09:25:00Z',
     canTeach: {
@@ -771,8 +841,10 @@ export const MOCK_USERS = [
     name: 'Ирина',
     location: 'Москва',
     age: 34,
+    birthDate: '1990-03-21',
     about: 'Инструктор по йоге и медитации. Провожу ретриты.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-03-21T08:55:00Z',
     canTeach: {
@@ -793,8 +865,10 @@ export const MOCK_USERS = [
     name: 'Денис',
     location: 'Санкт-Петербург',
     age: 33,
+    birthDate: '1991-05-17',
     about: 'Нутрициолог. Помогаю выстроить здоровое питание.',
     avatar: 'https://i.pinimg.com/736x/bf/00/bd/bf00bd9059e7878787893fa3e174bffd.jpg',
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-05-17T14:35:00Z',
     canTeach: {
@@ -814,8 +888,10 @@ export const MOCK_USERS = [
     name: 'Антон',
     location: 'Казань',
     age: 36,
+    birthDate: '1988-07-29',
     about: 'Психолог-консультант. Помогаю с ментальным здоровьем и выгоранием.',
     avatar: 'https://i.pinimg.com/videos/thumbnails/originals/a0/a0/a9/a0a0a92d972e0891c1662fe3cc97ddac.0000000.jpg',
+    likedBy: [],
     gender: 'male',
     createdAt: '2024-07-29T19:45:00Z',
     canTeach: {
@@ -836,8 +912,10 @@ export const MOCK_USERS = [
     name: 'Ксения',
     location: 'Новосибирск',
     age: 30,
+    birthDate: '1994-10-11',
     about: 'Преподаватель осознанности и медитации. Практикую майндфулнес.',
     avatar: 'https://img.freepik.com/free-photo/adorable-cat-lifestyle_23-2151593350.jpg?semt=ais_hybrid&w=740',
+    likedBy: [],
     gender: 'female',
     createdAt: '2024-10-11T12:10:00Z',
     canTeach: {
@@ -847,7 +925,7 @@ export const MOCK_USERS = [
       customName: 'Майндфулнес'
     },
     wantToLearn: [
-      { id: 'learn138', categoryId: 'languages', subcategoryId: 'chiniese' },
+      { id: 'learn138', categoryId: 'languages', subcategoryId: 'chinese' },
       { id: 'learn139', categoryId: 'creativity', subcategoryId: 'drawing' }
     ]
   },
@@ -856,8 +934,10 @@ export const MOCK_USERS = [
     name: 'Максим',
     location: 'Екатеринбург',
     age: 29,
+    birthDate: '1995-01-22',
     about: 'Фитнес-тренер. Специализация - функциональный тренинг.',
     avatar: 'https://i.ytimg.com/vi/BDT3cHRyvCU/oardefault.jpg?sqp=-oaymwEkCJUDENAFSFqQAgHyq4qpAxMIARUAAAAAJQAAyEI9AICiQ3gB&amp;rs=AOn4CLAnDwX5phD_QwN4FM0Yq0fL-6abAg',
+    likedBy: [],
     gender: 'male',
     createdAt: '2025-01-22T17:30:00Z',
     canTeach: {
@@ -878,8 +958,10 @@ export const MOCK_USERS = [
     name: 'Евгения',
     location: 'Сочи',
     age: 32,
+    birthDate: '1992-04-04',
     about: 'Сомнолог. Помогаю наладить сон и восстановление.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-04-04T15:20:00Z',
     canTeach: {
@@ -899,8 +981,10 @@ export const MOCK_USERS = [
     name: 'Анастасия',
     location: 'Москва',
     age: 35,
+    birthDate: '1989-06-30',
     about: 'Коуч по балансу жизни и работы. Помогаю найти гармонию.',
     avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
+    likedBy: [],
     gender: 'female',
     createdAt: '2025-06-30T10:50:00Z',
     canTeach: {
@@ -914,49 +998,6 @@ export const MOCK_USERS = [
       { id: 'learn148', categoryId: 'creativity', subcategoryId: 'music' },
       { id: 'learn149', categoryId: 'languages', subcategoryId: 'english' },
       { id: 'learn150', categoryId: 'home', subcategoryId: 'cooking' }
-    ]
-  },
-  {
-    id: 'user43',
-    name: 'Анна К.',
-    location: 'Москва',
-    age: 35,
-    about: 'Коуч по балансу жизни и работы. Помогаю найти гармонию.',
-    avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    gender: 'female',
-    createdAt: '2025-06-30T10:50:00Z',
-    canTeach: {
-      id: 'skill43',
-      categoryId: 'health',
-      subcategoryId: 'work-life-balance',
-      customName: 'Баланс'
-    },
-    wantToLearn: [
-      { id: 'learn151', categoryId: 'education', subcategoryId: 'coaching' },
-      { id: 'learn152', categoryId: 'creativity', subcategoryId: 'music' },
-      { id: 'learn153', categoryId: 'languages', subcategoryId: 'spanish' }
-    ]
-  },
-  {
-    id: 'user44',
-    name: 'Елизавета',
-    location: 'Москва',
-    age: 35,
-    about: 'Коуч по балансу жизни и работы. Помогаю найти гармонию.',
-    avatar: 'https://i.ytimg.com/vi/hgU4ApVb01Y/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGGUgZShlMA8=&amp;rs=AOn4CLC_o8Xi1YeWj2W7qoVSmCjcEWpPEw',
-    gender: 'female',
-    createdAt: '2025-06-30T10:50:00Z',
-    canTeach: {
-      id: 'skill44',
-      categoryId: 'health',
-      subcategoryId: 'work-life-balance',
-      customName: 'Баланс'
-    },
-    wantToLearn: [
-      { id: 'learn154', categoryId: 'education', subcategoryId: 'coaching' },
-      { id: 'learn155', categoryId: 'creativity', subcategoryId: 'drawing' },
-      { id: 'learn156', categoryId: 'home', subcategoryId: 'plants' },
-      { id: 'learn157', categoryId: 'languages', subcategoryId: 'french' }
     ]
   }
 ];

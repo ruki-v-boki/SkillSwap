@@ -14,6 +14,7 @@ export type SupabaseProfile = {
   name: string;
   location: TCity;
   age: number;
+  birth_date: string | null;
   about: string;
   gender: TGender;
   avatar_url: string | null;
@@ -47,6 +48,7 @@ export const transformToIUser = (
     name: supabaseUser.name,
     location: supabaseUser.location,
     age: supabaseUser.age,
+    birthDate: supabaseUser.birth_date || null,
     about: supabaseUser.about,
     gender: supabaseUser.gender,
     createdAt: supabaseUser.created_at,

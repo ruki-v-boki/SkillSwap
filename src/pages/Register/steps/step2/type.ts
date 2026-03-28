@@ -7,6 +7,7 @@ export type Step2FormProps = {
       avatar?: { file: File; preview: string } | null;
       name?: string;
       age?: number;
+      birthDate?: string | null;
       gender?: TGender;
       location?: TCity;
       selectedCategories?: string[];
@@ -16,6 +17,7 @@ export type Step2FormProps = {
       avatar?: { file: File; preview: string } | null;
       name: string;
       age: number;
+      birthDate: string | null;
       gender: TGender;
       location: TCity;
       selectedCategories: string[];

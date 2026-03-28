@@ -26,7 +26,6 @@ export class SupabaseAuthAPI {
     });
 
     if (error) {
-      console.log('Ошибка входа:', error);
       throw new Error(error.message)
     };
 
@@ -54,7 +53,7 @@ export class SupabaseAuthAPI {
     });
 
     if (signUpError) throw new Error(signUpError.message);
-    if (!authData.user) throw new Error('Registration failed');
+    if (!authData.user) throw new Error('Регистрация не удалась :(');
 
     const userId = authData.user.id;
 
@@ -64,7 +63,7 @@ export class SupabaseAuthAPI {
       try {
         avatarUrl = await this.uploadAvatar(userId, data.avatar.file);
       } catch (uploadError) {
-        console.error('Avatar upload failed:', uploadError);
+        console.error('Ошибка загрузки аватара:', uploadError);
       }
     }
 
@@ -77,6 +76,7 @@ export class SupabaseAuthAPI {
         name: data.name,
         location: data.location || '',
         age: data.age || 0,
+        birth_date: data.birthDate || null,
         gender: data.gender || 'any',
         avatar_url: avatarUrl,
       });
@@ -89,7 +89,7 @@ export class SupabaseAuthAPI {
       try {
         imageUrls = await this.uploadImages(userId, data.canTeach.images);
       } catch (uploadError) {
-        console.error('Image upload failed:', uploadError);
+        console.error('Ошибка загрузки изображений:', uploadError);
       }
     }
 
@@ -149,13 +149,13 @@ export class SupabaseAuthAPI {
     }
   }
 
-// --------------- Get User ---------------
+// --------------- Get User Profile ---------------
 
   async getUserProfile(userId: string): Promise<IUser> {
     // Получаем данные пользователя
     const { data: userData, error: userError } = await supabase
       .from('users')
-      .select('id, email, name, location, age, about, gender, avatar_url, liked_by, created_at')
+      .select('id, email, name, location, age, birth_date, about, gender, avatar_url, liked_by, created_at')
       .eq('id', userId)
       .maybeSingle()
 
@@ -200,6 +200,7 @@ export class SupabaseAuthAPI {
         name: data.name,
         location: data.location,
         age: data.age,
+        birth_date: data.birthDate,
         about: data.about,
         gender: data.gender,
         avatar_url: data.avatar,
@@ -212,7 +213,8 @@ export class SupabaseAuthAPI {
     return this.getUserProfile(userId);
   }
 
-// --------------- Avatar ---------------
+
+// --------------- Upload Avatar ---------------
 
   private async uploadAvatar(userId: string, file: File): Promise<string> {
     const fileName = `${userId}/avatar_${Date.now()}_${file.name}`;
@@ -235,7 +237,7 @@ export class SupabaseAuthAPI {
     return urlData.publicUrl;
   }
 
-// --------------- Images ---------------
+// --------------- Upload Images ---------------
 
   private async uploadImages(userId: string, files: File[]): Promise<string[]> {
     const urls: string[] = [];

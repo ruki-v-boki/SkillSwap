@@ -29,7 +29,7 @@ export function LoginPage() {
         await dispatch(login(data)).unwrap();
         navigate('/profile');
       } catch (err) {
-        console.error('Ошибка входа:', err);
+        console.error('Ошибка входа', err);
       }
   };
 

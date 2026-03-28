@@ -1,0 +1,215 @@
+.datePickerContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.label {
+  color: var(--color-text);
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* ---------------------------------------------- */
+.dateInput {
+  width: 100%;
+  min-width: 160px;
+  min-height: 48px;
+  border: none;
+  border-radius: var(--radius-button);
+  padding: 12px 20px;
+  box-shadow: var(--box-shadow);
+  outline: 1px solid var(--color-caption);
+  color: var(--color-text);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.dateInput.error {
+  outline: 1px solid var(--color-error);
+}
+
+.dateInput.hasValue {
+  outline: 1px solid var(--color-accent);
+}
+
+.dateInput.disabled {
+  opacity: 0.6;
+  background-color: var(--color-disabled);
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------- */
+.calendarIcon {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  padding: 0;
+  color: var(--color-text);
+}
+
+.calendarIcon:disabled {
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------- */
+.errorMessage {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  display: flex;
+  width: 100%;
+  color: var(--color-error);
+  font-size: 12px;
+  text-wrap: nowrap;
+}
+
+/* ---------------------------------------------- */
+.calendarPopover {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  z-index: 10;
+  min-width: 280px;
+  border-radius: var(--radius-button);
+  padding: 24px 16px 16px 16px;
+  box-shadow: var(--box-shadow-smooth);
+  outline: 1px solid var(--color-caption);
+  background-color: var(--color-input);
+}
+
+/* ---------------------------------------------- */
+.selectors {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.selectWrapper {
+  position: relative;
+  display: flex;
+}
+
+.select {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  color: var(--color-text);
+  text-align: center;
+  transition: all 0.2s;
+  cursor: pointer;
+  appearance: none;
+}
+
+.selectArrow {
+  color: var(--color-text);
+  pointer-events: none;
+}
+
+.option {
+  padding: 0;
+  text-align: end;
+}
+
+/* ---------------------------------------------- */
+.weekDays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 16px 12px 8px;
+  text-align: center;
+}
+
+.weekDay {
+  color: var(--color-text-link);
+}
+
+/* ---------------------------------------------- */
+.daysGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  padding-inline: 12px;
+}
+
+/* ---------------------------------------------- */
+.dayButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 50%;
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: 12px;
+  background: none;
+  transition: all 0.2s;
+  cursor: pointer;
+  aspect-ratio: 1;
+}
+
+.dayButton:hover:not(.selected) {
+  background-color: var(--color-button-hover);
+}
+
+.dayButton:active {
+  background-color: var(--color-accent);
+}
+
+.dayButton.selected {
+  color: var(--color-text);
+  background-color: var(--color-accent);
+}
+
+.dayButton.today {
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+.dayButton.otherMonth {
+  opacity: 0.5;
+  color: var(--color-caption);
+}
+
+.dayButton.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------- */
+.actionButtons {
+  display: flex;
+  gap: 8px;
+  padding-top: 16px;
+}
+
+/* ---------------------------------------------- */
+@media (max-width: 480px) {
+  .calendarPopover {
+    position: fixed;
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+    padding: 20px;
+    transform: translateY(0);
+  }
+
+  .selectors {
+    gap: 8px;
+  }
+
+  .actionButtons {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+}

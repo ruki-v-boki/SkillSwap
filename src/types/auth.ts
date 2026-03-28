@@ -25,6 +25,7 @@ export type RegisterData = {
   avatar?: AvatarInput | null;        // ← File для загрузки
   name: string;
   age: number;
+  birthDate: string | null;
   gender: TGender;
   location: TCity;
   wantToLearn: Omit<WantToLearnSkill, 'id'>[];

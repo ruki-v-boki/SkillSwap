@@ -15,6 +15,7 @@ export type IUser = {
   name: string;
   location: TCity;
   age: number;
+  birthDate: string | null;
   about: string;
   gender: TGender;
   createdAt: string;

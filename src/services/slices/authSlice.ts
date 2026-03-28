@@ -29,9 +29,31 @@ export const checkAuth = createAsyncThunk(
   async () => {
     try {
       const { data: { session } } = await supabase.auth.getSession();
-      if (session?.user) return session.user.id;
+      if (session?.user) {
+        const userId = session.user.id;
+
+        const { data: profile, error } = await supabase
+          .from('users')
+          .select('id')
+          .eq('id', userId)
+          .maybeSingle();
+        console.error('Ошибка проверки авторизации', error)
+
+        if (!profile) {
+          await supabase.auth.signOut();
+
+          // Очищаем localStorage на всякий случай
+          localStorage.removeItem('token');
+          localStorage.removeItem('userId');
+          
+          return null;
+        }
+
+        return userId;
+      }
     } catch (error) {
       console.error('Check auth error:', error);
+      await supabase.auth.signOut();
     }
     return null;
   }

@@ -16,6 +16,7 @@ const baseInitialState = {
     avatar: null as AvatarInput | null,
     name: '',
     age: 0,
+    birthDate: null,
     gender: 'any' as TGender,
     location: '' as TCity,
     selectedCategories: [] as string[],
@@ -69,7 +70,10 @@ const saveToLocalStorage = (state: Omit<RegisterState, 'isLoading' | 'error'>) =
   try {
     const toSave = {
       step1: state.step1,
-      step2: state.step2,
+      step2: {
+        ...state.step2,
+        avatar: null,
+      },
       step3: {
         canTeach: {
           categoryId: state.step3.canTeach.categoryId,
@@ -83,7 +87,7 @@ const saveToLocalStorage = (state: Omit<RegisterState, 'isLoading' | 'error'>) =
     };
     localStorage.setItem('registerForm', JSON.stringify(toSave));
   } catch (error) {
-    console.error('Failed to save register state:', error);
+    console.error('Не удалось сохранить данные регистрации:', error);
   }
 };
 
@@ -97,6 +101,11 @@ const loadInitialState = (): Omit<RegisterState, 'isLoading' | 'error'> => {
       return {
         ...baseInitialState,
         ...parsed,
+        step2: {
+          ...baseInitialState.step2,
+          ...parsed.step2,
+          avatar: null,
+        },
         step3: {
           canTeach: {
             ...baseInitialState.step3.canTeach,
@@ -107,7 +116,7 @@ const loadInitialState = (): Omit<RegisterState, 'isLoading' | 'error'> => {
       };
     }
   } catch (error) {
-    console.error('Failed to load register state:', error);
+    console.error('Не удалось загрузить данные регистрации:', error);
   }
   return baseInitialState;
 };
@@ -237,6 +246,7 @@ export const selectRegisterData = (state: RootState): RegisterData => {
     avatar: step2.avatar,
     name: step2.name,
     age: step2.age,
+    birthDate: step2.birthDate,
     gender: step2.gender,
     location: step2.location,
     wantToLearn: step2.wantToLearn,

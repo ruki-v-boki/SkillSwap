@@ -142,7 +142,7 @@ export function LoginForm({
           rightIcon={<PasswordToggle onToggle={setShowPassword} />}
         />
 
-        {loginError && <div className={styles.errorFormMessage}>Ошибка входа: {loginError}</div>}
+        {loginError && <div className={styles.errorFormMessage}>Похоже, вы ещё не зарегистрированы</div>}
 
         {variant === 'loginPage' ? (
           <AuthButtonsUI
