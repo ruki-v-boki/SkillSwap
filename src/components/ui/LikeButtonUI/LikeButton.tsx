@@ -1,4 +1,4 @@
-import likeActive from '@/assets/icons/likeActive.svg';
+import likeActive from '@/assets/icons/LikeActive.svg';
 import type { LikeButtonUIProps } from './type';
 import styles from './LikeButton.module.css';
 import like from '@/assets/icons/like.svg';

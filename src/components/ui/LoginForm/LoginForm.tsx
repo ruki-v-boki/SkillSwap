@@ -1,6 +1,6 @@
-import googleIcon from '@/assets/icons/google.svg';
+import googleIcon from '@/assets/icons/Google.svg';
 import { PasswordToggle } from './PasswordToggle';
-import appleIcon from '@/assets/icons/apple.svg';
+import appleIcon from '@/assets/icons/Apple.svg';
 import { AuthButtonsUI } from '../AuthButtons';
 import type { LoginFormProps } from './type';
 import styles from './LoginForm.module.css';
