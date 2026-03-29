@@ -113,7 +113,11 @@ export function CardUI({
       <header className={styles.header}>
         <div className={styles.userBox}>
           <div className={styles.imageBox}>
-            <img className={styles.avatar} src={user.avatar} alt={user.name} />
+            <img
+              className={styles.avatar}
+              src={user.avatar}
+              alt={user.name}
+            />
           </div>
 
           <div className={styles.userInfoBox}>
@@ -133,9 +137,13 @@ export function CardUI({
               onClick={handleLikeClick}
               disabled={isPending}
             />
+
             {rating > 0 && (
-              <span className="h-caption">{rating}</span>
+              <span className="h-caption">
+                {rating}
+              </span>
             )}
+
           </div>
         )}
       </header>

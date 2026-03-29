@@ -1,14 +1,14 @@
 import { selectAllUsers, toggleLike } from '@/services/slices/userSlice';
+import { selectExchangeLoading } from '@/services/slices/exchangeSlice';
 import { SocialButtonsUI } from '@/components/ui/SocialButtons';
 import { OfferDetailsUI } from '@/components/ui/OfferDetails';
-import { selectUserId } from '@/services/slices/authSlice';
 import { useDispatch, useSelector } from '@/services/store';
-import { SliderUI } from '@/components/ui/Slider';
-import { CardUI } from '@/components/ui/Card';
+import { selectUserId } from '@/services/slices/authSlice';
 import { useNavigate, useParams } from 'react-router-dom';
+import { SliderUI } from '@/components/ui/Slider';
+import { Loader } from '@/components/ui/Loader';
+import { CardUI } from '@/components/ui/Card';
 import styles from './OfferPage.module.css';
-import { NotFoundPage } from '../Error';
-import { useState } from 'react';
 
 // ---------------------------------------------------------------
 
@@ -16,12 +16,21 @@ export function OfferPage() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { id } = useParams();
+
   const allUsers = useSelector(selectAllUsers);
   const currentUserId = useSelector(selectUserId);
-  const { id } = useParams();
-  const user = allUsers.find(u => u.id === id);
-  const [isPending, setIsPending] = useState(false);
-  const isLiked = currentUserId ? user?.likedBy?.includes(currentUserId) || false : false;
+  const isExchangeLoading = useSelector(selectExchangeLoading);
+
+  const offerAuthor = allUsers.find(author => author.id === id);
+  const isLiked = currentUserId ? offerAuthor?.likedBy?.includes(currentUserId) || false : false;
+
+// ---------------------------------------------------------------
+
+  const similarUsers = allUsers.filter(u =>
+    u.id !== offerAuthor?.id &&
+    u.canTeach?.categoryId === offerAuthor?.canTeach?.categoryId
+  );
 
 // ---------------------------------------------------------------
 
@@ -33,32 +42,22 @@ export function OfferPage() {
       return;
     }
 
-    if (!user?.id || isPending) return;
+    if (!offerAuthor?.id || isExchangeLoading) return;
 
-    setIsPending(true);
     try {
       await dispatch(toggleLike({
         currentUserId,
-        targetUserId: user.id,
+        targetUserId: offerAuthor.id,
       })).unwrap();
     } catch (error) {
-      console.error('Failed to toggle like:', error);
-    } finally {
-      setIsPending(false);
-    }
-  };
+      console.error('Не удалось переключить лайк:', error);
+    };
+  }
 
 // ---------------------------------------------------------------
 
-  const similarUsers = allUsers.filter(u =>
-    u.id !== user?.id &&
-    u.canTeach?.categoryId === user?.canTeach?.categoryId
-  );
-
-// ---------------------------------------------------------------
-
-  if (!user) {
-    return <NotFoundPage />
+  if (!offerAuthor) {
+    return <Loader />
   }
 
 // ---------------------------------------------------------------
@@ -67,11 +66,14 @@ export function OfferPage() {
     <div className={styles.offerPageContainer}>
 
       <main className={styles.offerSection}>
-        <div className={styles.offerCardWrapper}>
-          <CardUI user={user} styleType='profile' onCardClick={()=>{}}/>
-        </div>
+        <section className={styles.offerCardWrapper}>
+          <CardUI
+            user={offerAuthor}
+            styleType='profile'
+          />
+        </section>
 
-        <div className={styles.offerDetailsWrapper}>
+        <section className={styles.offerDetailsWrapper}>
           <SocialButtonsUI
             onFavoriteClick={handleFavoriteClick}
             isLiked={isLiked}
@@ -79,17 +81,27 @@ export function OfferPage() {
             onMoreClick={() => console.log('more button clicked')}
             className={styles.socials}
           />
-          <OfferDetailsUI user={user} variant='offerPage' />
-        </div>
+          <OfferDetailsUI
+            user={offerAuthor}
+            variant='offerPage'
+          />
+        </section>
       </main>
 
       <section className={styles.offersSimilarSection}>
-        <h2 className={`${styles.offerSimilarTitle} h-2`}>Похожие предложения</h2>
+        <h2
+          className={`${styles.offerSimilarTitle} h-2`}
+        >
+          Похожие предложения
+        </h2>
 
         {similarUsers.length > 0 ? (
           <SliderUI>
             {similarUsers.map(similarUser => (
-              <div key={similarUser.id} className={styles.cardWrapper}>
+              <div
+                key={similarUser.id}
+                className={styles.cardWrapper}
+              >
                 <CardUI
                   user={similarUser}
                   styleType='catalog'
@@ -98,7 +110,11 @@ export function OfferPage() {
             ))}
           </SliderUI>
         ) : (
-          <p className={`${styles.noResults} h-body`}>Нет похожих предложений :(</p>
+          <p
+            className={`${styles.noResults} h-body`}
+          >
+            Нет похожих предложений :(
+          </p>
         )}
       </section>
     </div>

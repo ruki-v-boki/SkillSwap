@@ -1,20 +1,22 @@
-// import { markAllAsRead, markAsRead, selectNotifications, selectUnreadCount } from '@/services/slices/notificationsSlice';
-// import { useDispatch, useSelector } from '@/services/store';
-// import { selectUserId } from '@/services/slices/authSlice';
-import { TEST_NOTIFICATIONS } from '@/constants/notifications';
+import { clearNotifications, markAllAsRead, markAsRead, selectNotifications } from '@/services/slices/notificationsSlice';
+import { useRealtimeNotifications } from '@/hooks/useRealtimeNotifications';
+import { useDispatch, useSelector } from '@/services/store';
+import { selectUserId } from '@/services/slices/authSlice';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './NotificationsCenter.module.css';
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
 
+// ---------------------------------------------------------------
 
 export function NotificationCenter() {
-  const [notifications, setNotifications] = useState(TEST_NOTIFICATIONS);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  // const dispatch = useDispatch();
-  // const notifications = useSelector(selectNotifications);
-  // const unreadCount = useSelector(selectUnreadCount);
-  // const currentUserId = useSelector(selectUserId);
+  const currentUserId = useSelector(selectUserId)
+  const notifications = useSelector(selectNotifications);
+
+  const unreadNotifications = notifications.filter(n => !n.isRead);
+  const readNotifications = notifications.filter(n => n.isRead);
 
 // ---------------------------------------------------------------
 
@@ -35,44 +37,27 @@ export function NotificationCenter() {
 
 // ---------------------------------------------------------------
 
-  // const handleNotificationClick = (notificationId: string, link?: string) => {
-  //   if (link) {
-  //     window.location.href = link;
-  //   }
-  //   dispatch(markAsRead(notificationId));
-  // };
+  useRealtimeNotifications(currentUserId);
 
-  const handleNotificationClick = (notification: typeof TEST_NOTIFICATIONS.unread[0]) => {
-    setNotifications({
-      unread: notifications.unread.filter(n => n.id !== notification.id),
-      read: [notification, ...notifications.read],
-    });
-    if (notification.link) {
-      console.log('Переход по ссылке:', notification.link);
-    }
+// ---------------------------------------------------------------
+
+  const handleNotificationClick = (notificationId: string, link?: string) => {
+    if (link) navigate(link)
+    dispatch(markAsRead(notificationId));
   };
 
 // ---------------------------------------------------------------
 
-  // const handleMarkAllRead = () => {
-  //   if (currentUserId) {
-  //     dispatch(markAllAsRead(currentUserId));
-  //   }
-  // };
-
-  const handleMarkAllAsRead = () => {
-    setNotifications({
-      unread: [],
-      read: [...notifications.unread, ...notifications.read],
-    });
+  const handleMarkAllRead = () => {
+    if (currentUserId) dispatch(markAllAsRead(currentUserId));
   };
+
+// ---------------------------------------------------------------
 
   const handleClearRead = () => {
-    setNotifications({
-      ...notifications,
-      read: [],
-    });
+    if (currentUserId) dispatch(clearNotifications())
   };
+
 // ---------------------------------------------------------------
 
   const getIcon = (type: string) => {
@@ -104,11 +89,14 @@ export function NotificationCenter() {
       {/* Новые уведомления */}
       <section className={styles.section}>
         <header className={styles.sectionHeader}>
-          <p className='h-2'>Новые уведомления</p>
-          {notifications.unread.length > 0 && (
+          <p className='h-2'
+          >
+            Новые уведомления
+          </p>
+          {unreadNotifications.length > 0 && (
             <button
               type='button'
-              onClick={handleMarkAllAsRead}
+              onClick={handleMarkAllRead}
               className={`${styles.listButton} h-4`}
             >
               Прочитать все
@@ -116,13 +104,16 @@ export function NotificationCenter() {
           )}
         </header>
 
-        {notifications.unread.length === 0 ? (
+        {unreadNotifications.length === 0 ? (
           <div className={styles.emptyState}>
-            <p className='h-body'>Нет новых уведомлений</p>
+            <p className='h-body'
+            >
+              Нет новых уведомлений
+            </p>
           </div>
         ) : (
           <ul className={styles.list}>
-            {notifications.unread.map(notification => (
+            {unreadNotifications.map(notification => (
               <li
                 key={notification.id}
                 className={styles.notificationItem}
@@ -131,18 +122,25 @@ export function NotificationCenter() {
                   <div className={styles.content}>
                     {getIcon(notification.type)}
                     <div className={styles.message}>
-                      <p className='h-body'>{notification.title}</p>
-                      <span className='h-caption'>{notification.message}</span>
+                      <p className='h-body'
+                      >
+                        {notification.title}
+                      </p>
+                      <p className='h-caption'
+                      >
+                        {notification.message}
+                      </p>
                     </div>
                   </div>
                   <div className={`${styles.time} h-body`}>
-                    {formatDate(notification.createdAt)}
+                    {formatDate(notification.created_at)}
                   </div>
                 </header>
+
                 <NavLink
-                  to={notification.link}
+                  to={notification.link || '#'}
                   className={`${styles.link} h-body`}
-                  onClick={() => handleNotificationClick(notification)}
+                  onClick={() => handleNotificationClick(notification.id, notification.link)}
                 >
                   Перейти
                 </NavLink>
@@ -155,8 +153,11 @@ export function NotificationCenter() {
       {/* Просмотренные уведомления */}
       <section className={styles.section}>
         <header className={styles.sectionHeader}>
-          <p className='h-2'>Просмотренные</p>
-          {notifications.read.length > 0 && (
+          <p className='h-2'
+          >
+            Просмотренные
+          </p>
+          {readNotifications.length > 0 && (
             <button
               type='button'
               onClick={handleClearRead}
@@ -167,13 +168,15 @@ export function NotificationCenter() {
           )}
         </header>
 
-        {notifications.read.length === 0 ? (
+        {readNotifications.length === 0 ? (
           <div className={styles.emptyState}>
-            <p>Нет просмотренных уведомлений</p>
+            <span>
+              Нет просмотренных уведомлений
+            </span>
           </div>
         ) : (
           <ul className={styles.list}>
-            {notifications.read.map(notification => (
+            {readNotifications.map(notification => (
               <li
                 key={notification.id}
                 className={styles.notificationItem}
@@ -182,12 +185,18 @@ export function NotificationCenter() {
                   <div className={styles.content}>
                     {getIcon(notification.type)}
                     <div className={styles.message}>
-                      <p className='h-body'>{notification.title}</p>
-                      <span className='h-caption'>{notification.message}</span>
+                      <p className='h-body'
+                      >
+                        {notification.title}
+                      </p>
+                      <p className='h-caption'
+                      >
+                        {notification.message}
+                      </p>
                     </div>
                   </div>
                   <div className={`${styles.time} h-body`}>
-                    {formatDate(notification.createdAt)}
+                    {formatDate(notification.created_at)}
                   </div>
                 </header>
               </li>

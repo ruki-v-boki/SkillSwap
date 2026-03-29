@@ -7,14 +7,14 @@ import type { RootState } from '@/services/store';
 
 export interface Notification {
   id: string;
-  userId: string;        // кому адресовано
-  fromUserId: string;    // от кого
+  userId: string;
+  fromUserId: string;
   type: TNotifications;
   title: string;
   message: string;
-  link?: string;         // куда ведёт (например, /offer/123)
+  link?: string;
   isRead: boolean;
-  createdAt: string;
+  created_at: string;
 }
 
 interface NotificationsState {
@@ -126,7 +126,7 @@ export const notificationsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string;
       })
-      // ---------------------------------------------------------------
+  // ---------------------------------------------------------------
       .addCase(markAsRead.fulfilled, (state, action) => {
         const notification = state.items.find(n => n.id === action.payload);
         if (notification && !notification.isRead) {

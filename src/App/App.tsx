@@ -1,12 +1,15 @@
+import { fetchMyOffers, fetchPendingIncoming } from '@/services/slices/exchangeSlice';
 import { UserCardModal } from '@/components/ui/Modal/UserCardModal/UserCardModal';
 import { PersonalDataPage } from '@/pages/Profile/PersonalData/PersonalDataPage';
 import { useRealtimeNotifications } from '@/hooks/useRealtimeNotifications';
 import { UserSkillsPage } from '@/pages/Profile/UserSkills/UserSkillsPage';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { FavouritesPage } from '@/pages/Profile/Favourites/FavouritesPage';
+import { fetchNotifications } from '@/services/slices/notificationsSlice';
 import { ExchangesPage } from '@/pages/Profile/Exchanges/ExchangesPage';
 import { checkAuth, selectUserId } from '@/services/slices/authSlice';
 import { RequestsPage } from '@/pages/Profile/Requests/RequestsPage';
+import { useRealtimeExchanges } from '@/hooks/useRealtimeExchanges';
 import { NotFoundPage, ServerErrorPage } from '@/pages/Error';
 import { useDispatch, useSelector } from '@/services/store';
 import { SkillsPage } from '@/pages/Skills/SkillsPage';
@@ -39,15 +42,20 @@ export function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const background = location.state?.background;
+
   const userId = useSelector(selectUserId);
   const currentUser = useSelector(selectCurrentUser);
   const isLoading = useSelector(selectUserIsLoading);
+
+  const background = location.state?.background;
   const closeModal = () => navigate(-1);
 
 // ---------------------------------------------------------------
 
+  useRealtimeExchanges(userId);
   useRealtimeNotifications(userId);
+
+// ---------------------------------------------------------------
 
   useEffect(() => {
     dispatch(checkAuth());
@@ -57,14 +65,23 @@ export function App() {
   useEffect(() => {
     if (userId && !currentUser && !isLoading) {
       dispatch(getCurrentUser(userId));
+      dispatch(fetchNotifications(userId));
+      dispatch(fetchMyOffers(userId));
+      dispatch(fetchPendingIncoming(userId));
     }
-  }, [userId, currentUser, dispatch, isLoading]);
+  }, [
+    userId,
+    currentUser,
+    dispatch,
+    isLoading
+  ]);
 
 // ---------------------------------------------------------------
 
   return (
     <>
       <Routes location={background || location}>
+
         {/* ---------- ПУБЛИЧНЫЕ МАРШРУТЫ (MainLayout) ---------- */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />

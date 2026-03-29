@@ -1,5 +1,6 @@
 import { notificationsSlice } from './slices/notificationsSlice';
 import { registerSlice } from './slices/registerSlice';
+import { exchangeSlice } from './slices/exchangeSlice';
 import { searchSlice } from './slices/searchSlice';
 import { filterSlice } from './slices/filterSlice';
 import { combineSlices } from '@reduxjs/toolkit';
@@ -11,6 +12,7 @@ import { authSlice } from './slices/authSlice';
 const rootReducer = combineSlices({
   notifications: notificationsSlice.reducer,
   register: registerSlice.reducer,
+  exchange: exchangeSlice.reducer,
   filter: filterSlice.reducer,
   search: searchSlice.reducer,
   users: usersSlice.reducer,
