@@ -32,12 +32,11 @@ export const checkAuth = createAsyncThunk(
       if (session?.user) {
         const userId = session.user.id;
 
-        const { data: profile, error } = await supabase
+        const { data: profile } = await supabase
           .from('users')
           .select('id')
           .eq('id', userId)
           .maybeSingle();
-        console.error('Ошибка проверки авторизации', error)
 
         if (!profile) {
           await supabase.auth.signOut();

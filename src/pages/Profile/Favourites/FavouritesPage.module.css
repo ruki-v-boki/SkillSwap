@@ -59,6 +59,7 @@
 .avatar {
   width: 60px;
   border-radius: 50%;
+  object-fit: cover;
   box-shadow: var(--box-shadow);
   aspect-ratio: 1 / 1;
 }

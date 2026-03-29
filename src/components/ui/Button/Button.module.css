@@ -31,6 +31,10 @@
   cursor: not-allowed;
 }
 
+.button:disabled:hover {
+  outline: none;
+}
+
 /* --------------------------------------------- */
 .base {
   box-shadow: var(--box-shadow-light);

@@ -11,6 +11,7 @@
 }
 
 .profileForm {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -67,4 +68,15 @@
   justify-content: center;
   width: 100%;
   padding-top: 16px;
+}
+
+.successMessage {
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  color: var(--color-text-link);
 }

@@ -24,14 +24,25 @@ export function ProtectedRoute({
 // ---------------------------------------------------------------
 
   if (onlyUnAuth && currentUser) {
-    const from = location.state?.from?.pathname || '/profile';
-    return <Navigate to={from} replace />;
+    const from = location.state?.from?.pathname || '/';
+    return (
+      <Navigate
+        to={from}
+        replace
+      />
+    )
   }
 
 // ---------------------------------------------------------------
 
   if (!onlyUnAuth && !currentUser) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return (
+      <Navigate
+        to="/login"
+        state={{ from: location }}
+        replace
+      />
+    )
   }
 // ---------------------------------------------------------------
 

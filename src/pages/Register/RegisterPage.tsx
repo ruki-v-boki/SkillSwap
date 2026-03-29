@@ -12,6 +12,7 @@ import { Step2Form } from './steps/step2/Step2Form';
 import { ModalUI } from '@/components/ui/Modal';
 import { Loader } from '@/components/ui/Loader';
 import styles from './RegisterPage.module.css';
+import { useNavigate } from 'react-router-dom';
 import type { TGender } from '@/types/types';
 import { useEffect, useState } from 'react';
 import { Step3Form } from './steps/step3';
@@ -30,6 +31,7 @@ import {
   nextStep,
   prevStep
 } from '@/services/slices/registerSlice';
+
 
 // ---------------------------------------------------------------
 
@@ -56,6 +58,7 @@ const STEP_HINTS = {
 export function RegisterPage() {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const currentStep = useSelector(selectCurrentStep);
   const step1Data = useSelector(selectRegisterStep1);
   const step2Data = useSelector(selectRegisterStep2);
@@ -129,10 +132,21 @@ export function RegisterPage() {
     setIsModalOpen(false);
   };
 
-  const handleConfirm = () => {
-    dispatch(registerUser());
-    setIsModalOpen(false);
-  };
+  // const handleConfirm = () => {
+  //   dispatch(registerUser());
+  //   setIsModalOpen(false);
+  // };
+  const handleConfirm = async () => {
+  const result = await dispatch(registerUser()).unwrap();
+  
+  if (result.success) {
+    // После успешной регистрации переходим в профиль с флагом
+    navigate('/profile', { 
+      state: { showWelcomeModal: true }
+    });
+  }
+  setIsModalOpen(false);
+};
 
 // ---------------------------------------------------------------
 

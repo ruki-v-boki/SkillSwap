@@ -75,7 +75,16 @@ export function CardUI({
 
   const handleLikeClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!currentUserId || isPending) return;
+
+    if (!currentUserId) {
+      setIsPending(false);
+      navigate('/login', {
+        state: { from: location.pathname }
+      });
+      return;
+    }
+
+    if (isPending) return;
 
     setIsPending(true);
     try {
@@ -84,7 +93,7 @@ export function CardUI({
         targetUserId: user.id
       })).unwrap();
     } catch (error) {
-      console.error('Failed to toggle like:', error);
+      console.error('Не удалось переключиь лайк:', error);
     } finally {
       setIsPending(false);
     }
@@ -122,7 +131,7 @@ export function CardUI({
             <LikeButtonUI
               isLiked={isLiked}
               onClick={handleLikeClick}
-              disabled={!currentUserId || isPending}
+              disabled={isPending}
             />
             {rating > 0 && (
               <span className="h-caption">{rating}</span>

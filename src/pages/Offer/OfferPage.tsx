@@ -5,8 +5,9 @@ import { selectUserId } from '@/services/slices/authSlice';
 import { useDispatch, useSelector } from '@/services/store';
 import { SliderUI } from '@/components/ui/Slider';
 import { CardUI } from '@/components/ui/Card';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from './OfferPage.module.css';
+import { NotFoundPage } from '../Error';
 import { useState } from 'react';
 
 // ---------------------------------------------------------------
@@ -14,6 +15,7 @@ import { useState } from 'react';
 export function OfferPage() {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const allUsers = useSelector(selectAllUsers);
   const currentUserId = useSelector(selectUserId);
   const { id } = useParams();
@@ -24,7 +26,14 @@ export function OfferPage() {
 // ---------------------------------------------------------------
 
   const handleFavoriteClick = async () => {
-    if (!currentUserId || !user?.id || isPending) return;
+    if (!currentUserId) {
+      navigate('/login', {
+        state: { from: location.pathname }
+      });
+      return;
+    }
+
+    if (!user?.id || isPending) return;
 
     setIsPending(true);
     try {
@@ -49,7 +58,7 @@ export function OfferPage() {
 // ---------------------------------------------------------------
 
   if (!user) {
-    return <p className={`${styles.notFound} h-body`}>Пользователь не найден :(</p>;
+    return <NotFoundPage />
   }
 
 // ---------------------------------------------------------------

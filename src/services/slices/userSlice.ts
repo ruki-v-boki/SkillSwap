@@ -172,6 +172,10 @@ export const usersSlice = createSlice({
         state.error = action.payload as string || 'Ошибка загрузки профиля';
       })
       // ---------------------------------------------------------------
+      .addCase(updateCurrentUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(updateCurrentUser.fulfilled, (state, action: PayloadAction<IUser>) => {
         state.isLoading = false;
         state.currentUser = action.payload;
@@ -254,6 +258,7 @@ export const selectAllUsers = (state: RootState) => state.users.allUsers;
 export const selectCurrentUser = (state: RootState) => state.users.currentUser;
 export const selectUserIsLoading = (state: RootState) => state.users.isLoading;
 export const selectUserError = (state: RootState) => state.users.error;
+export const selectIsLoading = (state: RootState) => state.users.isLoading;
 
 
 export const selectFavouriteUsers = createSelector(

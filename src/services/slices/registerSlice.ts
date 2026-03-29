@@ -57,7 +57,8 @@ export const registerUser = createAsyncThunk(
 
       dispatch(authSlice.actions.setUserId(response.user.id));
 
-      return response;
+      // return response;
+      return { success: true, user: response.user };
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Ошибка регистрации');
     }
