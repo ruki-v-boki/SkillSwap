@@ -1,9 +1,9 @@
 import { itemVariants, subcategoriesVariants } from './framerMotion';
-import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { SkillsSectionUIProps } from './type';
 import styles from './SkillsSection.module.css';
 import { ChevronIcon } from '../../ChevronIcon';
+import { useState, useCallback } from 'react';
 import { Button } from '../../Button';
 
 // ---------------------------------------------------------------
@@ -18,23 +18,12 @@ export function SkillsSectionUI({
 }: SkillsSectionUIProps) {
 
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(propSelectedCategories || []);
   const [selectedSkills, setSelectedSkills] = useState<string[]>(propSelectedSkills || []);
 
   const allCategoryIds = categories.map(cat => cat.id);
+  const selectedCategories = propSelectedCategories || [];
   const allCategoriesExpanded = allCategoryIds.length > 0 && 
     allCategoryIds.every(id => expandedCategories.includes(id));
-
-// ---------------------------------------------------------------
-
-  useEffect(() => {
-    if (propSelectedCategories) {
-      setSelectedCategories(propSelectedCategories);
-    }
-    if (propSelectedSkills) {
-      setSelectedSkills(propSelectedSkills);
-    }
-  }, [propSelectedCategories, propSelectedSkills]);
 
 // ---------------------------------------------------------------
 
@@ -71,7 +60,6 @@ export function SkillsSectionUI({
       newSkills = selectedSkills.filter(id => !categorySubcategories.includes(id));
     }
 
-    setSelectedCategories(newCategories);
     setSelectedSkills(newSkills);
     onChange?.(newCategories, newSkills);
   }, [selectedCategories, selectedSkills, subcategories, onChange]);
@@ -94,7 +82,6 @@ export function SkillsSectionUI({
       newSkills = selectedSkills.filter(id => id !== subcategoryId);
     }
 
-    setSelectedCategories(newCategories);
     setSelectedSkills(newSkills);
     onChange?.(newCategories, newSkills);
   }, [selectedCategories, selectedSkills, subcategories, onChange]);
@@ -226,7 +213,9 @@ export function SkillsSectionUI({
           className={styles.showAllButton}
         >
           {allCategoriesExpanded ? 'Скрыть' : 'Все категории'}
-          <ChevronIcon open={allCategoriesExpanded}/>
+          <ChevronIcon
+            open={allCategoriesExpanded}
+          />
         </Button>
     </section>
   );

@@ -1,4 +1,4 @@
-import type { ExchangeOffer, CreateExchangeOffer, RespondToExchange } from '@/types/exchange';
+import type { ExchangeOffer, CreateExchangeOffer, RespondToExchange, ExchangeStatus } from '@/types/exchange';
 import { supabase } from './client';
 
 // ---------------------------------------------------------------
@@ -80,7 +80,26 @@ export class SupabaseExchangeAPI {
 
 // ---------------------------------------------------------------
 
-  private transformOffer(offer: any): ExchangeOffer {
+  // private transformOffer(offer: any): ExchangeOffer {
+  //   return {
+  //     id: offer.id,
+  //     fromUserId: offer.from_user_id,
+  //     toUserId: offer.to_user_id,
+  //     status: offer.status,
+  //     message: offer.message || undefined,
+  //     createdAt: offer.created_at,
+  //     updatedAt: offer.updated_at,
+  //   };
+  // }
+  private transformOffer(offer: {
+    id: string;
+    from_user_id: string;
+    to_user_id: string;
+    status: ExchangeStatus;
+    message?: string | null;
+    created_at: string;
+    updated_at: string;
+  }): ExchangeOffer {
     return {
       id: offer.id,
       fromUserId: offer.from_user_id,

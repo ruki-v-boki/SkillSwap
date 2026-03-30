@@ -25,28 +25,34 @@ export function Step3Form({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [images, setImages] = useState<File[]>(initialData?.images || []);
-  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  // const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>(() => {
+    if (initialData?.images) {
+      return initialData.images.map(file => URL.createObjectURL(file));
+    }
+    return [];
+  });
 
 // ---------------------------------------------------------------
 
-  useEffect(() => {
-    if (initialData?.images && initialData.images.length > 0) {
-      imagePreviews.forEach(url => URL.revokeObjectURL(url));
+  // useEffect(() => {
+  //   if (initialData?.images && initialData.images.length > 0) {
+  //     imagePreviews.forEach(url => URL.revokeObjectURL(url));
 
-      const newPreviews = initialData.images.map(file => URL.createObjectURL(file));
+  //     const newPreviews = initialData.images.map(file => URL.createObjectURL(file));
 
-      setImagePreviews(newPreviews);
-      setImages(initialData.images);
-    } else if (!initialData?.images || initialData.images.length === 0) {
-      imagePreviews.forEach(url => URL.revokeObjectURL(url));
+  //     setImagePreviews(newPreviews);
+  //     setImages(initialData.images);
+  //   } else if (!initialData?.images || initialData.images.length === 0) {
+  //     imagePreviews.forEach(url => URL.revokeObjectURL(url));
 
-      setImagePreviews([]);
-      setImages([]);
-    }
-  }, [
-    initialData?.images,
-    imagePreviews
-  ]);
+  //     setImagePreviews([]);
+  //     setImages([]);
+  //   }
+  // }, [
+  //   initialData?.images,
+  //   imagePreviews
+  // ]);
 
 // ---------------------------------------------------------------
 

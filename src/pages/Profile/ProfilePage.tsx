@@ -3,7 +3,11 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { ProfileNavListUI } from '@/components/ui/ProfileNavList';
 import { ModalUI } from '@/components/ui/Modal';
 import styles from './ProfilePage.module.css';
-import { useEffect, useState } from 'react';
+import {
+  // useEffect,
+  useLayoutEffect,
+  useState
+} from 'react';
 
 // ---------------------------------------------------------------
 
@@ -14,13 +18,20 @@ export function ProfilePage() {
 
 // ---------------------------------------------------------------
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (location.state?.showWelcomeModal) {
+  //     setShowWelcomeModal(true);
+  //     // Очищаем state, чтобы при обновлении страницы модалка не появлялась
+  //     navigate(location.pathname, { replace: true, state: {} });
+  //   }
+  // }, [location, navigate]);
+
+  useLayoutEffect(() => {
     if (location.state?.showWelcomeModal) {
       setShowWelcomeModal(true);
-      // Очищаем state, чтобы при обновлении страницы модалка не появлялась
       navigate(location.pathname, { replace: true, state: {} });
     }
-  }, [location, navigate]);
+  }, [location.state, navigate]);
 
 // ---------------------------------------------------------------
 

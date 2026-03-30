@@ -191,8 +191,11 @@ export const registerSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(registerUser.fulfilled, (state) => {
+      .addCase(registerUser.fulfilled, (state, action: PayloadAction<AuthResponse>) => {
         state.isLoading = false;
+        localStorage.setItem('userId', action.payload.user.id);
+        localStorage.setItem('userName', action.payload.user.name);
+        localStorage.setItem('userAvatar', action.payload.user.avatar || '');
         localStorage.removeItem('registerForm');
         state.step1 = baseInitialState.step1;
         state.step2 = baseInitialState.step2;

@@ -152,7 +152,10 @@ export const usersSlice = createSlice({
       })
       .addCase(getAllUsers.fulfilled, (state, action: PayloadAction<IUser[]>) => {
         state.isAllUsersLoading = false;
-        state.allUsers = action.payload;
+        state.allUsers = action.payload.map(user => ({
+          ...user,
+          avatar: user.avatar || '/default-avatar.svg',
+        }));
         state.allUsersLoaded = true;
       })
       .addCase(getAllUsers.rejected, (state, action) => {
@@ -166,7 +169,10 @@ export const usersSlice = createSlice({
       })
       .addCase(getCurrentUser.fulfilled, (state, action: PayloadAction<IUser>) => {
         state.isLoading = false;
-        state.currentUser = action.payload;
+        state.currentUser = {
+          ...action.payload,
+          avatar: action.payload.avatar || '/default-avatar.svg',
+        };
       })
       .addCase(getCurrentUser.rejected, (state, action) => {
         state.isLoading = false;
