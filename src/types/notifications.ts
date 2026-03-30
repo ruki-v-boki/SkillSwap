@@ -1,13 +1,13 @@
 export type TNotifications = 'offer' | 'acceptOffer';
 
 export type Notification = {
-  notificationId: string;
-  toUserId: string;
-  fromUserId: string;
+  id: string;
+  user_id: string;
+  from_user_id: string;
   type: TNotifications;
   title: string;
   message: string;
   link?: string;
-  isRead: boolean;
+  is_read: boolean;
   created_at: string;
-}
+};

@@ -7,7 +7,7 @@ import type { RootState } from '@/services/store';
 
 interface NotificationsState {
   notifications: Notification[];
-  unreadCount: number,
+  unreadCount: number;
   isNotificationsLoading: boolean;
   notificationsError: string | null;
 }
@@ -21,28 +21,43 @@ const initialState: NotificationsState = {
 
 // ---------------------------------------------------------------
 
-export const sendNotification = createAsyncThunk(
+export const sendNotification = createAsyncThunk<
+  Notification,
+  {
+    toUserId: string;
+    fromUserId: string;
+    type: 'offer' | 'acceptOffer';
+    title: string;
+    message: string;
+    link?: string;
+  },
+  { rejectValue: string }
+>(
   'notifications/send',
-  async (data: Notification, { rejectWithValue }) => {
+  async (input, { rejectWithValue }) => {
     try {
-      const { error } = await supabase
-      .from('notifications')
-      .insert({
-        id: data.notificationId,
-        user_id: data.toUserId,
-        from_user_id: data.fromUserId,
-        type: data.type,
-        title: data.title,
-        message: data.message,
-        link: data.link,
-        is_read: false,
-      });
-      if (error) console.error('Notification error:', error);
+      const { data: result, error } = await supabase
+        .from('notifications')
+        .insert({
+          user_id: input.toUserId,
+          from_user_id: input.fromUserId,
+          type: input.type,
+          title: input.title,
+          message: input.message,
+          link: input.link,
+          is_read: false,
+        })
+        .select()
+        .single();
+
+      if (error) throw new Error(error.message);
+
+      return result as Notification;
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Ошибка отправки уведомления');
     }
   }
-)
+);
 
 // ---------------------------------------------------------------
 
@@ -58,7 +73,8 @@ export const getAllNotifications = createAsyncThunk(
         .limit(50);
 
       if (error) throw new Error(error.message);
-      return data;
+
+      return data as Notification[];
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Ошибка загрузки уведомлений');
     }
@@ -77,6 +93,7 @@ export const markAsRead = createAsyncThunk(
         .eq('id', notificationId);
 
       if (error) throw new Error(error.message);
+
       return notificationId;
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Ошибка');
@@ -97,6 +114,7 @@ export const markAllAsRead = createAsyncThunk(
         .eq('is_read', false);
 
       if (error) throw new Error(error.message);
+
       return true;
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Ошибка');
@@ -112,7 +130,7 @@ export const notificationsSlice = createSlice({
   reducers: {
     addNotification: (state, action: PayloadAction<Notification>) => {
       state.notifications.unshift(action.payload);
-      if (!action.payload.isRead) {
+      if (!action.payload.is_read) {
         state.unreadCount++;
       }
     },
@@ -126,11 +144,12 @@ export const notificationsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // -------------------- getAllNotifications --------------------
       .addCase(getAllNotifications.pending, (state) => {
         state.isNotificationsLoading = true;
         state.notificationsError = null;
       })
-      .addCase(getAllNotifications.fulfilled, (state, action) => {
+      .addCase(getAllNotifications.fulfilled, (state, action: PayloadAction<Notification[]>) => {
         state.isNotificationsLoading = false;
         state.notifications = action.payload;
         state.unreadCount = action.payload.filter(n => !n.is_read).length;
@@ -139,20 +158,21 @@ export const notificationsSlice = createSlice({
         state.isNotificationsLoading = false;
         state.notificationsError = action.payload as string;
       })
-  // ---------------------------------------------------------------
-      .addCase(markAsRead.fulfilled, (state, action) => {
-        const notification = state.notifications.find(n => n.notificationId === action.payload);
-        if (notification && !notification.isRead) {
-          notification.isRead = true;
-          state.unreadCount--;
+      // -------------------- markAsRead --------------------
+      .addCase(markAsRead.fulfilled, (state, action: PayloadAction<string>) => {
+        const notification = state.notifications.find(n => n.id === action.payload);
+
+        if (notification && !notification.is_read) {
+          notification.is_read = true;
+          state.unreadCount = Math.max(0, state.unreadCount - 1);
         }
       })
-  // ---------------------------------------------------------------
+      // -------------------- markAllAsRead --------------------
       .addCase(markAllAsRead.fulfilled, (state) => {
-        state.notifications.forEach(n => { n.isRead = true; });
+        state.notifications.forEach(n => { n.is_read = true; });
         state.unreadCount = 0;
-      });
-  },
+      })
+  }
 });
 
 // ---------------------------------------------------------------
@@ -168,3 +188,4 @@ export const {
 export const selectNotifications = (state: RootState) => state.notifications.notifications;
 export const selectUnreadCount = (state: RootState) => state.notifications.unreadCount;
 export const selectIsNotificationsLoading = (state: RootState) => state.notifications.isNotificationsLoading;
+export const selectNotificationsError = (state: RootState) => state.notifications.notificationsError;

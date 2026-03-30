@@ -1,3 +1,4 @@
+import type { SupabaseNotification, SupabaseRealtimePayload } from '@/services/supabase';
 import { addNotification } from '@/services/slices/notificationsSlice';
 import type { Notification } from '@/types/notifications';
 import { supabase } from '@/services/supabase/client';
@@ -7,10 +8,7 @@ import { useEffect } from 'react';
 // ---------------------------------------------------------------
 
 export function useRealtimeNotifications(userId: string | null) {
-
   const dispatch = useDispatch();
-
-// ---------------------------------------------------------------
 
   useEffect(() => {
     if (!userId) return;
@@ -25,8 +23,11 @@ export function useRealtimeNotifications(userId: string | null) {
           table: 'notifications',
           filter: `user_id=eq.${userId}`,
         },
-        (payload) => {
-          dispatch(addNotification(payload.new as Notification));
+        (payload: SupabaseRealtimePayload<SupabaseNotification>) => {
+          if (payload.new) {
+            const notification = payload.new as Notification;
+            dispatch(addNotification(notification));
+          }
         }
       )
       .subscribe();
@@ -38,4 +39,4 @@ export function useRealtimeNotifications(userId: string | null) {
     userId,
     dispatch
   ]);
-};
+}

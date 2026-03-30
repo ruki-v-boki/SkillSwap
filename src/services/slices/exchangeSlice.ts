@@ -1,6 +1,5 @@
 import type { ExchangeOffer, CreateExchangeOffer, RespondToExchange } from '@/types/exchange';
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
-// import { sendNotification } from './notificationsSlice';
 import { exchangeAPI } from '../supabase/exchangeApi';
 import type { IUser } from '@/types/types';
 import type { RootState } from '../store';
@@ -12,7 +11,7 @@ type ExchangeState = {
   pendingIncoming: ExchangeOffer[];
   isLoading: boolean;
   error: string | null;
-}
+};
 
 const initialState: ExchangeState = {
   myOffers: [],
@@ -23,24 +22,20 @@ const initialState: ExchangeState = {
 
 // ---------------------------------------------------------------
 
-export const createExchangeOffer = createAsyncThunk(
+type CreateExchangeOfferArgs = {
+  fromUser: IUser;
+  data: CreateExchangeOffer;
+};
+
+export const createExchangeOffer = createAsyncThunk<
+  ExchangeOffer,
+  CreateExchangeOfferArgs,
+  { rejectValue: string }
+>(
   'exchange/create',
-  async ({ fromUser, data }: {
-    fromUser: IUser;
-    data: CreateExchangeOffer;
-  }, { rejectWithValue }) => {
+  async ({ fromUser, data }, { rejectWithValue }) => {
     try {
       const offer = await exchangeAPI.createOffer(fromUser.id, data);
-
-      // await sendNotification({
-      //   userId: data.toUserId,
-      //   fromUserId: fromUser.id,
-      //   type: 'offer',
-      //   title: 'Новое предложение обмена',
-      //   message: `${fromUser.name} предлагает вам обмен навыками`,
-      //   link: `/offer/${fromUser.id}`,
-      // });
-
       return offer;
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Ошибка создания предложения');
@@ -50,21 +45,21 @@ export const createExchangeOffer = createAsyncThunk(
 
 // ---------------------------------------------------------------
 
-export const respondToExchange = createAsyncThunk(
+type RespondToExchangeArgs = {
+  userId: string;
+  data: RespondToExchange;
+  fromUser: IUser;
+};
+
+export const respondToExchange = createAsyncThunk<
+  ExchangeOffer,
+  RespondToExchangeArgs,
+  { rejectValue: string }
+>(
   'exchange/respond',
-  async ({ userId, data }: { userId: string; data: RespondToExchange; fromUser: IUser }, { rejectWithValue }) => {
+  async ({ userId, data }, { rejectWithValue }) => {
     try {
       const offer = await exchangeAPI.respondToOffer(userId, data);
-
-      // await sendNotification({
-      //   userId: offer.fromUserId,
-      //   fromUserId: userId,
-      //   type: 'acceptOffer',
-      //   title: data.status === 'accepted' ? 'Предложение принято' : 'Предложение отклонено',
-      //   message: `${fromUser.name} ${data.status === 'accepted' ? 'принял' : 'отклонил'} ваше предложение`,
-      //   link: `/offer/${userId}`,
-      // });
-
       return offer;
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Ошибка ответа на предложение');
@@ -74,7 +69,11 @@ export const respondToExchange = createAsyncThunk(
 
 // ---------------------------------------------------------------
 
-export const fetchMyOffers = createAsyncThunk(
+export const fetchMyOffers = createAsyncThunk<
+  ExchangeOffer[],
+  string,
+  { rejectValue: string }
+>(
   'exchange/fetchMyOffers',
   async (userId: string, { rejectWithValue }) => {
     try {
@@ -87,7 +86,11 @@ export const fetchMyOffers = createAsyncThunk(
 
 // ---------------------------------------------------------------
 
-export const fetchPendingIncoming = createAsyncThunk(
+export const fetchPendingIncoming = createAsyncThunk<
+  ExchangeOffer[],
+  string,
+  { rejectValue: string }
+>(
   'exchange/fetchPendingIncoming',
   async (userId: string, { rejectWithValue }) => {
     try {
@@ -111,7 +114,7 @@ export const exchangeSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-  // ---------------------------------------------------------------
+      // -------------------- createExchangeOffer --------------------
       .addCase(createExchangeOffer.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -124,21 +127,25 @@ export const exchangeSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string;
       })
-  // ---------------------------------------------------------------
+      // -------------------- respondToExchange --------------------
       .addCase(respondToExchange.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(respondToExchange.fulfilled, (state, action: PayloadAction<ExchangeOffer>) => {
         state.isLoading = false;
-        state.myOffers = state.myOffers.map(o => o.id === action.payload.id ? action.payload : o);
-        state.pendingIncoming = state.pendingIncoming.filter(o => o.id !== action.payload.id);
+        state.myOffers = state.myOffers.map(offer => 
+          offer.id === action.payload.id ? action.payload : offer
+        );
+        if (action.payload.status !== 'pending') {
+          state.pendingIncoming = state.pendingIncoming.filter(offer => offer.id !== action.payload.id);
+        }
       })
       .addCase(respondToExchange.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       })
-  // ---------------------------------------------------------------
+      // -------------------- fetchMyOffers --------------------
       .addCase(fetchMyOffers.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -151,7 +158,7 @@ export const exchangeSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string;
       })
-  // ---------------------------------------------------------------
+      // -------------------- fetchPendingIncoming --------------------
       .addCase(fetchPendingIncoming.pending, (state) => {
         state.isLoading = true;
         state.error = null;

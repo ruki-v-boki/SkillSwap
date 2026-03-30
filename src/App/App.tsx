@@ -19,6 +19,7 @@ import { HomePage } from '@/pages/Home/HomePage';
 import { ModalUI } from '@/components/ui/Modal';
 import { ContactsPage } from '@/pages/Contacts';
 import { RegisterPage } from '@/pages/Register';
+import { Loader } from '@/components/ui/Loader';
 import { ProfilePage } from '@/pages/Profile';
 import { PolicyPage } from '@/pages/Policy';
 import { TermsPage } from '@/pages/Terms';
@@ -77,6 +78,10 @@ export function App() {
   ]);
 
 // ---------------------------------------------------------------
+
+  if (isLoading) return <Loader />
+// ---------------------------------------------------------------
+
 
   return (
     <>

@@ -1,22 +1,26 @@
 import { clearNotifications, markAllAsRead, markAsRead, selectNotifications } from '@/services/slices/notificationsSlice';
 import { useRealtimeNotifications } from '@/hooks/useRealtimeNotifications';
-import { useDispatch, useSelector } from '@/services/store';
 import { selectAuthUserId } from '@/services/slices/authSlice';
+import { useDispatch, useSelector } from '@/services/store';
+import type { Notification } from '@/types/notifications';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './NotificationsCenter.module.css';
+import type { NotificationCenterProps } from './type';
 
 // ---------------------------------------------------------------
 
-export function NotificationCenter() {
+export function NotificationCenter({
+  onClose
+}: NotificationCenterProps) {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const currentUserId = useSelector(selectAuthUserId)
+  const currentUserId = useSelector(selectAuthUserId);
   const notifications = useSelector(selectNotifications);
 
-  const unreadNotifications = notifications.filter(n => !n.isRead);
-  const readNotifications = notifications.filter(n => n.isRead);
+  const unreadNotifications = notifications.filter((n: Notification) => !n.is_read);
+  const readNotifications = notifications.filter((n: Notification) => n.is_read);
 
 // ---------------------------------------------------------------
 
@@ -24,6 +28,9 @@ export function NotificationCenter() {
     const date = new Date(dateString);
     const now = new Date();
     const diffMs = now.getTime() - date.getTime();
+
+    if (isNaN(date.getTime())) return '';
+
     const diffMins = Math.floor(diffMs / 60000);
     const diffHours = Math.floor(diffMs / 3600000);
     const diffDays = Math.floor(diffMs / 86400000);
@@ -42,8 +49,10 @@ export function NotificationCenter() {
 // ---------------------------------------------------------------
 
   const handleNotificationClick = (notificationId: string, link?: string) => {
-    if (link) navigate(link)
+    if (link) navigate(link);
     dispatch(markAsRead(notificationId));
+
+    if (onClose) onClose();
   };
 
 // ---------------------------------------------------------------
@@ -55,7 +64,7 @@ export function NotificationCenter() {
 // ---------------------------------------------------------------
 
   const handleClearRead = () => {
-    if (currentUserId) dispatch(clearNotifications())
+    dispatch(clearNotifications());
   };
 
 // ---------------------------------------------------------------
@@ -89,10 +98,7 @@ export function NotificationCenter() {
       {/* Новые уведомления */}
       <section className={styles.section}>
         <header className={styles.sectionHeader}>
-          <p className='h-2'
-          >
-            Новые уведомления
-          </p>
+          <p className='h-2'>Новые уведомления</p>
           {unreadNotifications.length > 0 && (
             <button
               type='button'
@@ -106,30 +112,21 @@ export function NotificationCenter() {
 
         {unreadNotifications.length === 0 ? (
           <div className={styles.emptyState}>
-            <p className='h-body'
-            >
-              Нет новых уведомлений
-            </p>
+            <p className='h-body'>Нет новых уведомлений</p>
           </div>
         ) : (
           <ul className={styles.list}>
             {unreadNotifications.map(notification => (
               <li
-                key={notification.notificationId}
+                key={notification.id}
                 className={styles.notificationItem}
               >
                 <header className={styles.header}>
                   <div className={styles.content}>
                     {getIcon(notification.type)}
                     <div className={styles.message}>
-                      <p className='h-body'
-                      >
-                        {notification.title}
-                      </p>
-                      <p className='h-caption'
-                      >
-                        {notification.message}
-                      </p>
+                      <p className='h-body'>{notification.title}</p>
+                      <p className='h-caption'>{notification.message}</p>
                     </div>
                   </div>
                   <div className={`${styles.time} h-body`}>
@@ -140,7 +137,7 @@ export function NotificationCenter() {
                 <NavLink
                   to={notification.link || '#'}
                   className={`${styles.link} h-body`}
-                  onClick={() => handleNotificationClick(notification.notificationId, notification.link)}
+                  onClick={() => handleNotificationClick(notification.id, notification.link)}
                 >
                   Перейти
                 </NavLink>
@@ -153,10 +150,7 @@ export function NotificationCenter() {
       {/* Просмотренные уведомления */}
       <section className={styles.section}>
         <header className={styles.sectionHeader}>
-          <p className='h-2'
-          >
-            Просмотренные
-          </p>
+          <p className='h-2'>Просмотренные</p>
           {readNotifications.length > 0 && (
             <button
               type='button'
@@ -170,29 +164,21 @@ export function NotificationCenter() {
 
         {readNotifications.length === 0 ? (
           <div className={styles.emptyState}>
-            <span>
-              Нет просмотренных уведомлений
-            </span>
+            <span>Нет просмотренных уведомлений</span>
           </div>
         ) : (
           <ul className={styles.list}>
             {readNotifications.map(notification => (
               <li
-                key={notification.notificationId}
+                key={notification.id}
                 className={styles.notificationItem}
               >
                 <header className={styles.header}>
                   <div className={styles.content}>
                     {getIcon(notification.type)}
                     <div className={styles.message}>
-                      <p className='h-body'
-                      >
-                        {notification.title}
-                      </p>
-                      <p className='h-caption'
-                      >
-                        {notification.message}
-                      </p>
+                      <p className='h-body'>{notification.title}</p>
+                      <p className='h-caption'>{notification.message}</p>
                     </div>
                   </div>
                   <div className={`${styles.time} h-body`}>

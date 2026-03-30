@@ -43,7 +43,9 @@ export function NotificationsButtonUI({
         className={styles.notificationsBanner}
         data-testid="notifications-banner"
       >
-        <NotificationCenter />
+        <NotificationCenter
+          onClose={() => setIsNotificationMenuOpen(false)}
+        />
       </BannerUI>
     </>
   )

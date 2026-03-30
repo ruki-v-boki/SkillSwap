@@ -1,4 +1,5 @@
 import { createExchangeOffer, selectExchangeLoading, selectMyOffers } from '@/services/slices/exchangeSlice';
+import { sendNotification } from '@/services/slices/notificationsSlice';
 import { getCategoryName, getSubcategoryName } from '@/utils/helpers';
 import { selectCurrentUser } from '@/services/slices/userSlice';
 import { useDispatch, useSelector } from '@/services/store';
@@ -63,39 +64,55 @@ export function OfferDetailsUI({
   const customName = isPreview
     ? previewData.canTeach.customName
     : user!.canTeach.customName;
-    
+
   const description = isPreview
     ? previewData.canTeach.description || ''
     : user!.canTeach.description || '';
-    
+
   const images = isPreview
     ? previewData.canTeach.images?.map(file => URL.createObjectURL(file))
     : user!.canTeach.images || [];
 
 // ---------------------------------------------------------------
 
-  const handleOfferClick = async () => {
-    if (!currentUser) {
-      navigate('/login');
-      return;
-    }
+// OfferDetailsUI.tsx
+const handleOfferClick = async () => {
 
-    if (hasActiveOffer || isSubmitting) return;
+  if (!currentUser) {
+    navigate('/login');
+    return;
+  }
 
-    try {
-      await dispatch(createExchangeOffer({
-        fromUser: currentUser,
-        data: {
-          toUserId: user!.id,
-          message: undefined,
-        }
-      })).unwrap();
+  if (hasActiveOffer || isSubmitting) {
+    return;
+  }
+  if (!user?.id) {
+    return;
+  }
 
-      setIsSuccessModalOpen(true);
-    } catch (error) {
-      console.error('Ошибка отправки предложения:', error);
-    }
-  };
+  try {
+    await dispatch(createExchangeOffer({
+      fromUser: currentUser,
+      data: {
+        toUserId: user.id,
+        message: undefined,
+      }
+    })).unwrap();
+
+    await dispatch(sendNotification({
+      toUserId: user.id,
+      fromUserId: currentUser.id,
+      type: 'offer',
+      title: 'Новое предложение обмена',
+      message: `${currentUser.name} предлагает вам обмен навыками`,
+      link: `/offer/${currentUser.id}`,
+    })).unwrap();
+
+    setIsSuccessModalOpen(true);
+  } catch (error) {
+    console.error('Полная ошибка:', error);
+  }
+};
 
 // ---------------------------------------------------------------
 
