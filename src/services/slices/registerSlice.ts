@@ -1,9 +1,9 @@
 import type { WantToLearnSkill, TGender, AvatarInput, CanTeachSkillInput, TCity } from '@/types/types';
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
+import type { RegisterData } from '@/types/register';
 import type { RootState } from '@/services/store';
-import type { RegisterData } from '@/types/auth';
+import type { AuthResponse } from '@/types/auth';
 import { authAPI } from '@/services/api';
-import { authSlice } from './authSlice';
 
 // ---------------------------------------------------------------
 
@@ -34,7 +34,7 @@ const baseInitialState = {
   currentStep: 1,
 };
 
-interface RegisterState {
+type RegisterState = {
   step1: typeof baseInitialState.step1;
   step2: typeof baseInitialState.step2;
   step3: typeof baseInitialState.step3;
@@ -45,9 +45,13 @@ interface RegisterState {
 
 // ---------------------------------------------------------------
 
-export const registerUser = createAsyncThunk(
+export const registerUser = createAsyncThunk<
+  AuthResponse,
+  void,
+  { state: RootState }
+>(
   'register/registerUser',
-  async (_, { getState, rejectWithValue, dispatch }) => {
+  async (_, { getState, rejectWithValue }) => {
     const state = getState() as RootState;
     const registerData = selectRegisterData(state);
 
@@ -55,10 +59,7 @@ export const registerUser = createAsyncThunk(
       const response = await authAPI.register(registerData);
       localStorage.removeItem('registerForm');
 
-      dispatch(authSlice.actions.setUserId(response.user.id));
-
-      // return response;
-      return { success: true, user: response.user };
+      return response;
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Ошибка регистрации');
     }

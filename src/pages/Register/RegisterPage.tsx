@@ -3,7 +3,8 @@ import { StepsCounter } from '@/components/features/StepsCounter';
 import type { TCity, WantToLearnSkill } from '@/types/types';
 import schoolBoardIcon from '@/assets/icons/schoolBoard.svg';
 import { useDispatch, useSelector } from '@/services/store';
-import type { RegistrationPreview } from '@/types/auth';
+import type { RegistrationPreview } from '@/types/register';
+import { authSlice } from '@/services/slices/authSlice';
 import userInfoIcon from '@/assets/icons/userInfo.svg';
 import { FormHintUI } from '@/components/ui/FormHint';
 import lampIcon from '@/assets/icons/light-bulb.svg';
@@ -132,21 +133,17 @@ export function RegisterPage() {
     setIsModalOpen(false);
   };
 
-  // const handleConfirm = () => {
-  //   dispatch(registerUser());
-  //   setIsModalOpen(false);
-  // };
+// ---------------------------------------------------------------
+
   const handleConfirm = async () => {
-  const result = await dispatch(registerUser()).unwrap();
-  
-  if (result.success) {
-    // После успешной регистрации переходим в профиль с флагом
-    navigate('/profile', { 
-      state: { showWelcomeModal: true }
-    });
-  }
-  setIsModalOpen(false);
-};
+    try {
+      const result = await dispatch(registerUser()).unwrap();
+      dispatch(authSlice.actions.setUserId(result.user.id));
+      navigate('/profile', { state: { showWelcomeModal: true } });
+    } catch (error ) {
+      console.error('Не удалось зарегистрироваться:', error);
+    }
+  };
 
 // ---------------------------------------------------------------
 

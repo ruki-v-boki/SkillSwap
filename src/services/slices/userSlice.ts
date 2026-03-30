@@ -3,7 +3,6 @@ import { supabase } from '@/services/supabase/client';
 import type { RootState } from '@/services/store';
 import type { IUser } from '@/types/types';
 import { usersAPI } from '@/services/api';
-import { logout } from './authSlice';
 
 // ---------------------------------------------------------------
 
@@ -133,19 +132,16 @@ export const usersSlice = createSlice({
     setCurrentUser: (state, action: PayloadAction<IUser | null>) => {
       state.currentUser = action.payload;
     },
-    // ---------------------------------------------------------------
     clearCurrentUser: (state) => {
       state.currentUser = null;
     },
-    clearAllUsers: (state) => {
-      state.allUsers = [];
-    },
-    clearUserError: (state) => {
+    clearUsersError: (state) => {
       state.error = null;
     },
   },
   extraReducers: (builder) => {
     builder
+      // -------------------- getAllUsers --------------------
       .addCase(getAllUsers.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -158,7 +154,7 @@ export const usersSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string || 'Ошибка загрузки всех пользователей';
       })
-      // ---------------------------------------------------------------
+      // -------------------- getCurrentUser --------------------
       .addCase(getCurrentUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -171,7 +167,7 @@ export const usersSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string || 'Ошибка загрузки профиля';
       })
-      // ---------------------------------------------------------------
+      // -------------------- updateCurrentUser --------------------
       .addCase(updateCurrentUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -182,51 +178,66 @@ export const usersSlice = createSlice({
         const index = state.allUsers.findIndex(u => u.id === action.payload.id);
         if (index !== -1) state.allUsers[index] = action.payload;
       })
-      // ---------------------------------------------------------------
+      .addCase(updateCurrentUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string || 'Ошибка обновления профиля';
+      })
+      // -------------------- updateUserEmail --------------------
+      .addCase(updateUserEmail.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(updateUserEmail.fulfilled, (state, action: PayloadAction<IUser>) => {
         state.isLoading = false;
         state.currentUser = action.payload;
         const index = state.allUsers.findIndex(u => u.id === action.payload.id);
         if (index !== -1) state.allUsers[index] = action.payload;
       })
-      // ---------------------------------------------------------------
+      .addCase(updateUserEmail.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string || 'Ошибка обновления email';
+      })
+      // -------------------- uploadAvatar --------------------
+      .addCase(uploadAvatar.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(uploadAvatar.fulfilled, (state, action: PayloadAction<IUser>) => {
         state.isLoading = false;
         state.currentUser = action.payload;
         const index = state.allUsers.findIndex(u => u.id === action.payload.id);
         if (index !== -1) state.allUsers[index] = action.payload;
       })
-      // ---------------------------------------------------------------
+      .addCase(uploadAvatar.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string || 'Ошибка загрузки аватара';
+      })
+      // -------------------- toggleLike --------------------
       .addCase(toggleLike.pending, (state) => {
         state.error = null;
       })
       .addCase(toggleLike.fulfilled, (state, action) => {
         const { targetUserId, currentUserId, isLiked } = action.payload;
 
-        const userIndex = state.allUsers.findIndex(u => u.id === targetUserId);
-        if (userIndex !== -1) {
-          const user = state.allUsers[userIndex];
-          const currentLikes = user.likedBy || [];
-
+        // Обновляем в allUsers
+        const targetUser = state.allUsers.find(u => u.id === targetUserId);
+        if (targetUser) {
           if (isLiked) {
-            if (!currentLikes.includes(currentUserId)) {
-              user.likedBy = [...currentLikes, currentUserId];
+            if (!targetUser.likedBy?.includes(currentUserId)) {
+              targetUser.likedBy = [...(targetUser.likedBy || []), currentUserId];
             }
           } else {
-            user.likedBy = currentLikes.filter(id => id !== currentUserId);
+            targetUser.likedBy = targetUser.likedBy?.filter(id => id !== currentUserId) || [];
           }
-          state.allUsers[userIndex] = user;
         }
-
         // Обновляем currentUser, если это он
         if (state.currentUser?.id === targetUserId) {
-          const currentLikes = state.currentUser.likedBy || [];
           if (isLiked) {
-            if (!currentLikes.includes(currentUserId)) {
-              state.currentUser.likedBy = [...currentLikes, currentUserId];
+            if (!state.currentUser.likedBy?.includes(currentUserId)) {
+              state.currentUser.likedBy = [...(state.currentUser.likedBy || []), currentUserId];
             }
           } else {
-            state.currentUser.likedBy = currentLikes.filter(id => id !== currentUserId);
+            state.currentUser.likedBy = state.currentUser.likedBy?.filter(id => id !== currentUserId) || [];
           }
         }
       })
@@ -234,7 +245,7 @@ export const usersSlice = createSlice({
         state.error = action.payload as string || 'Ошибка при изменении лайка';
       })
       // ---------------------------------------------------------------
-      .addCase(logout.fulfilled, (state) => {
+      .addCase('auth/logout/fulfilled', (state) => { // чтобы не импортировать logout из authSlice и не создавать циклических зависимостей
         state.currentUser = null;
         state.isLoading = false;
         state.error = null;
@@ -248,17 +259,15 @@ export const {
   setAllUsers,
   setCurrentUser,
   clearCurrentUser,
-  clearUserError,
-  clearAllUsers
+  clearUsersError
 } = usersSlice.actions;
 
 // ---------------------------------------------------------------
 // Selectors
 export const selectAllUsers = (state: RootState) => state.users.allUsers;
 export const selectCurrentUser = (state: RootState) => state.users.currentUser;
-export const selectUserIsLoading = (state: RootState) => state.users.isLoading;
-export const selectUserError = (state: RootState) => state.users.error;
-export const selectIsLoading = (state: RootState) => state.users.isLoading;
+export const selectCurrentUserIsLoading = (state: RootState) => state.users.isLoading;
+export const selectCurrentUserError = (state: RootState) => state.users.error;
 
 
 export const selectFavouriteUsers = createSelector(
@@ -267,4 +276,4 @@ export const selectFavouriteUsers = createSelector(
     if (!currentUser?.id) return [];
     return allUsers.filter(user => user.likedBy?.includes(currentUser.id));
   }
-);
+)

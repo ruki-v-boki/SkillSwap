@@ -1,4 +1,5 @@
-import type { LoginCredentials, RegisterData, AuthResponse } from '@/types/auth';
+import type { LoginCredentials, AuthResponse } from '@/types/auth';
+import type { RegisterData } from '@/types/register';
 import type { IAuthAPI, IUsersAPI } from './types';
 import type { IUser, TCity } from '@/types/types';
 import { MOCK_USERS } from '@/mock/users';

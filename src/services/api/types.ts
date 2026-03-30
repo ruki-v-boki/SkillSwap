@@ -1,4 +1,5 @@
-import type { LoginCredentials, RegisterData, AuthResponse } from '@/types/auth';
+import type { LoginCredentials, AuthResponse } from '@/types/auth';
+import type { RegisterData } from '@/types/register';
 import type { IUser } from '@/types/types';
 
 // ---------------------------------------------------------------

@@ -1,4 +1,3 @@
-import { selectCurrentUser, selectIsLoading, updateCurrentUser, updateUserEmail } from "@/services/slices/userSlice";
 import { CITY_OPTIONS, GENDER_OPTIONS } from "@/constants/options";
 import { AvatarLoader } from "@/components/features/AvatarLoader";
 import { useEffect, useRef, useState, useMemo } from "react";
@@ -13,6 +12,12 @@ import { Loader } from "@/components/ui/Loader";
 import { supabase } from "@/services/supabase";
 import { Input } from "@/components/ui/Input";
 import { useForm } from "@/hooks/useForm";
+import {
+  selectCurrentUserIsLoading,
+  selectCurrentUser,
+  updateCurrentUser,
+  updateUserEmail
+} from "@/services/slices/userSlice";
 import {
   validateBirthDate,
   validateLocation,
@@ -32,7 +37,7 @@ export function PersonalDataPage() {
   const [saveSuccess, setSaveSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const user = useSelector(selectCurrentUser);
-  const isUpdatingLoading = useSelector(selectIsLoading);
+  const isUpdatingLoading = useSelector(selectCurrentUserIsLoading);
   const dispatch = useDispatch();
 
 // ---------------------------------------------------------------

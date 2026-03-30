@@ -1,6 +1,6 @@
 import type { ExchangeOffer, CreateExchangeOffer, RespondToExchange } from '@/types/exchange';
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
-import { supabase } from '@/services/supabase/client';
+// import { sendNotification } from './notificationsSlice';
 import { exchangeAPI } from '../supabase/exchangeApi';
 import type { IUser } from '@/types/types';
 import type { RootState } from '../store';
@@ -23,32 +23,6 @@ const initialState: ExchangeState = {
 
 // ---------------------------------------------------------------
 
-async function sendNotification(data: {
-  userId: string;
-  fromUserId: string;
-  type: 'offer' | 'acceptOffer';
-  title: string;
-  message: string;
-  link?: string;
-}) {
-  try {
-    const { error } = await supabase.from('notifications').insert({
-      user_id: data.userId,
-      from_user_id: data.fromUserId,
-      type: data.type,
-      title: data.title,
-      message: data.message,
-      link: data.link,
-      is_read: false,
-    });
-    if (error) console.error('Notification error:', error);
-  } catch (error) {
-    console.error('Failed to send notification:', error);
-  }
-}
-
-// ---------------------------------------------------------------
-
 export const createExchangeOffer = createAsyncThunk(
   'exchange/create',
   async ({ fromUser, data }: {
@@ -58,14 +32,14 @@ export const createExchangeOffer = createAsyncThunk(
     try {
       const offer = await exchangeAPI.createOffer(fromUser.id, data);
 
-      await sendNotification({
-        userId: data.toUserId,
-        fromUserId: fromUser.id,
-        type: 'offer',
-        title: 'Новое предложение обмена',
-        message: `${fromUser.name} предлагает вам обмен навыками`,
-        link: `/offer/${fromUser.id}`,
-      });
+      // await sendNotification({
+      //   userId: data.toUserId,
+      //   fromUserId: fromUser.id,
+      //   type: 'offer',
+      //   title: 'Новое предложение обмена',
+      //   message: `${fromUser.name} предлагает вам обмен навыками`,
+      //   link: `/offer/${fromUser.id}`,
+      // });
 
       return offer;
     } catch (error) {
@@ -78,18 +52,18 @@ export const createExchangeOffer = createAsyncThunk(
 
 export const respondToExchange = createAsyncThunk(
   'exchange/respond',
-  async ({ userId, data, fromUser }: { userId: string; data: RespondToExchange; fromUser: IUser }, { rejectWithValue }) => {
+  async ({ userId, data }: { userId: string; data: RespondToExchange; fromUser: IUser }, { rejectWithValue }) => {
     try {
       const offer = await exchangeAPI.respondToOffer(userId, data);
 
-      await sendNotification({
-        userId: offer.fromUserId,
-        fromUserId: userId,
-        type: 'acceptOffer',
-        title: data.status === 'accepted' ? 'Предложение принято' : 'Предложение отклонено',
-        message: `${fromUser.name} ${data.status === 'accepted' ? 'принял' : 'отклонил'} ваше предложение`,
-        link: `/offer/${userId}`,
-      });
+      // await sendNotification({
+      //   userId: offer.fromUserId,
+      //   fromUserId: userId,
+      //   type: 'acceptOffer',
+      //   title: data.status === 'accepted' ? 'Предложение принято' : 'Предложение отклонено',
+      //   message: `${fromUser.name} ${data.status === 'accepted' ? 'принял' : 'отклонил'} ваше предложение`,
+      //   link: `/offer/${userId}`,
+      // });
 
       return offer;
     } catch (error) {

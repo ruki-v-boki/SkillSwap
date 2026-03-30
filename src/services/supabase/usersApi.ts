@@ -1,4 +1,5 @@
-import { transformToIUser, type SupabaseProfile, type SupabaseSkill } from './types';
+import { getUserWithSkills, transformToIUser, updateUserInDB } from './userHelpers';
+import type { SupabaseProfile, SupabaseSkill } from './types';
 import type { IUsersAPI } from '../api/types';
 import type { IUser } from '@/types/types';
 import { supabase } from './client';
@@ -69,63 +70,14 @@ export class SupabaseUsersAPI implements IUsersAPI {
 // --------------- Get User By Id ---------------
 
   async getUserById(id: string): Promise<IUser> {
-
-    const { data: user, error: userError } = await supabase
-      .from('users')
-      .select('id, email, name, location, age, birth_date, about, gender, avatar_url, liked_by, created_at')
-      .eq('id', id)
-      .maybeSingle()
-
-    if (userError) throw new Error(userError.message);
-
-    const { data: skills, error: skillsError } = await supabase
-      .from('skills')
-      .select('*')
-      .eq('user_id', id);
-
-    if (skillsError) throw new Error(skillsError.message);
-
-    const teachSkillRaw = skills.find(s => s.type === 'teach');
-    const teachSkill = teachSkillRaw ? {
-      id: teachSkillRaw.id,
-      categoryId: teachSkillRaw.category_id,
-      subcategoryId: teachSkillRaw.subcategory_id,
-      customName: teachSkillRaw.custom_name || '',
-      description: teachSkillRaw.description || undefined,
-      images: teachSkillRaw.images || [],
-    } : undefined;
-
-    const learnSkills = skills
-      .filter(s => s.type === 'learn')
-      .map(s => ({
-        id: s.id,
-        categoryId: s.category_id,
-        subcategoryId: s.subcategory_id,
-      }));
-
-    return transformToIUser(user as SupabaseProfile, teachSkill, learnSkills);
+    return getUserWithSkills(id);
   }
 
 // --------------- Update User ---------------
 
   async updateUser(id: string, data: Partial<IUser>): Promise<IUser> {
-    const { error } = await supabase
-      .from('users')
-      .update({
-        name: data.name,
-        location: data.location,
-        age: data.age,
-        birth_date: data.birthDate,
-        about: data.about,
-        gender: data.gender,
-        avatar_url: data.avatar,
-        liked_by: data.likedBy,
-      })
-      .eq('id', id);
-
-    if (error) throw new Error(error.message);
-
-    return this.getUserById(id);
+    await updateUserInDB(id, data);
+    return getUserWithSkills(id);
   }
 
 // --------------- Toggle Like ---------------

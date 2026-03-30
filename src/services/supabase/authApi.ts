@@ -1,6 +1,7 @@
-import type { LoginCredentials, RegisterData, AuthResponse } from '@/types/auth';
-import type { IUser, CanTeachSkill, WantToLearnSkill } from '@/types/types';
-import { transformToIUser, type SupabaseProfile } from './types';
+import type { LoginCredentials, AuthResponse } from '@/types/auth';
+import { getUserWithSkills, updateUserInDB } from './userHelpers';
+import type { RegisterData } from '@/types/register';
+import type { IUser } from '@/types/types';
 import { supabase } from './client';
 
 // ---------------------------------------------------------------
@@ -152,67 +153,15 @@ export class SupabaseAuthAPI {
 // --------------- Get User Profile ---------------
 
   async getUserProfile(userId: string): Promise<IUser> {
-    // Получаем данные пользователя
-    const { data: userData, error: userError } = await supabase
-      .from('users')
-      .select('id, email, name, location, age, birth_date, about, gender, avatar_url, liked_by, created_at')
-      .eq('id', userId)
-      .maybeSingle()
-
-    if (userError) throw new Error(userError.message);
-
-    // Получаем все навыки пользователя
-    const { data: skillsData, error: skillsError } = await supabase
-      .from('skills')
-      .select('*')
-      .eq('user_id', userId);
-
-    if (skillsError) throw new Error(skillsError.message);
-
-    // Находим навык "могу научить"
-    const teachSkillRaw = skillsData.find(s => s.type === 'teach');
-    const teachSkill: CanTeachSkill | undefined = teachSkillRaw ? {
-      id: teachSkillRaw.id,
-      categoryId: teachSkillRaw.category_id,
-      subcategoryId: teachSkillRaw.subcategory_id,
-      customName: teachSkillRaw.custom_name || '',
-      description: teachSkillRaw.description || undefined,
-      images: teachSkillRaw.images || [],
-    } : undefined;
-
-    // Находим навыки "хочу научиться"
-    const learnSkills: WantToLearnSkill[] = skillsData
-      .filter(s => s.type === 'learn')
-      .map(s => ({
-        id: s.id,
-        categoryId: s.category_id,
-        subcategoryId: s.subcategory_id,
-      }));
-    return transformToIUser(userData as SupabaseProfile, teachSkill, learnSkills);
+    return getUserWithSkills(userId);
   }
 
 // --------------- Update User ---------------
 
   async updateUser(userId: string, data: Partial<IUser>): Promise<IUser> {
-    const { error } = await supabase
-      .from('users')
-      .update({
-        name: data.name,
-        location: data.location,
-        age: data.age,
-        birth_date: data.birthDate,
-        about: data.about,
-        gender: data.gender,
-        avatar_url: data.avatar,
-        liked_by: data.likedBy,
-      })
-      .eq('id', userId);
-
-    if (error) throw new Error(error.message);
-
-    return this.getUserProfile(userId);
+    await updateUserInDB(userId, data);
+    return getUserWithSkills(userId);
   }
-
 
 // --------------- Upload Avatar ---------------
 

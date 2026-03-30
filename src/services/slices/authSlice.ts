@@ -1,10 +1,9 @@
+import type { LoginCredentials, AuthResponse } from '@/types/auth';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { supabase } from '@/services/supabase/client';
-import type { LoginCredentials } from '@/types/auth';
 import type { RootState } from '@/services/store';
 import { authAPI } from '@/services/api';
-import { usersSlice } from './userSlice';
 
 // ---------------------------------------------------------------
 
@@ -40,18 +39,15 @@ export const checkAuth = createAsyncThunk(
 
         if (!profile) {
           await supabase.auth.signOut();
-
-          // Очищаем localStorage на всякий случай
           localStorage.removeItem('token');
           localStorage.removeItem('userId');
-          
           return null;
         }
 
         return userId;
       }
     } catch (error) {
-      console.error('Check auth error:', error);
+      console.error('Ошибка проверки авторизации:', error);
       await supabase.auth.signOut();
     }
     return null;
@@ -60,25 +56,27 @@ export const checkAuth = createAsyncThunk(
 
 // ---------------------------------------------------------------
 
-export const login = createAsyncThunk(
+export const login = createAsyncThunk<
+  AuthResponse,
+  LoginCredentials,
+  { rejectValue: string }
+>(
   'auth/login',
-  async (credentials: LoginCredentials) => {
-    const response = await authAPI.login(credentials);
-    return response.user.id;
+  async (credentials: LoginCredentials, { rejectWithValue }) => {
+    try {
+      return await authAPI.login(credentials);
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Ошибка входа');
+    }
   }
 );
 
 // ---------------------------------------------------------------
 
-export const logout = createAsyncThunk(
-  'auth/logout',
-  async (_, { dispatch }) => {
-    dispatch(setUserId(''));
-    await authAPI.logout();
-    dispatch(usersSlice.actions.clearCurrentUser());
-    return null;
+export const logout = createAsyncThunk('auth/logout', async () => {
+  await supabase.auth.signOut();
+  return null;
 });
-
 
 // ---------------------------------------------------------------
 
@@ -86,7 +84,7 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setUserId: (state, action: PayloadAction<string>) => {
+    setUserId: (state, action: PayloadAction<string | null>) => {
       state.userId = action.payload;
     },
     setAuthChecked: (state) => {
@@ -98,6 +96,7 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // -------------------- checkAuth --------------------
       .addCase(checkAuth.pending, (state) => {
         state.error = null;
         state.isLoading = true;
@@ -112,20 +111,20 @@ export const authSlice = createSlice({
         state.isAuthChecked = true;
         state.error = action.error.message || 'Ошибка проверки авторизации';
       })
-// ---------------------------------------------------------------
+      // -------------------- login --------------------
       .addCase(login.pending, (state) => {
         state.error = null;
         state.isLoading = true;
       })
-      .addCase(login.fulfilled, (state, action: PayloadAction<string>) => {
+      .addCase(login.fulfilled, (state, action: PayloadAction<AuthResponse>) => {
         state.isLoading = false;
-        state.userId = action.payload;
+        state.userId = action.payload.user.id
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message || 'Ошибка входа';
+        state.error = action.payload as string;
       })
-// ---------------------------------------------------------------
+      // -------------------- logout --------------------
       .addCase(logout.pending, (state) => {
         state.error = null;
         state.isLoading = true;
@@ -151,7 +150,7 @@ export const {
 
 // ---------------------------------------------------------------
 // Selectors
-export const selectUserId = (state: RootState) => state.auth.userId;
+export const selectAuthUserId = (state: RootState) => state.auth.userId;
 export const selectIsAuthChecked = (state: RootState) => state.auth.isAuthChecked;
 export const selectIsAuthLoading = (state: RootState) => state.auth.isLoading;
 export const selectAuthError = (state: RootState) => state.auth.error;

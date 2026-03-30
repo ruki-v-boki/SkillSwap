@@ -3,7 +3,7 @@ import { selectExchangeLoading } from '@/services/slices/exchangeSlice';
 import { SocialButtonsUI } from '@/components/ui/SocialButtons';
 import { OfferDetailsUI } from '@/components/ui/OfferDetails';
 import { useDispatch, useSelector } from '@/services/store';
-import { selectUserId } from '@/services/slices/authSlice';
+import { selectAuthUserId } from '@/services/slices/authSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SliderUI } from '@/components/ui/Slider';
 import { Loader } from '@/components/ui/Loader';
@@ -19,7 +19,7 @@ export function OfferPage() {
   const { id } = useParams();
 
   const allUsers = useSelector(selectAllUsers);
-  const currentUserId = useSelector(selectUserId);
+  const currentUserId = useSelector(selectAuthUserId);
   const isExchangeLoading = useSelector(selectExchangeLoading);
 
   const offerAuthor = allUsers.find(author => author.id === id);

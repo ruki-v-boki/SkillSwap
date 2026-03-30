@@ -2,7 +2,7 @@ import { selectFavouriteUsers, toggleLike } from '@/services/slices/userSlice';
 import { SocialButtonsUI } from '@/components/ui/SocialButtons';
 import { OfferDetailsUI } from '@/components/ui/OfferDetails';
 import { useDispatch, useSelector } from '@/services/store';
-import { selectUserId } from '@/services/slices/authSlice';
+import { selectAuthUserId } from '@/services/slices/authSlice';
 import styles from './FavouritesPage.module.css';
 import { Button } from '@/components/ui/Button';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +14,7 @@ import { useState } from 'react';
 export function FavouritesPage() {
 
   const favouriteUsers = useSelector(selectFavouriteUsers);
-  const currentUserId = useSelector(selectUserId);
+  const currentUserId = useSelector(selectAuthUserId);
   const [pendingLikeId, setPendingLikeId] = useState<string | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();

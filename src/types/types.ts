@@ -5,7 +5,6 @@ import type { CITIES } from "@/constants/cities";
 
 export type TGender = 'male' | 'female' | 'any'
 export type TCity = typeof CITIES[number];
-export type TNotifications = 'offer' | 'acceptOffer';
 
 // ---------------------------------------------------------------
 

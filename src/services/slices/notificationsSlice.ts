@@ -1,40 +1,53 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
+import type { Notification } from '@/types/notifications';
 import { supabase } from '@/services/supabase/client';
-import type { TNotifications } from '@/types/types';
 import type { RootState } from '@/services/store';
 
 // ---------------------------------------------------------------
 
-export interface Notification {
-  id: string;
-  userId: string;
-  fromUserId: string;
-  type: TNotifications;
-  title: string;
-  message: string;
-  link?: string;
-  isRead: boolean;
-  created_at: string;
-}
-
 interface NotificationsState {
-  items: Notification[];
-  unreadCount: number;
-  isLoading: boolean;
-  error: string | null;
+  notifications: Notification[];
+  unreadCount: number,
+  isNotificationsLoading: boolean;
+  notificationsError: string | null;
 }
 
 const initialState: NotificationsState = {
-  items: [],
+  notifications: [],
   unreadCount: 0,
-  isLoading: false,
-  error: null,
+  isNotificationsLoading: false,
+  notificationsError: null,
 };
 
 // ---------------------------------------------------------------
 
-export const fetchNotifications = createAsyncThunk(
-  'notifications/fetch',
+export const sendNotification = createAsyncThunk(
+  'notifications/send',
+  async (data: Notification, { rejectWithValue }) => {
+    try {
+      const { error } = await supabase
+      .from('notifications')
+      .insert({
+        id: data.notificationId,
+        user_id: data.toUserId,
+        from_user_id: data.fromUserId,
+        type: data.type,
+        title: data.title,
+        message: data.message,
+        link: data.link,
+        is_read: false,
+      });
+      if (error) console.error('Notification error:', error);
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Ошибка отправки уведомления');
+    }
+  }
+)
+
+// ---------------------------------------------------------------
+
+export const getAllNotifications = createAsyncThunk(
+  'notifications/getAll',
   async (userId: string, { rejectWithValue }) => {
     try {
       const { data, error } = await supabase
@@ -98,44 +111,45 @@ export const notificationsSlice = createSlice({
   initialState,
   reducers: {
     addNotification: (state, action: PayloadAction<Notification>) => {
-      state.items.unshift(action.payload);
+      state.notifications.unshift(action.payload);
       if (!action.payload.isRead) {
         state.unreadCount++;
       }
     },
     clearNotifications: (state) => {
-      state.items = [];
+      state.notifications = [];
       state.unreadCount = 0;
     },
     clearError: (state) => {
-      state.error = null;
+      state.notificationsError = null;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchNotifications.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
+      .addCase(getAllNotifications.pending, (state) => {
+        state.isNotificationsLoading = true;
+        state.notificationsError = null;
       })
-      .addCase(fetchNotifications.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.items = action.payload;
+      .addCase(getAllNotifications.fulfilled, (state, action) => {
+        state.isNotificationsLoading = false;
+        state.notifications = action.payload;
         state.unreadCount = action.payload.filter(n => !n.is_read).length;
       })
-      .addCase(fetchNotifications.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
+      .addCase(getAllNotifications.rejected, (state, action) => {
+        state.isNotificationsLoading = false;
+        state.notificationsError = action.payload as string;
       })
   // ---------------------------------------------------------------
       .addCase(markAsRead.fulfilled, (state, action) => {
-        const notification = state.items.find(n => n.id === action.payload);
+        const notification = state.notifications.find(n => n.notificationId === action.payload);
         if (notification && !notification.isRead) {
           notification.isRead = true;
           state.unreadCount--;
         }
       })
+  // ---------------------------------------------------------------
       .addCase(markAllAsRead.fulfilled, (state) => {
-        state.items.forEach(n => { n.isRead = true; });
+        state.notifications.forEach(n => { n.isRead = true; });
         state.unreadCount = 0;
       });
   },
@@ -151,6 +165,6 @@ export const {
 
 // ---------------------------------------------------------------
 // Selectors
-export const selectNotifications = (state: RootState) => state.notifications.items;
+export const selectNotifications = (state: RootState) => state.notifications.notifications;
 export const selectUnreadCount = (state: RootState) => state.notifications.unreadCount;
-export const selectNotificationsLoading = (state: RootState) => state.notifications.isLoading;
+export const selectIsNotificationsLoading = (state: RootState) => state.notifications.isNotificationsLoading;

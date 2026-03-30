@@ -39,10 +39,14 @@ export function Step3Form({
       setImages(initialData.images);
     } else if (!initialData?.images || initialData.images.length === 0) {
       imagePreviews.forEach(url => URL.revokeObjectURL(url));
+
       setImagePreviews([]);
       setImages([]);
     }
-  }, [initialData?.images, imagePreviews]);
+  }, [
+    initialData?.images,
+    imagePreviews
+  ]);
 
 // ---------------------------------------------------------------
 
@@ -92,8 +96,10 @@ export function Step3Form({
 
 // ---------------------------------------------------------------
 
-  const isFormValid = isValid('customName') && isValid('categoryId') && 
-                      isValid('subcategoryId') && isValid('description');
+  const isFormValid = isValid('customName')
+                    && isValid('categoryId')
+                    && isValid('subcategoryId')
+                    && isValid('description');
 
 // ---------------------------------------------------------------
 
@@ -155,6 +161,7 @@ export function Step3Form({
 
   const removeImage = (index: number) => {
     URL.revokeObjectURL(imagePreviews[index]);
+
     setImagePreviews(prev => prev.filter((_, i) => i !== index));
     setImages(prev => prev.filter((_, i) => i !== index));
   };

@@ -1,8 +1,9 @@
 import { login, selectIsAuthLoading, selectAuthError } from '@/services/slices/authSlice';
-import { selectUserIsLoading } from '@/services/slices/userSlice';
+import { selectCurrentUserIsLoading } from '@/services/slices/userSlice';
 import { useDispatch, useSelector } from '@/services/store';
 import { FormHintUI } from '@/components/ui/FormHint';
 import { LoginForm } from '@/components/ui/LoginForm';
+import type { LoginCredentials } from '@/types/auth';
 import lamp from '@/assets/icons/light-bulb.svg';
 import { Loader } from '@/components/ui/Loader';
 import { useNavigate } from 'react-router-dom';
@@ -14,19 +15,16 @@ export function LoginPage() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const isAuthLoading = useSelector(selectIsAuthLoading);
-  const isUserLoading = useSelector(selectUserIsLoading)
+  const isUserLoading = useSelector(selectCurrentUserIsLoading);
   const error = useSelector(selectAuthError);
 
 // ---------------------------------------------------------------
 
-  const handleLogin = async (
-    data: {
-      email: string;
-      password: string
-    }) => {
-      try {
-        await dispatch(login(data)).unwrap();
+  const handleLogin = async (credentials: LoginCredentials) => {
+    try {
+        await dispatch(login(credentials)).unwrap();
         navigate('/profile');
       } catch (err) {
         console.error('Ошибка входа', err);
@@ -41,13 +39,15 @@ export function LoginPage() {
 
 // ---------------------------------------------------------------
 
-  if(isUserLoading || isAuthLoading) return <Loader />
+  if(isAuthLoading || isUserLoading) return <Loader />
 
 // ---------------------------------------------------------------
 
   return (
     <div className={styles.loginPage}>
-      <h2 className={`${styles.loginPageTitle} h-2`}>Вход</h2>
+      <h2 className={`${styles.loginPageTitle} h-2`}>
+        Вход
+      </h2>
 
       <main className={styles.loginPageMain}>
         <div className={styles.formContainer}>

@@ -1,4 +1,4 @@
-import type { RegistrationPreview } from "@/types/auth";
+import type { RegistrationPreview } from "@/types/register";
 
 // ---------------------------------------------------------------
 

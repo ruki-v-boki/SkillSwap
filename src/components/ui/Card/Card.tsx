@@ -1,7 +1,7 @@
 import { getAgeWord, getCategoryById, getSubcategoryById, getUserRating } from '@/utils/helpers';
 import { useDispatch, useSelector } from '@/services/store';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { selectUserId } from '@/services/slices/authSlice';
+import { selectAuthUserId } from '@/services/slices/authSlice';
 import { toggleLike } from '@/services/slices/userSlice';
 import { LikeButtonUI } from '../LikeButtonUI';
 import { SkillsListUI } from './SkillsList';
@@ -21,7 +21,7 @@ export function CardUI({
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const currentUserId = useSelector(selectUserId);
+  const currentUserId = useSelector(selectAuthUserId);
   const isExpandedView = styleType === 'profile' || styleType === 'modal';
   const isInteractive = styleType === 'catalog' || styleType === 'modal';
   const isCatalog = styleType === 'catalog';

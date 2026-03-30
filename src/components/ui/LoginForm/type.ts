@@ -3,7 +3,7 @@ export type LoginFormProps = {
   onGoogleClick: () => void;
   onAppleClick: () => void;
   onLoginClick: (data: { email: string; password: string }) => void;
-  onRegisterClick: () => void;
+  onRegisterClick?: () => void;
   isLoading?: boolean;
   loginError?: string | null;
   initialEmail?: string;

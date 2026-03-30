@@ -5,9 +5,9 @@ import { useRealtimeNotifications } from '@/hooks/useRealtimeNotifications';
 import { UserSkillsPage } from '@/pages/Profile/UserSkills/UserSkillsPage';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { FavouritesPage } from '@/pages/Profile/Favourites/FavouritesPage';
-import { fetchNotifications } from '@/services/slices/notificationsSlice';
+import { getAllNotifications } from '@/services/slices/notificationsSlice';
 import { ExchangesPage } from '@/pages/Profile/Exchanges/ExchangesPage';
-import { checkAuth, selectUserId } from '@/services/slices/authSlice';
+import { checkAuth, selectAuthUserId } from '@/services/slices/authSlice';
 import { RequestsPage } from '@/pages/Profile/Requests/RequestsPage';
 import { useRealtimeExchanges } from '@/hooks/useRealtimeExchanges';
 import { NotFoundPage, ServerErrorPage } from '@/pages/Error';
@@ -29,7 +29,7 @@ import { ProtectedRoute } from '@/routes';
 import { BlogPage } from '@/pages/Blog';
 import { useEffect } from 'react';
 import {
-  selectUserIsLoading,
+  selectCurrentUserIsLoading,
   selectCurrentUser,
   getCurrentUser,
   getAllUsers,
@@ -43,9 +43,9 @@ export function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const userId = useSelector(selectUserId);
+  const userId = useSelector(selectAuthUserId);
   const currentUser = useSelector(selectCurrentUser);
-  const isLoading = useSelector(selectUserIsLoading);
+  const isLoading = useSelector(selectCurrentUserIsLoading);
 
   const background = location.state?.background;
   const closeModal = () => navigate(-1);
@@ -65,7 +65,7 @@ export function App() {
   useEffect(() => {
     if (userId && !currentUser && !isLoading) {
       dispatch(getCurrentUser(userId));
-      dispatch(fetchNotifications(userId));
+      dispatch(getAllNotifications(userId));
       dispatch(fetchMyOffers(userId));
       dispatch(fetchPendingIncoming(userId));
     }

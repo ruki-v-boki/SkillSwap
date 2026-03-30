@@ -1,7 +1,7 @@
 import { clearNotifications, markAllAsRead, markAsRead, selectNotifications } from '@/services/slices/notificationsSlice';
 import { useRealtimeNotifications } from '@/hooks/useRealtimeNotifications';
 import { useDispatch, useSelector } from '@/services/store';
-import { selectUserId } from '@/services/slices/authSlice';
+import { selectAuthUserId } from '@/services/slices/authSlice';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './NotificationsCenter.module.css';
 
@@ -12,7 +12,7 @@ export function NotificationCenter() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const currentUserId = useSelector(selectUserId)
+  const currentUserId = useSelector(selectAuthUserId)
   const notifications = useSelector(selectNotifications);
 
   const unreadNotifications = notifications.filter(n => !n.isRead);
@@ -115,7 +115,7 @@ export function NotificationCenter() {
           <ul className={styles.list}>
             {unreadNotifications.map(notification => (
               <li
-                key={notification.id}
+                key={notification.notificationId}
                 className={styles.notificationItem}
               >
                 <header className={styles.header}>
@@ -140,7 +140,7 @@ export function NotificationCenter() {
                 <NavLink
                   to={notification.link || '#'}
                   className={`${styles.link} h-body`}
-                  onClick={() => handleNotificationClick(notification.id, notification.link)}
+                  onClick={() => handleNotificationClick(notification.notificationId, notification.link)}
                 >
                   Перейти
                 </NavLink>
@@ -178,7 +178,7 @@ export function NotificationCenter() {
           <ul className={styles.list}>
             {readNotifications.map(notification => (
               <li
-                key={notification.id}
+                key={notification.notificationId}
                 className={styles.notificationItem}
               >
                 <header className={styles.header}>

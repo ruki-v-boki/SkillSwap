@@ -1,5 +1,5 @@
-import { CITY_OPTIONS, CATEGORY_OPTIONS, GENDER_OPTIONS } from '@/constants/options';
 import { validateName, validateLocation, validateBirthDate } from '@/utils/validators';
+import { CITY_OPTIONS, CATEGORY_OPTIONS, GENDER_OPTIONS } from '@/constants/options';
 import { AvatarLoader } from '@/components/features/AvatarLoader/AvatarLoader';
 import { getSubcategoryOptionsForMultiple } from '@/utils/helpers';
 import { DatePicker } from '@/components/ui/DatePicker';
@@ -169,7 +169,7 @@ export function Step2Form({
           type="single"
           label="Пол"
           value={formData.gender}
-          onChange={(v) => handleChange('gender', v)}
+          onChange={(g) => handleChange('gender', g)}
           options={GENDER_OPTIONS}
           isValid
         />
@@ -180,7 +180,7 @@ export function Step2Form({
         type="single"
         label="Город"
         value={formData.location}
-        onChange={(v) => handleChange('location', v)}
+        onChange={(l) => handleChange('location', l)}
         options={CITY_OPTIONS}
         error={getError('location')}
         isValid={isValid('location')}
@@ -215,11 +215,21 @@ export function Step2Form({
 
       {/* ---------- Кнопки ---------- */}
       <div className={styles.buttonsBox}>
-        <Button variant="outline" onClick={onBack} type="button" fullWidth>
-          Назад
+        <Button
+          variant="outline"
+          onClick={onBack}
+          type="button"
+          fullWidth
+          >
+            Назад
         </Button>
-        <Button variant="prime" type="submit" fullWidth disabled={!isFormValid}>
-          Далее
+        <Button
+          variant="prime"
+          type="submit"
+          fullWidth
+          disabled={!isFormValid}
+          >
+            Далее
         </Button>
       </div>
     </form>

@@ -1,10 +1,4 @@
-import type {
-  IUser,
-  CanTeachSkill,
-  WantToLearnSkill,
-  TGender,
-  TCity
-} from '@/types/types';
+import type { TGender, TCity } from '@/types/types';
 
 // ---------------------------------------------------------------
 
@@ -33,35 +27,4 @@ export type SupabaseSkill = {
   custom_name: string | null;
   description: string | null;
   images: string[] | null;
-};
-
-// ---------------------------------------------------------------
-
-export const transformToIUser = (
-  supabaseUser: SupabaseProfile,
-  teachSkill?: CanTeachSkill,
-  learnSkills?: WantToLearnSkill[]
-): IUser => {
-  return {
-    id: supabaseUser.id,
-    email: supabaseUser.email,
-    name: supabaseUser.name,
-    location: supabaseUser.location,
-    age: supabaseUser.age,
-    birthDate: supabaseUser.birth_date || null,
-    about: supabaseUser.about,
-    gender: supabaseUser.gender,
-    createdAt: supabaseUser.created_at,
-    avatar: supabaseUser.avatar_url || undefined,
-    likedBy: supabaseUser.liked_by || [],
-    canTeach: teachSkill || {
-      id: '',
-      categoryId: '',
-      subcategoryId: '',
-      customName: '',
-      description: '',
-      images: []
-    },
-    wantToLearn: learnSkills || [],
-  };
 };
