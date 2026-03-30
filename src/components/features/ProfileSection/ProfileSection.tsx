@@ -1,8 +1,8 @@
 import { ProfileSectionUI } from '@/components/ui/ProfileSection';
 import { selectCurrentUser } from '@/services/slices/userSlice';
-import { ThemeToggler } from '@/components/ui/ThemeToggler';
 import { AuthButtonsUI } from '@/components/ui/AuthButtons';
 import styles from './ProfileSection.module.css';
+import { getCachedUser } from '@/utils/helpers';
 import { useSelector } from '@/services/store';
 import { useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
@@ -12,7 +12,9 @@ import { useCallback } from 'react';
 export function ProfileSection() {
 
   const navigate = useNavigate();
+  const cachedUser = getCachedUser();
   const currentUser = useSelector(selectCurrentUser);
+  const userToShow = currentUser || cachedUser;
 
 // ---------------------------------------------------------------
 
@@ -21,16 +23,17 @@ export function ProfileSection() {
 
 // ---------------------------------------------------------------
 
-  return currentUser ? (
-    <ProfileSectionUI user={currentUser} />
-  ) : (
+  return (
     <div className={styles.profileSectionHeaderBox}>
-      <ThemeToggler />
-      <AuthButtonsUI
-        variant="header"
-        onLoginClick={handleLoginClick}
-        onRegisterClick={handleRegisterClick}
-      />
+      {userToShow ? (
+        <ProfileSectionUI user={userToShow} />
+      ) : (
+        <AuthButtonsUI
+          variant="header"
+          onLoginClick={handleLoginClick}
+          onRegisterClick={handleRegisterClick}
+        />
+      )}
     </div>
   );
-};
+}

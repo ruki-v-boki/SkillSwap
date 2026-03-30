@@ -1,9 +1,10 @@
 import { selectFilteredUsers, selectHasActiveFilters } from '@/services/slices/filterSlice';
 import { containerVariants, noResultsVariants, sectionVariants } from './framerMotion';
-import { selectAllUsers, selectCurrentUser } from '@/services/slices/userSlice';
+import { selectAllUsers, selectCurrentUser, selectIsAllUsersLoading } from '@/services/slices/userSlice';
 import { resetFilters } from '@/services/slices/filterSlice';
 import { CatalogSectionUI } from '../../ui/CatalogSection';
 import noResultsIcon from '@/assets/icons/noResults.svg';
+import { Loader } from '@/components/ui/Loader';
 import { getUserRating } from '@/utils/helpers';
 import { useSelector } from '@/services/store';
 import { useDispatch } from '@/services/store';
@@ -17,7 +18,9 @@ import { useMemo } from 'react';
 export function Catalog() {
 
   const dispatch = useDispatch();
+
   const allUsers = useSelector(selectAllUsers);
+  const isAllUsersLoading = useSelector(selectIsAllUsersLoading);
   const filteredUsers = useSelector(selectFilteredUsers);
   const hasFilters = useSelector(selectHasActiveFilters);
   const currentUser = useSelector(selectCurrentUser);
@@ -60,6 +63,10 @@ export function Catalog() {
   const handleResetFilters = () => {
     dispatch(resetFilters());
   };
+
+// ---------------------------------------------------------------
+
+  if (isAllUsersLoading) return <Loader />
 
 // ---------------------------------------------------------------
 

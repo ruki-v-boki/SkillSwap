@@ -10,6 +10,8 @@ interface IUserState {
   allUsers: IUser[];
   currentUser: IUser | null;
   isLoading: boolean;
+  isAllUsersLoading: boolean;
+  allUsersLoaded: boolean;
   error: string | null;
 }
 
@@ -17,6 +19,8 @@ const initialState: IUserState = {
   allUsers: [],
   currentUser: null,
   isLoading: false,
+  isAllUsersLoading: false,
+  allUsersLoaded: false,
   error: null
 };
 
@@ -143,15 +147,16 @@ export const usersSlice = createSlice({
     builder
       // -------------------- getAllUsers --------------------
       .addCase(getAllUsers.pending, (state) => {
-        state.isLoading = true;
+        state.isAllUsersLoading = true;
         state.error = null;
       })
       .addCase(getAllUsers.fulfilled, (state, action: PayloadAction<IUser[]>) => {
-        state.isLoading = false;
+        state.isAllUsersLoading = false;
         state.allUsers = action.payload;
+        state.allUsersLoaded = true;
       })
       .addCase(getAllUsers.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isAllUsersLoading = false;
         state.error = action.payload as string || 'Ошибка загрузки всех пользователей';
       })
       // -------------------- getCurrentUser --------------------
@@ -267,6 +272,8 @@ export const {
 export const selectAllUsers = (state: RootState) => state.users.allUsers;
 export const selectCurrentUser = (state: RootState) => state.users.currentUser;
 export const selectCurrentUserIsLoading = (state: RootState) => state.users.isLoading;
+export const selectIsAllUsersLoading = (state: RootState) => state.users.isAllUsersLoading;
+export const selectAllUsersLoaded = (state: RootState) => state.users.allUsersLoaded;
 export const selectCurrentUserError = (state: RootState) => state.users.error;
 
 

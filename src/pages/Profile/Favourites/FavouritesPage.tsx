@@ -1,9 +1,10 @@
-import { selectFavouriteUsers, toggleLike } from '@/services/slices/userSlice';
+import { selectFavouriteUsers, toggleLike, selectCurrentUserIsLoading } from '@/services/slices/userSlice';
+import { selectAuthUserId, selectIsAuthChecked } from '@/services/slices/authSlice';
 import { SocialButtonsUI } from '@/components/ui/SocialButtons';
 import { OfferDetailsUI } from '@/components/ui/OfferDetails';
 import { useDispatch, useSelector } from '@/services/store';
-import { selectAuthUserId } from '@/services/slices/authSlice';
 import styles from './FavouritesPage.module.css';
+import { Loader } from '@/components/ui/Loader';
 import { Button } from '@/components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { getAgeWord } from '@/utils/helpers';
@@ -13,14 +14,24 @@ import { useState } from 'react';
 
 export function FavouritesPage() {
 
-  const favouriteUsers = useSelector(selectFavouriteUsers);
-  const currentUserId = useSelector(selectAuthUserId);
-  const [pendingLikeId, setPendingLikeId] = useState<string | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const favouriteUsers = useSelector(selectFavouriteUsers);
+  const currentUserId = useSelector(selectAuthUserId);
+  const isAuthChecked = useSelector(selectIsAuthChecked);
+  const isCurrentUserLoading = useSelector(selectCurrentUserIsLoading);
+
+  const [pendingLikeId, setPendingLikeId] = useState<string | null>(null);
   const title = 'Избранное';
 
-// ---------------------------------------------------------------
+  // ---------------------------------------------------------------
+
+  if (!isAuthChecked || isCurrentUserLoading) {
+    return  <Loader />
+  }
+
+  // ---------------------------------------------------------------
 
   const handleLikeClick = async (targetUserId: string) => {
     if (!currentUserId || pendingLikeId === targetUserId) return;
@@ -38,7 +49,7 @@ export function FavouritesPage() {
     }
   };
 
-// ---------------------------------------------------------------
+  // ---------------------------------------------------------------
 
   if (favouriteUsers.length === 0) {
     return (
@@ -54,12 +65,12 @@ export function FavouritesPage() {
           className={styles.emptyStateButton}
         >
           Перейти в каталог
-          </Button>
+        </Button>
       </div>
     );
   }
 
-// ---------------------------------------------------------------
+  // ---------------------------------------------------------------
 
   return (
     <main className={styles.favouritesPage}>

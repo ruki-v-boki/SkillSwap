@@ -6,8 +6,8 @@ import { UserSkillsPage } from '@/pages/Profile/UserSkills/UserSkillsPage';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { FavouritesPage } from '@/pages/Profile/Favourites/FavouritesPage';
 import { getAllNotifications } from '@/services/slices/notificationsSlice';
-import { ExchangesPage } from '@/pages/Profile/Exchanges/ExchangesPage';
 import { checkAuth, selectAuthUserId } from '@/services/slices/authSlice';
+import { ExchangesPage } from '@/pages/Profile/Exchanges/ExchangesPage';
 import { RequestsPage } from '@/pages/Profile/Requests/RequestsPage';
 import { useRealtimeExchanges } from '@/hooks/useRealtimeExchanges';
 import { NotFoundPage, ServerErrorPage } from '@/pages/Error';
@@ -19,7 +19,6 @@ import { HomePage } from '@/pages/Home/HomePage';
 import { ModalUI } from '@/components/ui/Modal';
 import { ContactsPage } from '@/pages/Contacts';
 import { RegisterPage } from '@/pages/Register';
-import { Loader } from '@/components/ui/Loader';
 import { ProfilePage } from '@/pages/Profile';
 import { PolicyPage } from '@/pages/Policy';
 import { TermsPage } from '@/pages/Terms';
@@ -46,7 +45,7 @@ export function App() {
 
   const userId = useSelector(selectAuthUserId);
   const currentUser = useSelector(selectCurrentUser);
-  const isLoading = useSelector(selectCurrentUserIsLoading);
+  const isCurrentUserLoading = useSelector(selectCurrentUserIsLoading);
 
   const background = location.state?.background;
   const closeModal = () => navigate(-1);
@@ -64,7 +63,7 @@ export function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (userId && !currentUser && !isLoading) {
+    if (userId && !currentUser && !isCurrentUserLoading) {
       dispatch(getCurrentUser(userId));
       dispatch(getAllNotifications(userId));
       dispatch(fetchMyOffers(userId));
@@ -74,14 +73,10 @@ export function App() {
     userId,
     currentUser,
     dispatch,
-    isLoading
+    isCurrentUserLoading
   ]);
 
 // ---------------------------------------------------------------
-
-  if (isLoading) return <Loader />
-// ---------------------------------------------------------------
-
 
   return (
     <>

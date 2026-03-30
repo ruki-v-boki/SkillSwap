@@ -105,6 +105,11 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthChecked = true;
         state.userId = action.payload;
+        if (!action.payload) {
+          localStorage.removeItem('userId');
+          localStorage.removeItem('userName');
+          localStorage.removeItem('userAvatar');
+        }
       })
       .addCase(checkAuth.rejected, (state, action) => {
         state.isLoading = false;
@@ -118,7 +123,11 @@ export const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action: PayloadAction<AuthResponse>) => {
         state.isLoading = false;
-        state.userId = action.payload.user.id
+        state.userId = action.payload.user.id;
+        state.isAuthChecked = true;
+        localStorage.setItem('userId', action.payload.user.id);
+        localStorage.setItem('userName', action.payload.user.name);
+        localStorage.setItem('userAvatar', action.payload.user.avatar || '');
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
@@ -132,6 +141,9 @@ export const authSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.isLoading = false;
         state.userId = null;
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userAvatar');
       })
       .addCase(logout.rejected, (state, action) => {
         state.isLoading = false;

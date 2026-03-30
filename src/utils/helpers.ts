@@ -1,6 +1,6 @@
 import { APP_CATEGORIES, APP_SUBCATEGORIES } from "@/constants/skills";
+import type { CategoryId, IUser, TCity } from "@/types/types";
 import { CATEGORY_CONFIG } from "@/constants/category";
-import type { CategoryId, IUser } from "@/types/types";
 import { differenceInYears } from 'date-fns';
 
 // ---------------------------------------------------------------
@@ -94,12 +94,11 @@ export const getSubcategoryOptions = (categoryId: string) => {
 export const getSubcategoryOptionsForMultiple = (categoryIds: string[]) => {
   if (categoryIds.length === 0) return [];
 
-  const subcategories = APP_SUBCATEGORIES.filter(sub => 
+  const subcategories = APP_SUBCATEGORIES.filter(sub =>
     categoryIds.includes(sub.categoryId)
   );
-
   // Убираем дубликаты по id
-  const uniqueSubcategories = subcategories.filter((sub, index, self) => 
+  const uniqueSubcategories = subcategories.filter((sub, index, self) =>
     index === self.findIndex(s => s.id === sub.id)
   );
 
@@ -107,4 +106,39 @@ export const getSubcategoryOptionsForMultiple = (categoryIds: string[]) => {
     value: sub.id,
     label: sub.name,
   }));
+};
+
+// ---------------------------------------------------------------
+
+export const getCachedUser = (): IUser | null => {
+  if (typeof window === 'undefined') return null;
+
+  const id = localStorage.getItem('userId');
+  const name = localStorage.getItem('userName');
+  const avatar = localStorage.getItem('userAvatar');
+
+  if (!id || !name) return null;
+
+  return {
+    id,
+    name,
+    avatar: avatar || undefined,
+    location: '' as TCity,
+    age: 0,
+    birthDate: null,
+    about: '',
+    gender: 'any',
+    createdAt: '',
+    email: '',
+    likedBy: [],
+    canTeach: {
+      id: '',
+      categoryId: '',
+      subcategoryId: '',
+      customName: '',
+      description: '',
+      images: [],
+    },
+    wantToLearn: [],
+  };
 };
